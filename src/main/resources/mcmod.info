@@ -1,0 +1,17 @@
+[
+  {
+    "modid": "meowhack",
+    "name": "Meowhack",
+    "description": "Utility client for minecraft 1.12.2",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/notkronos/meowhack",
+    "updateUrl": "",
+    "authorList": [
+      "C10H15NO#0001"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "dependencies": []
+  }
+]
