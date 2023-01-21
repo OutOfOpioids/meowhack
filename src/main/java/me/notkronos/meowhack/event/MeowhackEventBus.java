@@ -1,10 +1,9 @@
 package me.notkronos.meowhack.event;
 
 import me.notkronos.meowhack.event.eventbus.EventBus;
-import me.notkronos.meowhack.event.eventbus.ICancellable;
-import me.notkronos.meowhack.event.eventbus.ISubscriber;
-import me.notkronos.meowhack.event.listener.IListener;
-import scala.collection.mutable.Subscriber;
+import me.notkronos.meowhack.event.eventbus.Subscriber;
+import me.notkronos.meowhack.event.listener.ICancellable;
+import me.notkronos.meowhack.event.listener.Listener;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,9 +11,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class MeowhackEventBus implements EventBus {
-    private final Map<Class<?>, List<IListener>> listeners;
-    private final Set<ISubscriber> subscribers;
-    private final Set<IListener> subscribedListeners;
+    private final Map<Class<?>, List<Listener>> listeners;
+    private final Set<Subscriber> subscribers;
+    private final Set<Listener> subscribedListeners;
 
     public MeowhackEventBus() {
         listeners = new ConcurrentHashMap<>();
@@ -24,9 +23,9 @@ public class MeowhackEventBus implements EventBus {
 
     @Override
     public void post(Object object) {
-        List<IListener> listening = listeners.get(object.getClass());
+        List<Listener> listening = listeners.get(object.getClass());
         if(listening != null) {
-            for(IListener listener : listening) {
+            for(Listener listener : listening) {
                 listener.invoke(object);
             }
         }
@@ -34,9 +33,9 @@ public class MeowhackEventBus implements EventBus {
 
     @Override
     public void post(Object object, Class<?> type) {
-        List<IListener> listening = listeners.get(object.getClass());
+        List<Listener> listening = listeners.get(object.getClass());
         if(listening != null) {
-            for(IListener listener : listening) {
+            for(Listener listener : listening) {
                 if(listener.getType() == null || listener.getType() == type) {
                     listener.invoke(object);
                 }
@@ -46,9 +45,9 @@ public class MeowhackEventBus implements EventBus {
 
     @Override
     public boolean postCancellable(ICancellable object) {
-        List<IListener> listening = listeners.get(object.getClass());
+        List<Listener> listening = listeners.get(object.getClass());
         if(listening != null) {
-            for(IListener listener : listening) {
+            for(Listener listener : listening) {
                 listener.invoke(object);
                 if(object.isCancelled()) {
                     return true;
@@ -60,9 +59,9 @@ public class MeowhackEventBus implements EventBus {
 
     @Override
     public boolean postCancellable(ICancellable object, Class<?> type) {
-        List<IListener> listening = listeners.get(object.getClass());
+        List<Listener> listening = listeners.get(object.getClass());
         if(listening != null) {
-            for(IListener listener : listening) {
+            for(Listener listener : listening) {
                 if(listener.getType() == null || listener.getType() == type) {
                     listener.invoke(object);
                     if (object.isCancelled()) {
@@ -76,9 +75,9 @@ public class MeowhackEventBus implements EventBus {
 
     @Override
     public void subscribe(Object object) {
-        if (object instanceof ISubscriber) {
-            ISubscriber subscriber = (ISubscriber) object;
-            for (IListener<?> listener : subscriber.getListeners()) {
+        if (object instanceof Subscriber) {
+            Subscriber subscriber = (Subscriber) object;
+            for (Listener<?> listener : subscriber.getListeners()) {
                 register(listener);
             }
 
@@ -88,9 +87,9 @@ public class MeowhackEventBus implements EventBus {
 
     @Override
     public void unsubscribe(Object object) {
-        if (object instanceof ISubscriber) {
-            ISubscriber subscriber = (ISubscriber) object;
-            for (IListener<?> listener : subscriber.getListeners()) {
+        if (object instanceof Subscriber) {
+            Subscriber subscriber = (Subscriber) object;
+            for (Listener<?> listener : subscriber.getListeners()) {
                 unregister(listener);
             }
             subscribers.remove(subscriber);
@@ -98,16 +97,16 @@ public class MeowhackEventBus implements EventBus {
     }
 
     @Override
-    public void register(IListener<?> listener) {
+    public void register(Listener<?> listener) {
         if (subscribedListeners.add(listener)) {
             addAtPriority(listener, listeners.computeIfAbsent(listener.getTarget(), v -> new CopyOnWriteArrayList<>()));
         }
     }
 
     @Override
-    public void unregister(IListener<?> listener) {
+    public void unregister(Listener<?> listener) {
         if (subscribedListeners.remove(listener)) {
-            List<IListener> list = listeners.get(listener.getTarget());
+            List<Listener> list = listeners.get(listener.getTarget());
             if (list != null) {
                 list.remove(listener);
             }
@@ -116,12 +115,10 @@ public class MeowhackEventBus implements EventBus {
 
     @Override
     public boolean isSubscribed(Object object) {
-        if (object instanceof Subscriber)
-        {
+        if (object instanceof scala.collection.mutable.Subscriber) {
             return subscribers.contains(object);
         }
-        else if (object instanceof IListener)
-        {
+        else if (object instanceof Listener) {
             return subscribedListeners.contains(object);
         }
         return false;
@@ -129,18 +126,18 @@ public class MeowhackEventBus implements EventBus {
 
     @Override
     public boolean hasSubscribers(Class<?> clazz) {
-        List<IListener> listening = listeners.get(clazz);
+        List<Listener> listening = listeners.get(clazz);
         return listening != null && !listening.isEmpty();
     }
 
     @Override
     public boolean hasSubscribers(Class<?> clazz, Class<?> type) {
-        List<IListener> listening = listeners.get(clazz);
+        List<Listener> listening = listeners.get(clazz);
         return listening != null && listening.stream().anyMatch(listener ->
                 listener.getType() == null || listener.getType() == type);
     }
 
-    private void addAtPriority(IListener<?> listener, List<IListener> list)
+    private void addAtPriority(Listener<?> listener, List<Listener> list)
     {
         int index = 0;
         while (index < list.size()

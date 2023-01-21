@@ -5,6 +5,11 @@ public class Setting<T> {
 
     public T value;
 
+    public Setting(String name, T value) {
+        this.name = name;
+        this.value = value;
+    }
+
     public String getName() {
         return name;
     }

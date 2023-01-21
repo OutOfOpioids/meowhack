@@ -1,4 +1,4 @@
-package me.notkronos.meowhack.event.eventbus;
+package me.notkronos.meowhack.event.listener;
 
 public interface ICancellable {
     void cancel(boolean cancelled);

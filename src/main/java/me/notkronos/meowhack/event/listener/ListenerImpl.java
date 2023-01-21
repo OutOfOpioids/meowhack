@@ -1,11 +1,8 @@
 package me.notkronos.meowhack.event.listener;
 
 import me.notkronos.meowhack.event.eventbus.EventBus;
-import me.notkronos.meowhack.event.listener.IListener;
 
-import java.util.EventListener;
-
-public abstract class ListenerImpl<T> implements IListener<T> {
+public abstract class ListenerImpl<T> implements Listener<T> {
     Class<T> target;
     Class<?> type;
     int priority;
