@@ -20,7 +20,7 @@ import java.util.function.Predicate;
 public class Meowhack {
     public static final String MODID = "meowhack";
     public static final String NAME = "Meowhack";
-    public static final String VERSION = "0.1-beta";
+    public static final String VERSION = "0.2-beta";
 
     @Mod.Instance
     public static Meowhack INSTANCE;

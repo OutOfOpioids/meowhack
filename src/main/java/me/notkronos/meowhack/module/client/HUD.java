@@ -40,12 +40,11 @@ public class HUD extends Module {
         if (watermark.getValue()) {
             watermarkS = new StringBuilder()
                     .append(Meowhack.NAME)
-                    .append(TextFormatting.RED)
                     .append(" v.")
                     .append(Meowhack.VERSION);
         }
         assert watermarkS != null;
-        FontUtil.drawStringWithShadow(watermarkS.toString(), 2, topLeft, 0xff0000);
+        FontUtil.drawStringWithShadow(watermarkS.toString(), 2, topLeft, 0xff80ff);
         topLeft += ELEMENT;
     }
 }
