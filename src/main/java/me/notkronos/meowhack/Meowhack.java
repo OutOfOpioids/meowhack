@@ -1,10 +1,7 @@
 package me.notkronos.meowhack;
 
 import me.notkronos.meowhack.manager.Manager;
-import me.notkronos.meowhack.manager.managers.EventManager;
-import me.notkronos.meowhack.manager.managers.FontManager;
-import me.notkronos.meowhack.manager.managers.ModuleManager;
-import me.notkronos.meowhack.manager.managers.ThreadManager;
+import me.notkronos.meowhack.manager.managers.*;
 import me.notkronos.meowhack.module.Module;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -77,9 +74,7 @@ public class Meowhack {
         return threadManager;
     }
 
-    public FontManager getFontManager() {
-        return fontManager;
-    }
+    public FontManager getFontManager() { return fontManager; }
 
     public Manager getManager(Predicate<? super Manager> predicate) {
         return managers.stream()

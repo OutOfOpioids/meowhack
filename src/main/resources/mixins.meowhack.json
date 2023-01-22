@@ -1,8 +1,9 @@
 {
   "required": true,
   "compatibilityLevel": "JAVA_8",
-  "package": "me.notkronos.meowhack.mixin.client",
+  "package": "me.notkronos.meowhack.mixin",
   "refmap": "mixins.meowhack.refmap.json",
-  "client": [
+  "mixins": [
+    "mixins.network.MixinNetworkManager"
   ]
 }
