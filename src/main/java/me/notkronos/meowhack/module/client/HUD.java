@@ -24,7 +24,7 @@ public class HUD extends Module {
     public static Setting<Boolean> watermark = new Setting<>("Watermark", true);
 
 
-    private static final float ELEMENT = FontUtil.getFontHeight() + 1;
+    private static final float ELEMENT_SIZE = FontUtil.getFontHeight() + 1;
 
     @Override
     public void onRender2D() {
@@ -33,8 +33,6 @@ public class HUD extends Module {
         int height = resolution.getScaledHeight();
         float topLeft = 2;
         float topRight = 2;
-        float bottomLeft = height - ELEMENT;
-        float bottomRight = height - ELEMENT;
 
         StringBuilder watermarkS = null;
         if (watermark.getValue()) {
@@ -45,6 +43,6 @@ public class HUD extends Module {
         }
         assert watermarkS != null;
         FontUtil.drawStringWithShadow(watermarkS.toString(), 2, topLeft, 0xff80ff);
-        topLeft += ELEMENT;
+        topLeft += ELEMENT_SIZE;
     }
 }
