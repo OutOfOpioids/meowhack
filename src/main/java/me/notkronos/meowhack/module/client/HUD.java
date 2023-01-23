@@ -7,6 +7,8 @@ import me.notkronos.meowhack.setting.Setting;
 import me.notkronos.meowhack.util.render.FontUtil;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.text.TextFormatting;
+import org.apache.logging.log4j.Level;
+import scala.Int;
 
 import java.text.DecimalFormat;
 
@@ -21,6 +23,11 @@ public class HUD extends Module {
         INSTANCE.drawn = false;
         INSTANCE.enabled = true;
     }
+
+    private static final String primaryColorString = Colors.INSTANCE.getColorHexString(
+            Colors.INSTANCE.getRed(), Colors.INSTANCE.getGreen(), Colors.INSTANCE.getBlue());
+
+    private static final Integer primaryColor = Integer.decode(primaryColorString);
 
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.0");
 
@@ -48,7 +55,7 @@ public class HUD extends Module {
                     .append(" v.")
                     .append(Meowhack.VERSION);
 
-            FontUtil.drawStringWithShadow(watermarkS.toString(), 2, topLeft, 0xff80ff);
+            FontUtil.drawStringWithShadow(watermarkS.toString(), 2, topLeft, primaryColor);
             topLeft += ELEMENT;
         }
 
@@ -57,20 +64,19 @@ public class HUD extends Module {
             double Y = Double.parseDouble(decimalFormat.format(mc.player.posY));
             double Z = Double.parseDouble(decimalFormat.format(mc.player.posZ));
 
-            String coordinateS = TextFormatting.GRAY +
-                    "XY Z" +
+            String coordinateS = "XYZ " +
                     TextFormatting.WHITE +
                     X +
-                    TextFormatting.GRAY +
+                    TextFormatting.RESET +
                     ", " +
                     TextFormatting.WHITE +
                     Y +
-                    TextFormatting.GRAY +
+                    TextFormatting.RESET +
                     ", " +
                     TextFormatting.WHITE +
                     Z;
 
-            FontUtil.drawStringWithShadow(coordinateS, 2, bottomLeft, 0xffffff);
+            FontUtil.drawStringWithShadow(coordinateS, 2, bottomLeft, primaryColor);
             bottomLeft -= ELEMENT;
         }
 

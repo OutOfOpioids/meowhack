@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Core;
 import org.lwjgl.opengl.Display;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +33,7 @@ public class Meowhack {
     public static EventBus EVENT_BUS = MinecraftForge.EVENT_BUS;
 
     private final List<Manager> managers = new ArrayList<>();
+    private CoreModuleManager coreModuleManager;
     private ModuleManager moduleManager;
     private EventManager eventManager;
     private ThreadManager threadManager;
@@ -50,6 +52,9 @@ public class Meowhack {
         LOGGER.info("Initializing meowhack.");
         Display.setTitle(NAME + " v." + VERSION);
 
+        coreModuleManager = new CoreModuleManager("cmm");
+        managers.add(coreModuleManager);
+
         moduleManager = new ModuleManager("mm");
         managers.add(moduleManager);
 
@@ -61,6 +66,8 @@ public class Meowhack {
 
         LOGGER.info("Meowhack initialized.");
     }
+
+    public CoreModuleManager getCoreModuleManager() { return coreModuleManager; }
 
     public ModuleManager getModuleManager() {
         return moduleManager;

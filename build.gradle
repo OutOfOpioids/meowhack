@@ -1,61 +1,38 @@
 buildscript {
     repositories {
-        // The mavenCentral() alias means that dependencies are fetched from the central Maven 2 repository (https://repo1.maven.org/maven2).
         mavenCentral()
-        // The url to get the spongepowered dependencies from.
         maven { url 'https://repo.spongepowered.org/maven' }
-        // The url to get the forge dependencies from.
         maven { url 'https://maven.minecraftforge.net/' }
     }
     dependencies {
-        // Latest 2 version of ForgeGradle will update to 5.1.26 later. Versions list: https://maven.minecraftforge.net/net/minecraftforge/gradle/ForgeGradle/maven-metadata.xml
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3.4'
-        // Upgrade to 0.7-SNAPSHOT when upgrading ForgeGradle to 3.0+ & mixin ver at dependencies has to be 0.8+ for upgrading mixingradle ver. https://github.com/SpongePowered/MixinGradle
         classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
     }
 }
-
-// Gradle plugin for all Minecraft mod development needs.
 apply plugin: 'net.minecraftforge.gradle.forge'
-// Gradle plugin. Mixin is a trait/mixin & bytecode weaving framework for Java using ASM.
 apply plugin: 'org.spongepowered.mixin'
-// Only edit below this line, the above code adds & enables the necessary things for Forge to be setup.
 
-// The jar version number that will be output when building.
 version = modversion
-// https://maven.apache.org/guides/mini/guide-naming-conventions.html
 group = modgroup
-// The jar name that will be output when building.
 archivesBaseName = modid
 
-// Need this here so eclipse task generates correctly.
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava {
-    // This ensures that the generated class files will be compatible with JVMs specified by targetCompatibility.
     sourceCompatibility = targetCompatibility = '1.8'
-    // Makes it so u don't need to convert unicode to basic latin for it to be able to build/run.
     options.encoding 'UTF-8'
 }
 
 minecraft {
-    // The version of forge & if u want to update to the patch 1.12.2-14.23.5.2860 for log4j exploit u need to have ForgeGradle 3+ version.
     version = mcforgeversion
-    // The directory of where the files that are output when doing runClient will be put.
     runDir = 'run'
-    // MCP Mapping version.
     mappings = mappingsversion
-    // An Srg named sources jar is made by default. No point for it aka bloat so it has been disabled.
     makeObfSourceJar = false
-    // Tells FML to load our mixin loader in IDE's.
     clientJvmArgs += '-Dfml.coreMods.load=' + mixinclass
-    // Tells mixin to use our mixin config in IDE's.
     clientRunArgs += '--mixin ' + mixinconfig
 }
 
 mixin {
-    // The obfuscation environment to use when generating refMaps. This is the obfuscation which will end up in the mappings in the generated refMap.
     defaultObfuscationEnv searge // Types of obf env: searge, notch.
-    // Sets the main sourceSets refmap name instead of add sourceSets.main so there is no conflict cause of it adding another value instead of setting the 1 value.
     sourceSets {
         main {
             ext.refMap = 'mixins.meowhack.refmap.json'
@@ -64,27 +41,20 @@ mixin {
 }
 
 repositories {
-    // The mavenCentral() alias means that dependencies are fetched from the central Maven 2 repository (https://repo1.maven.org/maven2).
     mavenCentral()
-    // The url to get the spongepowered dependencies from.
     maven { url 'https://repo.spongepowered.org/maven' }
-    // The url to get GitHub repositories from
     maven { url 'https://jitpack.io' }
 }
 
 configurations {
-    // Adds a reference so that we extend/add on to it with depends so we can grab them and compile them into the jar.
     embed
-    // Grabs what's extended/added on from/to embed and compiles it into the jar when being built.
     compile.extendsFrom embed
 }
 
 dependencies {
     implementation 'org.jetbrains:annotations:19.0.0'
 
-    // Upgrading to 0.8+ can possibly break compatibility with other clients like Future/RusherHack.
     embed('org.spongepowered:mixin:0.7.11-SNAPSHOT') {
-        // Excludes unneeded stuff.
         exclude module: 'launchwrapper'
         exclude module: 'guava'
         exclude module: 'gson'
@@ -94,15 +64,11 @@ dependencies {
 }
 
 processResources {
-    // This will ensure that this task is redone when the versions change.
     inputs.property 'version', project.version
-    // Replace stuff in mcmod.info, Nothing else.
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-        // Replace version.
         expand 'version': project.version
     }
-    // Copy everything else except the mcmod.info.
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
@@ -120,15 +86,10 @@ jar {
                 'org/**/*.html'
     }
     manifest.attributes(
-            // Name for the clients mixins.json.
             'MixinConfigs': mixinconfig,
-            // Directory for the org library mixin loader.
             'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
-            // Actually not too sure what this is for.
             'TweakOrder': 0,
-            // Directory for the mixin loader for the built jar.
             'FMLCorePlugin': mixinclass,
-            // Turn this to false for the client to be able to load in a IDE.
             'ForceLoadAsMod': 'true'
     )
 }
