@@ -37,6 +37,14 @@ public class Module {
     public void onThread() {
     }
 
+    public void enable() {
+        enabled = true;
+    }
+
+    public void disable() {
+        enabled = false;
+    }
+
     public Setting<Bind> getBind() {
         return bind;
     }

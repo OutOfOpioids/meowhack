@@ -32,18 +32,20 @@ public class TotemPopCounter extends Module implements Wrapper {
 
     @SubscribeEvent
     public void onTotemPop(TotemPopEvent event) {
-        totemPops.put(event.getPopEntity(), totemPops.containsKey(event.getPopEntity()) ? totemPops.get(event.getPopEntity()) + 1 : 1);
-        String message;
-        Entity player = event.getPopEntity();
-        int pops = getTotemPops(player);
-        if(pops == 1) {
-            message = TextFormatting.RED + "[Meowhack] " + TextFormatting.WHITE
-                    +  player.getName() + " popped " + TextFormatting.GREEN + pops + TextFormatting.WHITE + " totem.";
-        } else {
-            message = TextFormatting.RED + "[Meowhack] " + TextFormatting.WHITE
-                    +  player.getName() + " popped " + TextFormatting.GREEN + pops + TextFormatting.WHITE + " totems.";
+        if(isEnabled()) {
+            totemPops.put(event.getPopEntity(), totemPops.containsKey(event.getPopEntity()) ? totemPops.get(event.getPopEntity()) + 1 : 1);
+            String message;
+            Entity player = event.getPopEntity();
+            int pops = getTotemPops(player);
+            if (pops == 1) {
+                message = TextFormatting.RED + "[Meowhack] " + TextFormatting.WHITE
+                        + player.getName() + " popped " + TextFormatting.GREEN + pops + TextFormatting.WHITE + " totem.";
+            } else {
+                message = TextFormatting.RED + "[Meowhack] " + TextFormatting.WHITE
+                        + player.getName() + " popped " + TextFormatting.GREEN + pops + TextFormatting.WHITE + " totems.";
+            }
+            messageSender.sendMessageClientSide(message);
         }
-        messageSender.sendMessageClientSide(message);
     }
 
     @SubscribeEvent
