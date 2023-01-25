@@ -1,5 +1,6 @@
 package me.notkronos.meowhack;
 
+import me.notkronos.meowhack.gui.clickgui.ClickGUIScreen;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.manager.managers.*;
 import me.notkronos.meowhack.module.Module;
@@ -21,7 +22,7 @@ import java.util.function.Predicate;
 public class Meowhack {
     public static final String MODID = "meowhack";
     public static final String NAME = "Meowhack";
-    public static final String VERSION = "0.2-beta";
+    public static final String VERSION = "1.0-beta";
 
     @Mod.Instance
     public static Meowhack INSTANCE;
@@ -30,10 +31,11 @@ public class Meowhack {
         INSTANCE = this;
     }
 
+    private ClickGUIScreen clickGUI;
+
     public static EventBus EVENT_BUS = MinecraftForge.EVENT_BUS;
 
     private final List<Manager> managers = new ArrayList<>();
-    private CoreModuleManager coreModuleManager;
     private ModuleManager moduleManager;
     private EventManager eventManager;
     private ThreadManager threadManager;
@@ -52,9 +54,6 @@ public class Meowhack {
         LOGGER.info("Initializing meowhack.");
         Display.setTitle(NAME + " v." + VERSION);
 
-        coreModuleManager = new CoreModuleManager("cmm");
-        managers.add(coreModuleManager);
-
         moduleManager = new ModuleManager("mm");
         managers.add(moduleManager);
 
@@ -64,10 +63,10 @@ public class Meowhack {
         threadManager = new ThreadManager();
         managers.add(threadManager);
 
+        clickGUI = new ClickGUIScreen();
+
         LOGGER.info("Meowhack initialized.");
     }
-
-    public CoreModuleManager getCoreModuleManager() { return coreModuleManager; }
 
     public ModuleManager getModuleManager() {
         return moduleManager;
@@ -101,5 +100,9 @@ public class Meowhack {
     public static Logger getLogger()
     {
         return LOGGER;
+    }
+
+    public ClickGUIScreen getClickGUI() {
+        return clickGUI;
     }
 }

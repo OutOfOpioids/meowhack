@@ -6,5 +6,5 @@ public enum Category {
     MISC,
     MOVEMENT,
     RENDER,
-    WORLD
+    WORLD;
 }

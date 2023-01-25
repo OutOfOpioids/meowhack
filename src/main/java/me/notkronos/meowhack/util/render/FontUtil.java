@@ -10,4 +10,9 @@ public class FontUtil implements Wrapper {
     public static float getFontHeight() {
         return mc.fontRenderer.FONT_HEIGHT;
     }
+
+    public static int getStringWidth(String text) {
+        return mc.fontRenderer.getStringWidth(text);
+    }
+
 }

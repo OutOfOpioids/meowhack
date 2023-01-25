@@ -11,11 +11,35 @@ import net.minecraft.network.play.server.SPacketEntityStatus;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class EventManager extends Manager implements Wrapper {
     public EventManager() {
         super("EventManager");
         Meowhack.EVENT_BUS.register(this);
+    }
+
+    @SubscribeEvent
+    public void onTick(TickEvent.ClientTickEvent event) {
+
+        // module onTick
+        for (Module module : getMeowhack().getModuleManager().getAllModules()) {
+
+            // check if the module is safe to run
+            if (nullCheck()) {
+
+                // check if module should run
+                if (module.isEnabled()) {
+
+                    // run
+                    try {
+                        module.onTick();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
     @SubscribeEvent
@@ -32,7 +56,7 @@ public class EventManager extends Manager implements Wrapper {
             }
         }
         for (Manager manager : getMeowhack().getAllManagers()) {
-            if (nullCheck() || getMeowhack().getNullSafeFeatures().contains(manager)) {
+            if (nullCheck()) {
                 try {
                     manager.onRender2D();
                 } catch (Exception exception) {

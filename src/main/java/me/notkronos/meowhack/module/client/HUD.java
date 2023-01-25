@@ -4,13 +4,12 @@ import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
+import me.notkronos.meowhack.util.ColorUtil;
 import me.notkronos.meowhack.util.render.FontUtil;
 import me.notkronos.meowhack.util.string.FormatUtil;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.TextFormatting;
-import scala.tools.nsc.ast.TreeDSL;
-
 
 import java.text.DecimalFormat;
 
@@ -26,10 +25,6 @@ public class HUD extends Module {
         INSTANCE.enabled = true;
     }
 
-    private static final String primaryColorString = Colors.INSTANCE.getColorHexString(
-            Colors.INSTANCE.getRed(), Colors.INSTANCE.getGreen(), Colors.INSTANCE.getBlue());
-
-    private static final Integer primaryColor = Integer.decode(primaryColorString);
 
     private static final FormatUtil formatUtil = new FormatUtil();
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.0");
@@ -44,6 +39,8 @@ public class HUD extends Module {
 
     @Override
     public void onRender2D() {
+        int[] colors = ColorUtil.getPrimaryColor();
+        int primaryColor = ColorUtil.decimalToHex(colors[0], colors[1], colors[2]);
         ScaledResolution resolution = new ScaledResolution(mc);
         int width = resolution.getScaledWidth();
         int height = resolution.getScaledHeight();

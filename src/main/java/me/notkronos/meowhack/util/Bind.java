@@ -1,34 +1,110 @@
 package me.notkronos.meowhack.util;
 
+import me.notkronos.meowhack.util.Wrapper;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
-public class Bind {
-    int key;
+public class Bind implements Wrapper {
 
-    public Bind(int key) {
-        this.key = key;
-    }
-    public int getKey() {
-        return key;
-    }
+    // The button index
+    private final int buttonCode;
 
-    public void setKey(int key) {
-        this.key = key;
+    // Input device
+    private final Device device;
+
+    // Prevent spam
+    private boolean alreadyPressed;
+
+    public Bind(int buttonCode, Device device) {
+        this.buttonCode = buttonCode;
+        this.device = device;
     }
 
     public static Bind none() {
-        return new Bind(-1);
+        return new Bind(-1, Device.KEYBOARD);
     }
 
-    public static Bind fromKey(int key) {
-        return new Bind(key);
-    }
+    /**
+     * Checks if the bind has been pressed
+     * @return Whether the bind has been pressed
+     */
+    public boolean isPressed() {
 
-    public String toString() {
-        if(key == -1) {
-            return "NONE";
-        } else {
-            return Keyboard.getKeyName(key);
+        if (buttonCode <= 1 || mc.currentScreen != null) {
+            return false;
+        }
+
+        // Our bind is pressed
+        boolean pressed = device.equals(Device.KEYBOARD) && Keyboard.isKeyDown(buttonCode) || device.equals(Device.MOUSE) && Mouse.isButtonDown(buttonCode);
+
+        if (pressed) {
+
+            // We haven't already pressed the key
+            if (!alreadyPressed) {
+                alreadyPressed = true;
+                return true;
+            }
+
+            else {
+                return false;
+            }
+        }
+
+        else {
+            alreadyPressed = false;
+            return false;
         }
     }
+
+    public enum Device {
+
+        /**
+         * A key on the keyboard
+         */
+        KEYBOARD,
+
+        /**
+         * A mouse button
+         */
+        MOUSE
+    }
+
+    /**
+     * Gets the button name for the GUI
+     * @return The button name
+     */
+    public String getButtonName() {
+
+        // Invalid button
+        if (buttonCode < 1) {
+            return "None";
+        }
+
+        else if (device.equals(Device.KEYBOARD)) {
+            return Keyboard.getKeyName(buttonCode);
+        }
+
+        else if (device.equals(Device.MOUSE)) {
+            return Mouse.getButtonName(buttonCode);
+        }
+
+        return "Unrecognized";
+    }
+
+    /**
+     * Gets the button code
+     * @return The button code
+     */
+    public int getButtonCode() {
+        return buttonCode;
+    }
+
+    /**
+     * Gets the input device
+     * @return The input device
+     */
+    public Device getDevice() {
+        return device;
+    }
+
 }

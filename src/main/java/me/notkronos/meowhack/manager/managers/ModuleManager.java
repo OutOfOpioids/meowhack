@@ -2,6 +2,7 @@ package me.notkronos.meowhack.manager.managers;
 
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.module.Module;
+import me.notkronos.meowhack.module.client.ClickGUIModule;
 import me.notkronos.meowhack.module.client.Colors;
 import me.notkronos.meowhack.module.client.HUD;
 import me.notkronos.meowhack.module.combat.TotemPopCounter;
@@ -18,6 +19,8 @@ public class ModuleManager extends Manager {
     public ModuleManager(String name) {
         super("ModuleManager");
         modules = Arrays.asList(
+                new Colors(),
+                new ClickGUIModule(),
                 new HUD(),
                 new TotemPopCounter()
         );
@@ -25,7 +28,11 @@ public class ModuleManager extends Manager {
 
     @Override
     public void onThread() {
-
+        for (Module module : modules) {
+            if (module.getBind().getValue().isPressed()) {
+                module.toggle();
+            }
+        }
     }
 
     public List<Module> getAllModules() {
