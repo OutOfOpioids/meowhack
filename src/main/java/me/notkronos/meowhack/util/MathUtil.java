@@ -2,6 +2,10 @@ package me.notkronos.meowhack.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * @author linustouchtips
@@ -75,4 +79,20 @@ public class MathUtil {
             return result;
         }
     }
+
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map, boolean descending) {
+        LinkedList<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
+        if (descending) {
+            list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+        } else {
+            list.sort(Map.Entry.comparingByValue());
+        }
+        LinkedHashMap result = new LinkedHashMap();
+        for (Map.Entry entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
+    }
+
+
 }

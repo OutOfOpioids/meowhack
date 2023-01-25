@@ -113,4 +113,8 @@ public abstract class Module {
     public void onTick() {
 
     }
+
+    public void onUpdate() {
+
+    }
 }
