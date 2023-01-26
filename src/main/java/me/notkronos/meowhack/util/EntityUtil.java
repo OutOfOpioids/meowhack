@@ -1,12 +1,17 @@
 package me.notkronos.meowhack.util;
 
+import me.notkronos.meowhack.Meowhack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.math.BlockPos;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static me.notkronos.meowhack.util.Wrapper.mc;
@@ -69,6 +74,29 @@ public class EntityUtil {
         }
         if (!output.isEmpty()) {
             output = MathUtil.sortByValue(output, false);
+        }
+        Meowhack.LOGGER.info("this fuckery executes");
+        return output;
+    }
+    public static Map<EntityPlayer, Boolean> getBurrowMap() {
+        Map<EntityPlayer, Boolean> output = new HashMap<EntityPlayer, Boolean>();
+        List<BlockPos> posList = new ArrayList<>();
+        for (EntityPlayer player : mc.world.playerEntities) {
+            BlockPos blockPos = new BlockPos(Math.floor(player.posX), Math.floor(player.posY + 0.2), Math.floor(player.posZ));
+            if ((mc.world.getBlockState(blockPos).getBlock() == Blocks.ENDER_CHEST || mc.world.getBlockState(blockPos).getBlock() == Blocks.OBSIDIAN) && blockPos.distanceSq(mc.player.posX, mc.player.posY, player.posZ) <= 64) {
+
+                if (!(blockPos.distanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) <= 1.5)) {
+                    assert false;
+                    posList.add(blockPos);
+                    output.put(mc.player, true);
+                    Meowhack.LOGGER.info("put a player in the list");
+                } else {
+                    assert false;
+                    output.put(mc.player, false);
+                    Meowhack.LOGGER.info("put a player in the list");
+                }
+
+            }
         }
         return output;
     }

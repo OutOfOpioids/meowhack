@@ -6,5 +6,8 @@
   "mixins": [
     "mixins.network.MixinNetworkManager",
     "mixins.world.MixinWorld"
+  ],
+  "client": [
+    "mixins.entity.player.MixinEntityPlayerSP"
   ]
 }

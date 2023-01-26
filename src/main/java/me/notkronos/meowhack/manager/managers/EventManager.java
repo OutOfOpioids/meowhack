@@ -5,11 +5,12 @@ import me.notkronos.meowhack.event.events.combat.TotemPopEvent;
 import me.notkronos.meowhack.event.events.network.PacketEvent;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.module.Module;
+import me.notkronos.meowhack.module.client.HUD;
 import me.notkronos.meowhack.util.Wrapper;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.server.SPacketEntityStatus;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -18,6 +19,35 @@ public class EventManager extends Manager implements Wrapper {
         super("EventManager");
         Meowhack.EVENT_BUS.register(this);
     }
+
+    @SubscribeEvent
+    public void onUpdate(LivingEvent.LivingUpdateEvent event) {
+
+        // check if the update event is for the local player
+        if (nullCheck() && event.getEntity().getEntityWorld().isRemote && event.getEntityLiving().equals(mc.player)) {
+            try {
+                HUD.INSTANCE.onUpdate();
+                Meowhack.LOGGER.info("Executed onUpdate()");
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+
+            // manager onUpdate
+            for (Manager manager : getMeowhack().getAllManagers()) {
+
+                // check if the manager is safe to run
+                if (nullCheck() || getMeowhack().getNullSafeFeatures().contains(manager)) {
+
+                    // run
+                    try {
+                        manager.onUpdate();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                }
+            }
+        }
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {

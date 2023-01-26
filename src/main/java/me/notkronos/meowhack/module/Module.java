@@ -51,6 +51,10 @@ public abstract class Module {
         enabled = !enabled;
     }
 
+    public void onUpdate() {
+
+    }
+
     public void onRender2D() {
 
     }
@@ -111,10 +115,6 @@ public abstract class Module {
     }
 
     public void onTick() {
-
-    }
-
-    public void onUpdate() {
 
     }
 }
