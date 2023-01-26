@@ -9,22 +9,18 @@ import me.notkronos.meowhack.util.Timer;
 import me.notkronos.meowhack.util.render.FontUtil;
 import me.notkronos.meowhack.util.string.FormatUtil;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.TextFormatting;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
-
-import static me.notkronos.meowhack.util.EntityUtil.getBurrowMap;
 import static me.notkronos.meowhack.util.EntityUtil.getTextRadarPlayers;
 import static me.notkronos.meowhack.util.Wrapper.mc;
 
 public class HUD extends Module {
     public static HUD INSTANCE;
     private static final Timer timer = new Timer();
-    private static Map<String, Integer> players = new HashMap<String, Integer>();
-    private Map<EntityPlayer, Boolean> burrowed = new HashMap<EntityPlayer, Boolean>();
+    private static Map<String, Boolean> players = new HashMap<String, Boolean>();
 
     public HUD() {
         super("HUD", Category.CLIENT, "HUD of the client", new String[]{});
@@ -50,7 +46,6 @@ public class HUD extends Module {
     public void onUpdate() {
         if(timer.passedMs(500)) {
             players = getTextRadarPlayers();
-            burrowed = getBurrowMap();
             timer.reset();
         }
     }
@@ -80,18 +75,13 @@ public class HUD extends Module {
 
         if (textRadar.getValue()) {
             if (!players.isEmpty()) {
-                float y = FontUtil.getFontHeight() + 7 + topLeft;
-                for (final Map.Entry<String, Integer> player : players.entrySet()) {
-                    boolean isBurrowed = burrowed.get(player);
-                    final String text;
-                    if(isBurrowed) {
-                        text = player.getKey() + "[burrowed]";
-                    } else {
-                        text = player.getKey();
+                for (Map.Entry<String, Boolean> player : players.entrySet()) {
+                    String text = player.getKey();
+                    if(player.getValue()) {
+                        text = "[B]" + player.getKey();
                     }
-                    final float textHeight = FontUtil.getFontHeight() + 1;
-                    FontUtil.drawStringWithShadow(text, 2.0f, (float) y, primaryColor);
-                    y += textHeight;
+                    FontUtil.drawStringWithShadow(text, 2.0f, topLeft, primaryColor);
+                    topLeft += ELEMENT;
                 }
             }
         }

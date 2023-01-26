@@ -27,7 +27,6 @@ public class EventManager extends Manager implements Wrapper {
         if (nullCheck() && event.getEntity().getEntityWorld().isRemote && event.getEntityLiving().equals(mc.player)) {
             try {
                 HUD.INSTANCE.onUpdate();
-                Meowhack.LOGGER.info("Executed onUpdate()");
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
