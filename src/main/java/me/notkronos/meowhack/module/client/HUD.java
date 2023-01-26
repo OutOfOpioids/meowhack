@@ -77,9 +77,6 @@ public class HUD extends Module {
             if (!players.isEmpty()) {
                 for (Map.Entry<String, Boolean> player : players.entrySet()) {
                     String text = player.getKey();
-                    if(player.getValue()) {
-                        text = "[B]" + player.getKey();
-                    }
                     FontUtil.drawStringWithShadow(text, 2.0f, topLeft, primaryColor);
                     topLeft += ELEMENT;
                 }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public abstract class Module {
+public class Module {
     protected boolean enabled;
     protected boolean drawn = true;
 

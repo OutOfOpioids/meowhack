@@ -1,6 +1,5 @@
 package me.notkronos.meowhack.util;
 
-import me.notkronos.meowhack.Meowhack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,9 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static me.notkronos.meowhack.util.Wrapper.mc;
@@ -61,7 +58,7 @@ public class EntityUtil {
             distanceSB.append("§");
             if (distanceInt >= 25) {
                 distanceSB.append("a");
-            } else if (distanceInt > 10) {
+            } else if (distanceInt >= 10) {
                 distanceSB.append("6");
             } else if (distanceInt >= 50) {
                 distanceSB.append("7");
@@ -73,11 +70,12 @@ public class EntityUtil {
             BlockPos blockPos = new BlockPos(Math.floor(player.posX), Math.floor(player.posY + 0.2), Math.floor(player.posZ));
             if ((mc.world.getBlockState(blockPos).getBlock() == Blocks.ENDER_CHEST || mc.world.getBlockState(blockPos).getBlock() == Blocks.OBSIDIAN) && blockPos.distanceSq(mc.player.posX, mc.player.posY, player.posZ) <= 64) {
                 if (!(blockPos.distanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) <= 1.5)) {
-                    output.put(healthSB.toString() + " " + ("§r") + player.getName() + " " + distanceSB.toString() + " " + "§f" + distanceString, true);
-                } else {
-                    output.put(healthSB.toString() + " " + ("§r") + player.getName() + " " + distanceSB.toString() + " " + "§f"+ distanceString, false);
+                    output.put(healthSB.toString() + " " + ("§r") + player.getName() + " " + distanceSB.toString() + " " + "§f", true);
+                    continue;
                 }
             }
+            output.put(healthSB.toString() + " " + ("§r") + player.getName() + " " + distanceSB.toString() + " " + "§f", false);
+
             healthSB.setLength(0);
             distanceSB.setLength(0);
         }
