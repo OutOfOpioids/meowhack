@@ -1,17 +1,26 @@
 package me.notkronos.meowhack.module.client;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
 import me.notkronos.meowhack.util.ColorUtil;
+import me.notkronos.meowhack.util.MathUtil;
 import me.notkronos.meowhack.util.Timer;
 import me.notkronos.meowhack.util.render.FontUtil;
 import me.notkronos.meowhack.util.string.FormatUtil;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.TextFormatting;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
 import static me.notkronos.meowhack.util.EntityUtil.getTextRadarPlayers;
@@ -27,7 +36,6 @@ public class HUD extends Module {
         INSTANCE = this;
         INSTANCE.drawn = false;
         INSTANCE.enabled = true;
-
     }
 
     private static final FormatUtil formatUtil = new FormatUtil();
@@ -39,8 +47,10 @@ public class HUD extends Module {
     public static Setting<Boolean> coordinates = new Setting<>("Coordinates", true);
     public static Setting<Boolean> netherCoordinates = new Setting<>("NetherCoordinates", true);
     public static Setting<Boolean> textRadar = new Setting<>("TextRadar", true);
+    public static Setting<Boolean> potionEffects = new Setting<>("PotionEffects", true);
+    public static Setting<Boolean> speed = new Setting<>("Speed", true);
 
-    private static final float ELEMENT = FontUtil.getFontHeight() + 1;
+    private static final float ELEMENT_SIZE = FontUtil.getFontHeight() + 1;
 
     @Override
     public void onUpdate() {
@@ -59,8 +69,8 @@ public class HUD extends Module {
         int height = resolution.getScaledHeight();
         float topLeft = 2;
         float topRight = 2;
-        float bottomLeft = height - ELEMENT;
-        float bottomRight = height - ELEMENT;
+        float bottomLeft = height - ELEMENT_SIZE;
+        float bottomRight = height - ELEMENT_SIZE;
 
         StringBuilder watermarkS = null;
         if (watermark.getValue()) {
@@ -70,7 +80,7 @@ public class HUD extends Module {
                     .append(Meowhack.VERSION);
 
             FontUtil.drawStringWithShadow(watermarkS.toString(), 2, topLeft, primaryColor);
-            topLeft += ELEMENT;
+            topLeft += ELEMENT_SIZE;
         }
 
         if (textRadar.getValue()) {
@@ -78,7 +88,7 @@ public class HUD extends Module {
                 for (Map.Entry<String, Boolean> player : players.entrySet()) {
                     String text = player.getKey();
                     FontUtil.drawStringWithShadow(text, 2.0f, topLeft, primaryColor);
-                    topLeft += ELEMENT;
+                    topLeft += ELEMENT_SIZE;
                 }
             }
         }
@@ -157,7 +167,7 @@ public class HUD extends Module {
                 }
                 FontUtil.drawStringWithShadow(coordinates, 2, bottomLeft, primaryColor);
             }
-            bottomLeft -= ELEMENT;
+            bottomLeft -= ELEMENT_SIZE;
         }
         if(direction.getValue()) {
             EnumFacing direction = mc.player.getHorizontalFacing();
@@ -173,8 +183,25 @@ public class HUD extends Module {
                     TextFormatting.RESET +
                     "]";
             FontUtil.drawStringWithShadow(directionString, 2, bottomLeft, primaryColor);
-            bottomLeft -= ELEMENT;
+            bottomLeft -= ELEMENT_SIZE;
         }
-
+        if(potionEffects.getValue()) {
+            for(PotionEffect potEff : mc.player.getActivePotionEffects()) {
+                String potName = I18n.format(potEff.getEffectName());
+                if(!potName.equals("FullBright") && !potName.equals("SpeedMine")) {
+                    StringBuilder potionString = new StringBuilder(potName);
+                    int amplifier = potEff.getAmplifier() + 1;
+                    potionString.append(" ")
+                            .append(amplifier)
+                            .append(" ")
+                            .append(ChatFormatting.WHITE)
+                            .append(Potion.getPotionDurationString(potEff, 1F));
+                    float textWidth = FontUtil.getStringWidth(potionString.toString());
+                    FontUtil.drawStringWithShadow(potionString.toString(), width - 1 - textWidth, bottomRight, primaryColor);
+                    bottomRight -= ELEMENT_SIZE;
+                }
+            }
+        }
     }
+
 }
