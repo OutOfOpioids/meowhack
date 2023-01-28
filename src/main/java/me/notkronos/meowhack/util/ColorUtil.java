@@ -27,6 +27,21 @@ public class ColorUtil {
         return new Color(red, green, blue);
     }
 
+    public static int toRGBA(double r, double g, double b, double a) {
+        return ColorUtil.toRGBA((float) r, (float) g, (float) b, (float) a);
+    }
+
+    public static int toRGBA(int r, int g, int b) {
+        return ColorUtil.toRGBA(r, g, b, 255);
+    }
+
+    public static int toRGBA(int r, int g, int b, int a) {
+        return (r << 16) + (g << 8) + b + (a << 24);
+    }
+    public static int toRGBA(float r, float g, float b, float a) {
+        return ColorUtil.toRGBA((int) (r * 255.0f), (int) (g * 255.0f), (int) (b * 255.0f), (int) (a * 255.0f));
+    }
+
 }
 
 

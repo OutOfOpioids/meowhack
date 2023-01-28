@@ -41,7 +41,7 @@ public class ThreadManager extends Manager {
                         for (Module module : getMeowhack().getModuleManager().getAllModules()) {
 
                             // check if the module is safe to run
-                            if (nullCheck() || getMeowhack().getNullSafeFeatures().contains(module)) {
+                            if (nullCheck()) {
 
                                 // check if module should run
                                 if (module.isEnabled()) {
@@ -60,7 +60,7 @@ public class ThreadManager extends Manager {
                         for (Manager manager : getMeowhack().getAllManagers()) {
 
                             // check if the manager is safe to run
-                            if (nullCheck() || getMeowhack().getNullSafeFeatures().contains(manager)) {
+                            if (nullCheck()) {
 
                                 // run
                                 try {

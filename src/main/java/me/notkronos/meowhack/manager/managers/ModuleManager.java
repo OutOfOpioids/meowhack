@@ -7,6 +7,7 @@ import me.notkronos.meowhack.module.client.Colors;
 import me.notkronos.meowhack.module.client.HUD;
 import me.notkronos.meowhack.module.combat.ChestplateSwap;
 import me.notkronos.meowhack.module.combat.TotemPopCounter;
+import me.notkronos.meowhack.module.misc.RPC;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +21,7 @@ public class ModuleManager extends Manager {
     public ModuleManager(String name) {
         super("ModuleManager");
         modules = Arrays.asList(
+                new RPC(),
                 new ChestplateSwap(),
                 new Colors(),
                 new ClickGUIModule(),

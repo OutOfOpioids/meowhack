@@ -8,6 +8,8 @@
     "mixins.world.MixinWorld"
   ],
   "client": [
+    "mixins.accessor.IMInecraftAccessor",
+    "mixins.accessor.ITimerAccessor",
     "mixins.entity.player.MixinEntityPlayerSP"
   ]
 }

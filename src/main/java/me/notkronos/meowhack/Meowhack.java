@@ -4,6 +4,7 @@ import me.notkronos.meowhack.gui.clickgui.ClickGUIScreen;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.manager.managers.*;
 import me.notkronos.meowhack.module.Module;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -22,7 +23,7 @@ import java.util.function.Predicate;
 public class Meowhack {
     public static final String MODID = "meowhack";
     public static final String NAME = "Meowhack";
-    public static final String VERSION = "1.0+b0982270";
+    public static final String VERSION = "1.0+f48411c8";
 
     @Mod.Instance
     public static Meowhack INSTANCE;
@@ -40,6 +41,7 @@ public class Meowhack {
     private EventManager eventManager;
     private ThreadManager threadManager;
     private FontManager fontManager;
+    private TickManager tickManager;
 
     public static final Logger LOGGER = LogManager.getLogger("meowhack");
 
@@ -63,6 +65,9 @@ public class Meowhack {
         threadManager = new ThreadManager();
         managers.add(threadManager);
 
+        tickManager = new TickManager();
+        managers.add(tickManager);
+
         clickGUI = new ClickGUIScreen();
 
         LOGGER.info("Meowhack initialized.");
@@ -81,27 +86,20 @@ public class Meowhack {
     }
 
     public FontManager getFontManager() { return fontManager; }
-
+    public TickManager getTickManager() { return tickManager; }
     public Manager getManager(Predicate<? super Manager> predicate) {
         return managers.stream()
                 .filter(predicate)
                 .findFirst()
                 .orElse(null);
     }
-
     public List<Manager> getAllManagers() {
         return managers;
     }
-
-    public List<Module> getNullSafeFeatures() {
-        return Arrays.asList();
-    }
-
     public static Logger getLogger()
     {
         return LOGGER;
     }
-
     public ClickGUIScreen getClickGUI() {
         return clickGUI;
     }

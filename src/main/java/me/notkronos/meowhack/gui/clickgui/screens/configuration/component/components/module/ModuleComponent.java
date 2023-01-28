@@ -158,6 +158,11 @@ public class ModuleComponent extends DrawableComponent {
                 if (highestPoint >= categoryFrameComponent.getPosition().y + categoryFrameComponent.getTitle() + 2 && lowestPoint <= categoryFrameComponent.getPosition().y + categoryFrameComponent.getTitle() + categoryFrameComponent.getHeight() + 2) {
                     if (in.equals(ClickType.LEFT)) {
                         module.toggle();
+                        if(module.isEnabled()) {
+                            module.onEnable();
+                        } else {
+                            module.onDisable();
+                        }
                     }
 
                     else if (in.equals(ClickType.RIGHT)) {

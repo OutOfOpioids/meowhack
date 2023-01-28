@@ -36,7 +36,7 @@ public class EventManager extends Manager implements Wrapper {
             for (Manager manager : getMeowhack().getAllManagers()) {
 
                 // check if the manager is safe to run
-                if (nullCheck() || getMeowhack().getNullSafeFeatures().contains(manager)) {
+                if (nullCheck()) {
 
                     // run
                     try {
@@ -74,7 +74,7 @@ public class EventManager extends Manager implements Wrapper {
     @SubscribeEvent
     public void onRender2d(RenderGameOverlayEvent.Text event) {
         for (Module module : getMeowhack().getModuleManager().getAllModules()) {
-            if (nullCheck() || getMeowhack().getNullSafeFeatures().contains(module)) {
+            if (nullCheck()) {
                 if (module.isEnabled()) {
                     try {
                         module.onRender2D();

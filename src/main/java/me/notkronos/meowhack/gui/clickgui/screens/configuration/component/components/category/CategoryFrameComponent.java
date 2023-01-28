@@ -116,9 +116,7 @@ public class CategoryFrameComponent extends FrameComponent<Category> implements 
             RenderUtil.drawRect(getPosition().x, getPosition().y + TITLE + 2, WIDTH, (float) (height * animation.getAnimationFactor()), new Color(23, 23, 29, 255));
 
             featureOffset = 0;
-            moduleComponents.forEach(moduleComponent -> {
-                moduleComponent.drawComponent();
-            });
+            moduleComponents.forEach(ModuleComponent::drawComponent);
 
             // pop scissor
             getScissorStack().popScissor();

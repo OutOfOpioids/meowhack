@@ -65,6 +65,10 @@ public class Module {
     public void onThread() {
     }
 
+    public void onEnable() {
+
+    }
+
     public void enable() {
         enabled = true;
     }
@@ -115,6 +119,10 @@ public class Module {
     }
 
     public void onTick() {
+
+    }
+
+    public void onDisable() {
 
     }
 }

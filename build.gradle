@@ -61,6 +61,11 @@ dependencies {
         exclude module: 'commons-io'
         exclude module: 'log4j-core'
     }
+
+    embed('club.minnced:java-discord-rpc:2.0.2') {
+        // For no reason it includes the com.sun.jna library.
+        exclude module: 'jna'
+    }
 }
 
 processResources {

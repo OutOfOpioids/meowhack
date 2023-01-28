@@ -1,6 +1,5 @@
 package me.notkronos.meowhack.module.client;
 
-import akka.actor.ActorSystemImpl;
 import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.event.events.client.SettingUpdateEvent;
 import me.notkronos.meowhack.module.Category;
@@ -11,9 +10,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static me.notkronos.meowhack.util.Wrapper.mc;
 
 public class ClickGUIModule extends Module {
@@ -22,17 +18,15 @@ public class ClickGUIModule extends Module {
     public ClickGUIModule() {
         super("ClickGUI", Category.CLIENT, "This screen.", new String[] {"GUI", "UI"});
         INSTANCE = this;
-        getBind().setValue(new Bind(Keyboard.KEY_RBRACKET, Bind.Device.KEYBOARD));
+        INSTANCE.drawn = false;
+        getBind().setValue(new Bind(Keyboard.KEY_RCONTROL, Bind.Device.KEYBOARD));
     }
 
     Meowhack meowhack = Meowhack.INSTANCE;
 
-    // **************************** general ****************************
-
+    //Settings
     public static Setting<Boolean> pauseGame = new Setting<>("PauseGame", false);
-
     public static Setting<Boolean> blur = new Setting<>("Blur", false);
-
 
     @Override
     public void onTick() {

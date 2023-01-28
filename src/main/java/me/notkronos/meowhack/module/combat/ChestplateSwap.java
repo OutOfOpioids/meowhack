@@ -21,7 +21,7 @@ public class ChestplateSwap extends Module {
     public ChestplateSwap() {
         super("ChestplateSwap", Category.COMBAT, "Swaps chestplate and elytra", new String[]{});
         INSTANCE = this;
-        INSTANCE.drawn = false;
+        INSTANCE.drawn = true;
         INSTANCE.enabled = true;
     }
 
