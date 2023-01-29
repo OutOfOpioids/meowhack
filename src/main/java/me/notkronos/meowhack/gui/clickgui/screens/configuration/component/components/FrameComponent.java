@@ -2,8 +2,6 @@ package me.notkronos.meowhack.gui.clickgui.screens.configuration.component.compo
 
 import me.notkronos.meowhack.gui.clickgui.screens.DrawableComponent;
 import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.ClickType;
-import me.notkronos.meowhack.module.client.Colors;
-import me.notkronos.meowhack.module.client.HUD;
 import me.notkronos.meowhack.util.render.RenderUtil;
 import net.minecraft.util.math.Vec2f;
 

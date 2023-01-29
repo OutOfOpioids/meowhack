@@ -4,7 +4,6 @@ import me.notkronos.meowhack.gui.clickgui.screens.DrawableComponent;
 import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.ClickType;
 import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.module.ModuleComponent;
 import me.notkronos.meowhack.setting.Setting;
-import me.notkronos.meowhack.util.Bind;
 
 /**
  * @author linustouchtips

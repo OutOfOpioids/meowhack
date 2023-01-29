@@ -1,6 +1,5 @@
 package me.notkronos.meowhack.mixin.mixins.network;
 
-import com.google.common.graph.Network;
 import io.netty.channel.ChannelHandlerContext;
 import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.event.events.network.PacketEvent;

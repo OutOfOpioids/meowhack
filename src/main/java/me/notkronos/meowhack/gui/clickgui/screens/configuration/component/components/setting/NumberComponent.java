@@ -1,9 +1,6 @@
 package me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.setting;
 
-import com.ibm.icu.math.BigDecimal;
-import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.ClickType;
 import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.module.ModuleComponent;
-import me.notkronos.meowhack.module.client.Colors;
 import me.notkronos.meowhack.setting.Setting;
 import me.notkronos.meowhack.util.MathUtil;
 import me.notkronos.meowhack.util.render.FontUtil;

@@ -1,7 +1,5 @@
 package me.notkronos.meowhack.manager;
 
-import me.notkronos.meowhack.util.Wrapper;
-
 public class Manager {
     private final String name;
 

@@ -3,19 +3,16 @@ package me.notkronos.meowhack;
 import me.notkronos.meowhack.gui.clickgui.ClickGUIScreen;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.manager.managers.*;
-import me.notkronos.meowhack.module.Module;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.Core;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -23,7 +20,7 @@ import java.util.function.Predicate;
 public class Meowhack {
     public static final String MODID = "meowhack";
     public static final String NAME = "Meowhack";
-    public static final String VERSION = "1.0+f48411c8";
+    public static final String VERSION = "1.1+6c1471d4";
 
     @Mod.Instance
     public static Meowhack INSTANCE;
@@ -40,15 +37,12 @@ public class Meowhack {
     private ModuleManager moduleManager;
     private EventManager eventManager;
     private ThreadManager threadManager;
-    private FontManager fontManager;
     private TickManager tickManager;
 
     public static final Logger LOGGER = LogManager.getLogger("meowhack");
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        fontManager = new FontManager();
-        managers.add(fontManager);
     }
 
     @Mod.EventHandler
@@ -85,7 +79,6 @@ public class Meowhack {
         return threadManager;
     }
 
-    public FontManager getFontManager() { return fontManager; }
     public TickManager getTickManager() { return tickManager; }
     public Manager getManager(Predicate<? super Manager> predicate) {
         return managers.stream()

@@ -1,6 +1,5 @@
 package me.notkronos.meowhack.util.render;
 
-import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.util.Wrapper;
 
 public class FontUtil implements Wrapper {

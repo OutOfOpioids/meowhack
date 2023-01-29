@@ -1,9 +1,9 @@
 package me.notkronos.meowhack.mixin.mixins.entity.player;
 
 import me.notkronos.meowhack.Meowhack;
+import me.notkronos.meowhack.event.events.entity.LivingUpdateEvent;
 import me.notkronos.meowhack.event.events.movement.MotionEvent;
 import me.notkronos.meowhack.util.Wrapper;
-import me.notkronos.meowhack.event.events.entity.LivingUpdateEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;

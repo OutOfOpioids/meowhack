@@ -10,6 +10,7 @@
   "client": [
     "mixins.accessor.IMInecraftAccessor",
     "mixins.accessor.ITimerAccessor",
-    "mixins.entity.player.MixinEntityPlayerSP"
+    "mixins.entity.player.MixinEntityPlayerSP",
+    "mixins.render.gui.MixinFontRenderer"
   ]
 }

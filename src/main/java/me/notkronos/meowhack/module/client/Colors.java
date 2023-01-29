@@ -1,6 +1,5 @@
 package me.notkronos.meowhack.module.client;
 
-import me.notkronos.meowhack.event.events.client.SettingUpdateEvent;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
@@ -26,6 +25,10 @@ public class Colors extends Module {
     }
     public Integer getGreen() {
         return green.value;
+    }
+
+    public boolean getHudPrimaryColor() {
+        return HudPrimaryColor.getValue();
     }
 }
 

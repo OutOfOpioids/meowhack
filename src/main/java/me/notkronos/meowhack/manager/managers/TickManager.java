@@ -8,6 +8,7 @@ import me.notkronos.meowhack.mixin.mixins.accessor.ITimerAccessor;
 import me.notkronos.meowhack.util.MathUtil;
 import net.minecraft.network.play.server.SPacketTimeUpdate;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
 import static me.notkronos.meowhack.util.Wrapper.mc;
 
 public class TickManager extends Manager {

@@ -1,6 +1,5 @@
 package me.notkronos.meowhack.util;
 
-import me.notkronos.meowhack.util.Wrapper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 

@@ -1,8 +1,9 @@
 package me.notkronos.meowhack.gui.util;
+
 import me.notkronos.meowhack.util.Wrapper;
 import net.minecraft.client.gui.ScaledResolution;
 
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.LinkedList;
 
 import static org.lwjgl.opengl.GL11.*;

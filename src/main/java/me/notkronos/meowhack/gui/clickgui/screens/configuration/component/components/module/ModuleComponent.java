@@ -14,6 +14,7 @@ import me.notkronos.meowhack.util.Bind;
 import me.notkronos.meowhack.util.ColorUtil;
 import me.notkronos.meowhack.util.render.FontUtil;
 import me.notkronos.meowhack.util.render.RenderUtil;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,6 +1,7 @@
 package me.notkronos.meowhack.gui.clickgui;
 
 import me.notkronos.meowhack.Meowhack;
+import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.ClickType;
 import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.category.CategoryFrameComponent;
 import me.notkronos.meowhack.gui.util.InterfaceWrapper;
 import me.notkronos.meowhack.gui.util.MousePosition;
@@ -13,12 +14,12 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.ClickType;
 
 /**
  * @author linustouchtips

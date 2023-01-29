@@ -36,7 +36,7 @@ public class FontImage implements Wrapper {
     public FontImage(Font font) {
         this.font = font;
         characterLocations = new CharacterLocation[255];
-        renderBitmap(0, 255);
+        renderBitmap();
     }
 
     /**
@@ -75,7 +75,7 @@ public class FontImage implements Wrapper {
             CharacterLocation fontCharacter = characterLocations[index];
 
             // add to wdith
-            if (characterLocations.length <= index || fontCharacter == null) {
+            if (fontCharacter == null) {
                 width += mc.fontRenderer.getStringWidth(String.valueOf(character)) / 4;
                 continue;
             }
@@ -172,7 +172,7 @@ public class FontImage implements Wrapper {
             }
 
             // draw the character and update offsets
-            drawCharacter(fontCharacter, (float) offset, 0);
+            drawCharacter(fontCharacter, (float) offset);
             offset += (double) fontCharacter.width - 8;
         }
 
@@ -183,32 +183,30 @@ public class FontImage implements Wrapper {
 
     /**
      * Draws a character to an image
+     *
      * @param character The character to draw
-     * @param x The x position
-     * @param y The y position
+     * @param x         The x position
      */
-    private void drawCharacter(CharacterLocation character, float x, float y) {
+    private void drawCharacter(CharacterLocation character, float x) {
 
         // draw character
         GL11.glTexCoord2f(character.x / (float) textureWidth, character.y / (float) textureHeight);
-        GL11.glVertex2f(x, y);
+        GL11.glVertex2f(x, (float) 0);
         GL11.glTexCoord2f(character.x / (float) textureWidth, (character.y / (float) textureHeight) + (character.height / (float) textureHeight));
-        GL11.glVertex2f(x, y + character.height);
+        GL11.glVertex2f(x, (float) 0 + character.height);
         GL11.glTexCoord2f((character.x / (float) textureWidth) + (character.width / (float) textureWidth), (character.y / (float) textureHeight) + (character.height / (float) textureHeight));
-        GL11.glVertex2f(x + character.width, y + character.height);
+        GL11.glVertex2f(x + character.width, (float) 0 + character.height);
         GL11.glTexCoord2f((character.x / (float) textureWidth) + (character.width / (float) textureWidth), character.y / (float) textureHeight);
-        GL11.glVertex2f(x + character.width, y);
+        GL11.glVertex2f(x + character.width, (float) 0);
     }
 
     /**
      * Renders all the characters in the bitmap
-     * @param startCharacter The character to start at
-     * @param stopCharacter The character to stop at
      */
-    private void renderBitmap(int startCharacter, int stopCharacter) {
+    private void renderBitmap() {
 
         // images of the font
-        BufferedImage[] fontImages = new BufferedImage[stopCharacter];
+        BufferedImage[] fontImages = new BufferedImage[255];
 
         // position
         int height = 0;
@@ -216,7 +214,7 @@ public class FontImage implements Wrapper {
         int characterY = 0;
 
         // update from start to stop
-        for (int i = startCharacter; i < stopCharacter; i++) {
+        for (int i = 0; i < 255; i++) {
 
             // font images
             BufferedImage fontImage = drawCharacterToImage((char) i);
@@ -268,7 +266,7 @@ public class FontImage implements Wrapper {
         graphics2D.setColor(Color.WHITE);
 
         // draw from start to stop
-        for (int i = startCharacter; i < stopCharacter; i++) {
+        for (int i = 0; i < 255; i++) {
 
             // check if the image exists
             if (fontImages[i] == null || characterLocations[i] == null) {

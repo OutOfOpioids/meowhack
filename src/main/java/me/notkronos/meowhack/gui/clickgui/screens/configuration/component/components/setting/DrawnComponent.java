@@ -2,8 +2,6 @@ package me.notkronos.meowhack.gui.clickgui.screens.configuration.component.compo
 
 import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.ClickType;
 import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.module.ModuleComponent;
-import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.setting.SettingComponent;
-import me.notkronos.meowhack.module.client.Colors;
 import me.notkronos.meowhack.setting.Setting;
 import me.notkronos.meowhack.util.render.FontUtil;
 import me.notkronos.meowhack.util.render.RenderUtil;

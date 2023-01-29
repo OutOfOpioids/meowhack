@@ -22,6 +22,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
+
 import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -76,7 +77,12 @@ public class HUD extends Module {
     @Override
     public void onRender2D() {
         int[] colors = ColorUtil.getPrimaryColor();
-        int primaryColor = ColorUtil.decimalToHex(colors[0], colors[1], colors[2]);
+        int primaryColor;
+        if(Colors.INSTANCE.getHudPrimaryColor()) {
+            primaryColor = ColorUtil.decimalToHex(colors[0], colors[1], colors[2]);
+        } else {
+            primaryColor = 0xaaaaaa;
+        }
         ScaledResolution resolution = new ScaledResolution(mc);
         int width = resolution.getScaledWidth();
         int height = resolution.getScaledHeight();
