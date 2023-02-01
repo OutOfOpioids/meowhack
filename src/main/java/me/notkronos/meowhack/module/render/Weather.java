@@ -20,6 +20,7 @@ import java.util.Random;
 import static me.notkronos.meowhack.util.Wrapper.mc;
 
 public class Weather extends Module {
+    public static Weather INSTANCE;
 
     private static final Random RANDOM = new Random();
     private static final ResourceLocation RAIN_TEXTURES =
@@ -33,6 +34,9 @@ public class Weather extends Module {
     public Weather()
     {
         super("Weather", Category.RENDER, "Allows you to change weather", new String[]{"WeatherChanger"});
+        INSTANCE = this;
+        INSTANCE.drawn = true;
+        INSTANCE.enabled = false;
     }
 
     public void render(float partialTicks)
