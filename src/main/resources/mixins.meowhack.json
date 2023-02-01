@@ -11,6 +11,7 @@
     "mixins.accessor.IMInecraftAccessor",
     "mixins.accessor.ITimerAccessor",
     "mixins.entity.player.MixinEntityPlayerSP",
+    "mixins.render.entity.IEntityRenderer",
     "mixins.render.gui.MixinFontRenderer"
   ]
 }
