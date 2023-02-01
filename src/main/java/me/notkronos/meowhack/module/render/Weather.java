@@ -28,8 +28,6 @@ public class Weather extends Module {
     private static final ResourceLocation SNOW_TEXTURES =
             new ResourceLocation("textures/environment/snow.png");
 
-    protected final Setting<Boolean> snow = new Setting<>("Snow", true);
-    protected final Setting<Integer> height = new Setting<>("Height", 80, 0, 255);
     float strength = 0.25f;
     public Weather()
     {
@@ -39,6 +37,8 @@ public class Weather extends Module {
         INSTANCE.enabled = false;
     }
 
+    public static Setting<Boolean> snow = new Setting<>("Snow", true);
+    public static Setting<Integer> height = new Setting<>("Height", 80, 0, 255);
     public void render(float partialTicks)
     {
         EntityRenderer renderer = mc.entityRenderer;
