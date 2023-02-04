@@ -341,7 +341,7 @@ public class HUD extends Module {
             GlStateManager.disableLighting();
         }
         if(welcomer.getValue()) {
-            String text = "Hey," + mc.player.getDisplayNameString() + " you are based!";
+            String text = "Hey, " + mc.player.getDisplayNameString() + " you are based!";
             FontUtil.drawStringWithShadow(text, width / 2.0F - FontUtil.getStringWidth(text) / 2.0F + 2.0F, 2.0F, primaryColor);
         }
     }

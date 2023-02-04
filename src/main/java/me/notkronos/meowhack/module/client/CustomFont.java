@@ -26,6 +26,8 @@ public class CustomFont extends Module {
     private static FontRenderer font = new FontRenderer(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
     private final FontType style = FontType.PLAIN;
     private static int fontType;
+
+    public static Setting<Integer> size = new Setting<>("Size", 40);
     public static Setting<Boolean> antiAlias = new Setting<>("AntiAlias", true);
 
     @SubscribeEvent
@@ -43,7 +45,7 @@ public class CustomFont extends Module {
     }
 
     public static void loadFont(String in, int type) {
-        font = new FontRenderer(loadFont(in, 40, type));
+        font = new FontRenderer(loadFont(in, size.getValue(), type));
         fontType = type;
     }
 
@@ -67,9 +69,10 @@ public class CustomFont extends Module {
             return new Font(Font.SANS_SERIF, type, size);
         }
     }
-    public Object getFontRenderer() {
+    public static FontRenderer getFontRenderer() {
         return font != null ? font : new FontRenderer(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
     }
+
     public static String getFont() {
         return font.getName();
     }
