@@ -12,10 +12,8 @@ import net.minecraftforge.fml.common.eventhandler.EventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 @Mod(modid = Meowhack.MODID, name = Meowhack.NAME, version = Meowhack.VERSION)
 public class Meowhack {
@@ -38,10 +36,7 @@ public class Meowhack {
 
     private final List<Manager> managers = new ArrayList<>();
     private ModuleManager moduleManager;
-    private EventManager eventManager;
-    private ThreadManager threadManager;
     private TickManager tickManager;
-    private ConfigManager configManager;
     public static final Logger LOGGER = LogManager.getLogger("meowhack");
 
     @Mod.EventHandler
@@ -53,19 +48,19 @@ public class Meowhack {
         LOGGER.info("Initializing meowhack.");
         Display.setTitle(NAME + " v." + VERSION);
 
-        moduleManager = new ModuleManager("mm");
+        moduleManager = new ModuleManager();
         managers.add(moduleManager);
 
-        eventManager = new EventManager();
+        EventManager eventManager = new EventManager();
         managers.add(eventManager);
 
-        threadManager = new ThreadManager();
+        ThreadManager threadManager = new ThreadManager();
         managers.add(threadManager);
 
         tickManager = new TickManager();
         managers.add(tickManager);
 
-        configManager = new ConfigManager();
+        ConfigManager configManager = new ConfigManager();
         managers.add(configManager);
 
         clickGUI = new ClickGUIScreen();
@@ -80,32 +75,11 @@ public class Meowhack {
     public ModuleManager getModuleManager() {
         return moduleManager;
     }
-
-    public EventManager getEventManager() {
-        return eventManager;
-    }
-
-    public ThreadManager getThreadManager() {
-        return threadManager;
-    }
-
     public TickManager getTickManager() { return tickManager; }
-
-    public ConfigManager getConfigManager() { return configManager; }
-
-    public Manager getManager(Predicate<? super Manager> predicate) {
-        return managers.stream()
-                .filter(predicate)
-                .findFirst()
-                .orElse(null);
-    }
     public List<Manager> getAllManagers() {
         return managers;
     }
-    public static Logger getLogger()
-    {
-        return LOGGER;
-    }
+
     public ClickGUIScreen getClickGUI() {
         return clickGUI;
     }
