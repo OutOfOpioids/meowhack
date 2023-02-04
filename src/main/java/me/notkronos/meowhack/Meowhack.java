@@ -21,7 +21,7 @@ import java.util.function.Predicate;
 public class Meowhack {
     public static final String MODID = "meowhack";
     public static final String NAME = "Meowhack";
-    public static final String VERSION = "1.1+13b0a4da";
+    public static final String VERSION = "1.2+017a9026";
     public static boolean SETUP = false;
     public static String PREFIX = "++";
 

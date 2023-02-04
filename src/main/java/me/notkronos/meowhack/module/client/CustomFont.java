@@ -22,21 +22,20 @@ public class CustomFont extends Module {
         INSTANCE.drawn = false;
     }
 
-    private final String fontName = "Lato";
-    private static FontRenderer font = new FontRenderer(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
+
+
+    public static Setting<Integer> size = new Setting<>("Size", 35, 0, 255);
+    public static Setting<Boolean> antiAlias = new Setting<>("AntiAlias", true);
+
+    private static FontRenderer font;
+    private final String fontName = "Lato-Regular";
     private final FontType style = FontType.PLAIN;
     private static int fontType;
 
-    public static Setting<Integer> size = new Setting<>("Size", 40);
-    public static Setting<Boolean> antiAlias = new Setting<>("AntiAlias", true);
-
     @SubscribeEvent
     public void onSettingUpdate(SettingUpdateEvent event) {
-
-            String font = getFont();
-
             // reload font with new style
-            loadFont(font, style.getType());
+            loadFont(fontName, style.getType());
     }
 
     @SubscribeEvent
@@ -70,7 +69,7 @@ public class CustomFont extends Module {
         }
     }
     public static FontRenderer getFontRenderer() {
-        return font != null ? font : new FontRenderer(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
+        return font != null ? font : new FontRenderer(new Font(Font.SANS_SERIF, Font.PLAIN, size.getValue()));
     }
 
     public static String getFont() {

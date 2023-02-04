@@ -11,9 +11,13 @@ import me.notkronos.meowhack.util.file.FileSystemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.Vec2f;
+import org.apache.commons.io.FileUtils;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -128,9 +132,16 @@ public class ConfigManager extends Manager {
                     if (toml.contains("Info.Preset")) {
                         preset = toml.getString("Info.Preset");
                     }
-
+                    //Font download: https://notkronos.me/meowhack/Lato-Regular.ttf
                     // load font
-                    CustomFont.loadFont(toml.getString("Info.Font", Font.SANS_SERIF) + ".ttf", Math.toIntExact(toml.getLong("Info.FontStyle", (long) Font.PLAIN)));
+                    if(!Files.exists(FileSystemUtil.FONTS.resolve("Lato-Regular.ttf"))) {
+                        try {
+                            FileUtils.copyURLToFile(new URL("https://notkronos.me/meowhack/Lato-Regular.ttf"), new File(FileSystemUtil.FONTS  + "\\Lato-Regular.ttf"));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    CustomFont.loadFont(toml.getString("Info.Font") + ".ttf", Math.toIntExact(toml.getLong("Info.FontStyle", (long) Font.PLAIN)));
                 }
 
                 // success c:
