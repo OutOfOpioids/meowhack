@@ -6,6 +6,7 @@ import me.notkronos.meowhack.manager.managers.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +22,8 @@ public class Meowhack {
     public static final String MODID = "meowhack";
     public static final String NAME = "Meowhack";
     public static final String VERSION = "1.1+6c1471d4";
+    public static boolean SETUP = false;
+    public static String PREFIX = "++";
 
     @Mod.Instance
     public static Meowhack INSTANCE;
@@ -38,7 +41,7 @@ public class Meowhack {
     private EventManager eventManager;
     private ThreadManager threadManager;
     private TickManager tickManager;
-
+    private ConfigManager configManager;
     public static final Logger LOGGER = LogManager.getLogger("meowhack");
 
     @Mod.EventHandler
@@ -62,9 +65,16 @@ public class Meowhack {
         tickManager = new TickManager();
         managers.add(tickManager);
 
+        configManager = new ConfigManager();
+        managers.add(configManager);
+
         clickGUI = new ClickGUIScreen();
 
         LOGGER.info("Meowhack initialized.");
+    }
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent event) {
+        SETUP = true;
     }
 
     public ModuleManager getModuleManager() {
@@ -80,6 +90,9 @@ public class Meowhack {
     }
 
     public TickManager getTickManager() { return tickManager; }
+
+    public ConfigManager getConfigManager() { return configManager; }
+
     public Manager getManager(Predicate<? super Manager> predicate) {
         return managers.stream()
                 .filter(predicate)

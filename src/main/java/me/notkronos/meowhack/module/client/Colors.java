@@ -14,8 +14,8 @@ public class Colors extends Module {
     }
 
     //Settings
-    public static Setting<Integer> red = new Setting<Integer>("red", 255, 0, 255);
-    public static Setting<Integer> green = new Setting<Integer>("green", 128, 0, 255);
+    public static Setting<Integer> red = new Setting<Integer>("red", 111, 0, 255);
+    public static Setting<Integer> green = new Setting<Integer>("green", 0, 0, 255);
     public static Setting<Integer> blue = new Setting<Integer>("blue", 255, 0, 255);
     public static Setting<Boolean> HudPrimaryColor = new Setting<Boolean>("HUDColor", true);
 

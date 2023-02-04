@@ -64,6 +64,7 @@ public class HUD extends Module {
     public static Setting<Boolean> fps = new Setting<>("FPS", true);
     public static Setting<Boolean> arrayList = new Setting<>("ArrayList", true);
     public static Setting<Boolean> armor = new Setting<>("Armor", true);
+    public static Setting<Boolean> welcomer = new Setting<>("Welcomer", true);
     private static final float ELEMENT_SIZE = FontUtil.getFontHeight() + 1;
 
     @Override
@@ -330,8 +331,7 @@ public class HUD extends Module {
                 GlStateManager.disableDepth();
                 final String s = (is.getCount() > 1) ? (is.getCount() + "") : "";
                 FontUtil.drawStringWithShadow(s, (float) (x + 19 - 2 - FontUtil.getStringWidth(s)), (float) (y + 9), 16777215);
-                int dmg = 0;
-                final int itemDurability = is.getMaxDamage() - is.getItemDamage();
+                int dmg;
                 final float green = (is.getMaxDamage() - (float) is.getItemDamage()) / is.getMaxDamage();
                 final float red = 1.0f - green;
                 dmg = 100 - (int) (red * 100.0f);
@@ -339,6 +339,10 @@ public class HUD extends Module {
             }
             GlStateManager.enableDepth();
             GlStateManager.disableLighting();
+        }
+        if(welcomer.getValue()) {
+            String text = "Hey," + mc.player.getDisplayNameString() + " you are based!";
+            FontUtil.drawStringWithShadow(text, width / 2.0F - FontUtil.getStringWidth(text) / 2.0F + 2.0F, 2.0F, primaryColor);
         }
     }
 }

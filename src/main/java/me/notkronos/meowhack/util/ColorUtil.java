@@ -13,9 +13,9 @@ public class ColorUtil {
 
     public static int decimalToHex(int red, int green, int blue) {
         String hexString;
-        String redHex = Integer.toHexString(red);
-        String greenHex = Integer.toHexString(green);
-        String blueHex = Integer.toHexString(blue);
+        String redHex = red < 10 ? "0" + Integer.toHexString(red) : Integer.toHexString(red);
+        String greenHex = blue < 10 ? "0" + Integer.toHexString(green) : Integer.toHexString(green);
+        String blueHex = green < 10 ? "0" + Integer.toHexString(blue) : Integer.toHexString(blue);
         hexString = "0x" +
                 redHex +
                 greenHex +

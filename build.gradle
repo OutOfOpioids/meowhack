@@ -63,8 +63,11 @@ dependencies {
     }
 
     embed('club.minnced:java-discord-rpc:2.0.2') {
-        // For no reason it includes the com.sun.jna library.
         exclude module: 'jna'
+    }
+
+    embed ('com.moandjiezana.toml:toml4j:0.7.2') {
+        exclude module: 'gson'
     }
 }
 

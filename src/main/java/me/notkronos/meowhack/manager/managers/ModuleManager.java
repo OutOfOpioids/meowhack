@@ -9,7 +9,6 @@ import me.notkronos.meowhack.module.client.HUD;
 import me.notkronos.meowhack.module.combat.ChestplateSwap;
 import me.notkronos.meowhack.module.combat.TotemPopCounter;
 import me.notkronos.meowhack.module.misc.RPC;
-import me.notkronos.meowhack.module.render.Weather;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,8 +28,7 @@ public class ModuleManager extends Manager {
             new CustomFont(),
             new HUD(),
             new RPC(),
-            new TotemPopCounter(),
-            new Weather()
+            new TotemPopCounter()
         );
     }
 

@@ -8,7 +8,6 @@ import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
 import me.notkronos.meowhack.util.FileSystemUtil;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
 import java.awt.*;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -24,9 +23,9 @@ public class CustomFont extends Module {
     }
 
     private final String fontName = "Lato";
-    private FontRenderer font;
+    private static FontRenderer font = new FontRenderer(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
     private final FontType style = FontType.PLAIN;
-    private int fontType;
+    private static int fontType;
     public static Setting<Boolean> antiAlias = new Setting<>("AntiAlias", true);
 
     @SubscribeEvent
@@ -43,12 +42,12 @@ public class CustomFont extends Module {
         event.setCanceled(true);
     }
 
-    public void loadFont(String in, int type) {
+    public static void loadFont(String in, int type) {
         font = new FontRenderer(loadFont(in, 40, type));
         fontType = type;
     }
 
-    private Font loadFont(String in, int size, int type) {
+    private static Font loadFont(String in, int size, int type) {
         fontType = type;
         try {
 
@@ -71,17 +70,12 @@ public class CustomFont extends Module {
     public Object getFontRenderer() {
         return font != null ? font : new FontRenderer(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
     }
-
-    /**
-     * Gets the current font
-     * @return The current font
-     */
-    public String getFont() {
+    public static String getFont() {
         return font.getName();
     }
 
 
-    public int getFontType() {
+    public static int getFontType() {
         return fontType;
     }
 
@@ -103,7 +97,7 @@ public enum FontType {
     ITALICS(Font.PLAIN);
 
     // font type identifier
-    private int type;
+    private final int type;
 
     FontType(int type) {
         this.type = type;
