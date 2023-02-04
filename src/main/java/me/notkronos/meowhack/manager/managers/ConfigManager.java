@@ -140,17 +140,18 @@ public class ConfigManager extends Manager {
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
+                        CustomFont.loadFont(toml.getString("Info.Font") + ".ttf", Math.toIntExact(toml.getLong("Info.FontStyle", (long) Font.PLAIN)));
                     }
                     CustomFont.loadFont(toml.getString("Info.Font") + ".ttf", Math.toIntExact(toml.getLong("Info.FontStyle", (long) Font.PLAIN)));
                 }
 
                 // success c:
-                System.out.println("[Cosmos] Read info.toml successfully!");
+                System.out.println("[Meowhack] Read info.toml successfully!");
             } catch (IllegalStateException e) {
 
                 // rip
                 e.printStackTrace();
-                System.out.println("[Cosmos] Could not load info file. Will revert to default configuration.");
+                System.out.println("[Meowhack] Could not load info file. Will revert to default configuration.");
             }
 
         }
