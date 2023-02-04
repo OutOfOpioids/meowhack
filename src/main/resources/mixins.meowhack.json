@@ -13,6 +13,7 @@
     "mixins.entity.player.MixinEntityPlayerSP",
     "mixins.render.entity.IEntityRenderer",
     "mixins.render.entity.MixinEntityRenderer",
+    "mixins.render.entity.MixinRenderEnderCrystal",
     "mixins.render.gui.MixinFontRenderer"
   ]
 }

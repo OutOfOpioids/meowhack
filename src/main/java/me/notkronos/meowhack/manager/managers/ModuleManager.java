@@ -9,6 +9,8 @@ import me.notkronos.meowhack.module.client.HUD;
 import me.notkronos.meowhack.module.combat.ChestplateSwap;
 import me.notkronos.meowhack.module.combat.TotemPopCounter;
 import me.notkronos.meowhack.module.misc.RPC;
+import me.notkronos.meowhack.module.render.Ambience;
+import me.notkronos.meowhack.module.render.CrystalChams;
 import me.notkronos.meowhack.module.render.Weather;
 
 import java.util.Arrays;
@@ -21,9 +23,11 @@ public class ModuleManager extends Manager {
     public ModuleManager() {
         super("ModuleManager");
         modules = Arrays.asList(
+            new Ambience(),
             new ChestplateSwap(),
             new ClickGUIModule(),
             new Colors(),
+            new CrystalChams(),
             new CustomFont(),
             new HUD(),
             new RPC(),
