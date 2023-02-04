@@ -73,6 +73,9 @@ public class CustomFont extends Module {
     }
 
     public static String getFont() {
+        if (font == null) {
+            font = new FontRenderer(new Font(Font.SANS_SERIF, Font.PLAIN, size.getValue()));
+        }
         return font.getName();
     }
 
