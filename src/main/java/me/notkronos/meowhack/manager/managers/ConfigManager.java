@@ -14,7 +14,9 @@ import net.minecraft.util.math.Vec2f;
 import org.apache.commons.io.FileUtils;
 
 import java.awt.*;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -135,10 +137,15 @@ public class ConfigManager extends Manager {
                     //Font download: https://notkronos.me/meowhack/Lato-Regular.ttf
                     // load font
                     if(!Files.exists(FileSystemUtil.FONTS.resolve("Lato-Regular.ttf"))) {
-                        try {
-                            FileUtils.copyURLToFile(new URL("https://notkronos.me/meowhack/Lato-Regular.ttf"), new File(FileSystemUtil.FONTS  + "\\Lato-Regular.ttf"));
+                        try (BufferedInputStream inputStream = new BufferedInputStream(new URL("https://notkronos.me/meowhack/Lato-Regular.ttf").openStream());
+                             FileOutputStream fileOS = new FileOutputStream(FileSystemUtil.FONTS.toFile() + "Lato-Regular.ttf")) {
+                            byte[] data = new byte[1024];
+                            int byteContent;
+                            while ((byteContent = inputStream.read(data, 0, 1024)) != -1) {
+                                fileOS.write(data, 0, byteContent);
+                            }
                         } catch (IOException e) {
-                            throw new RuntimeException(e);
+                            // handles IO exceptions
                         }
                         CustomFont.loadFont(toml.getString("Info.Font") + ".ttf", Math.toIntExact(toml.getLong("Info.FontStyle", (long) Font.PLAIN)));
                     }
