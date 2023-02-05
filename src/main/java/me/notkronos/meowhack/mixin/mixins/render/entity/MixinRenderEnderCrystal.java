@@ -24,7 +24,7 @@ public class MixinRenderEnderCrystal {
             if(CrystalChams.INSTANCE.isEnabled()) {
                 if(CrystalChams.noAnimation.getValue()) {
                     //Finding these values was so fucking annoying
-                    instance.render(entityIn, 0.0f, 50048.297f, 0.15f, 0.0f, 0.0f, 0.0625f);
+                    instance.render(entityIn, 0.0f, limbSwingAmount, 0.15f, 0.0f, 0.0f, 0.0625f);
                 } else {
                     instance.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
                 }
@@ -37,7 +37,7 @@ public class MixinRenderEnderCrystal {
     public void onDoRender(EntityEnderCrystal entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
         if(CrystalChams.INSTANCE.isEnabled()) {
             if (CrystalChams.noAnimation.getValue()) {
-                RenderCrystalEvent.RenderCrystalPostEvent renderCrystalEvent = new RenderCrystalEvent.RenderCrystalPostEvent(modelEnderCrystal, modelEnderCrystalNoBase, entity, x, y, z, 0, 0.10000658f);
+                RenderCrystalEvent.RenderCrystalPostEvent renderCrystalEvent = new RenderCrystalEvent.RenderCrystalPostEvent(modelEnderCrystal, modelEnderCrystalNoBase, entity, x, y, z, 0, partialTicks);
                 Meowhack.EVENT_BUS.post(renderCrystalEvent);
             }
         }
