@@ -11,14 +11,12 @@ import me.notkronos.meowhack.util.file.FileSystemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.Vec2f;
-import org.apache.commons.io.FileUtils;
 
 import java.awt.*;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -185,6 +183,9 @@ public class ConfigManager extends Manager {
         String content = FileSystemUtil.read(presetPath, true);
         if (content == null || content.isEmpty()) {
             saveModules();
+            saveKeybinds();
+            saveGUI();
+            saveInfo();
         }
 
         // the toml input from the file
@@ -341,6 +342,9 @@ public class ConfigManager extends Manager {
         String content = FileSystemUtil.read(FileSystemUtil.GUI, true);
         if (content == null || content.isEmpty()) {
             saveModules();
+            saveKeybinds();
+            saveGUI();
+            saveInfo();
         }
 
         else {
@@ -362,6 +366,9 @@ public class ConfigManager extends Manager {
         String content = FileSystemUtil.read(FileSystemUtil.KEYBINDS, true);
         if (content == null || content.isEmpty()) {
             saveModules();
+            saveKeybinds();
+            saveGUI();
+            saveInfo();
         }
         else {
             Toml inputTOML = new Toml().read(content);
@@ -567,6 +574,7 @@ public class ConfigManager extends Manager {
 
         FileSystemUtil.write(FileSystemUtil.KEYBINDS, outputTOML.toString());
     }
+
     public List<String> getPresets() {
         return presets;
     }

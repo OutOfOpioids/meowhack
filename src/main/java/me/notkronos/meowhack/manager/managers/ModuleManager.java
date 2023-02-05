@@ -11,6 +11,7 @@ import me.notkronos.meowhack.module.combat.TotemPopCounter;
 import me.notkronos.meowhack.module.misc.RPC;
 import me.notkronos.meowhack.module.render.Ambience;
 import me.notkronos.meowhack.module.render.CrystalChams;
+import me.notkronos.meowhack.module.render.NoEnchantingTableLag;
 import me.notkronos.meowhack.module.render.Weather;
 
 import java.util.Arrays;
@@ -30,6 +31,7 @@ public class ModuleManager extends Manager {
             new CrystalChams(),
             new CustomFont(),
             new HUD(),
+            new NoEnchantingTableLag(),
             new RPC(),
             new TotemPopCounter(),
             new Weather()
