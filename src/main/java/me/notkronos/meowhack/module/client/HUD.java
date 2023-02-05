@@ -16,12 +16,14 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
+import org.lwjgl.opengl.GL11;
 
 import java.text.DecimalFormat;
 import java.time.LocalTime;
@@ -65,6 +67,7 @@ public class HUD extends Module {
     public static Setting<Boolean> arrayList = new Setting<>("ArrayList", true);
     public static Setting<Boolean> armor = new Setting<>("Armor", true);
     public static Setting<Boolean> welcomer = new Setting<>("Welcomer", true);
+    public static Setting<Boolean> combatItemCounter = new Setting<>("CombatItemCounter", false);
     private static final float ELEMENT_SIZE = FontUtil.getFontHeight() + 1;
 
     @Override
@@ -342,7 +345,44 @@ public class HUD extends Module {
         }
         if(welcomer.getValue()) {
             String text = "Hey, " + mc.player.getDisplayNameString() + " you are based!";
-            FontUtil.drawStringWithShadow(text, width / 2.0F - FontUtil.getStringWidth(text) / 2.0F + 2.0F, 2.0F, primaryColor);
+            FontUtil.drawStringWithShadow(text, width / 2.0F - FontUtil.getStringWidth(text) / 2.0F + 2.0F, 2.0F, 0xFFFFFF);
         }
+        if(combatItemCounter.getValue()) {
+            final int x = -2;
+            final int y = (int) topRight;
+            GL11.glEnable(GL11.GL_DEPTH_TEST);
+            int offset = 0;
+
+            mc.getRenderItem().renderItemAndEffectIntoGUI(new ItemStack(Item.getItemById(426), 1), x , y + offset);
+            renderItemOverlayIntoGUI(x, y + offset , "" + getItemCount(Item.getItemById(426)), primaryColor);
+            offset += 20;
+
+            mc.getRenderItem().renderItemAndEffectIntoGUI(new ItemStack(Item.getItemById(384), 1), x, y + offset);
+            renderItemOverlayIntoGUI(x , y +  offset, "" + getItemCount(Item.getItemById(384)), primaryColor);
+            offset += 20;
+
+            mc.getRenderItem().renderItemAndEffectIntoGUI(new ItemStack(Item.getItemById(322), 1), x, y + offset);
+            renderItemOverlayIntoGUI(x, y + offset, "" + getItemCount(Item.getItemById(322)), primaryColor);
+            offset += 20;
+
+            mc.getRenderItem().renderItemAndEffectIntoGUI(new ItemStack(Item.getItemById(449), 1), x, y + offset);
+            renderItemOverlayIntoGUI(x , y + offset, "" + getItemCount(Item.getItemById(449)), primaryColor);
+
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
+            GL11.glDisable(GL11.GL_LIGHTING);
+            topRight += 80;
+        }
+    }
+    public static int getItemCount(Item item) {
+        return mc.player.inventory.mainInventory.stream().filter(itemStack -> itemStack.getItem() == item).mapToInt(ItemStack::getCount).sum();
+    }
+    public void renderItemOverlayIntoGUI(int xPosition, int yPosition, String s, int color) {
+        GlStateManager.disableLighting();
+        GlStateManager.disableDepth();
+        GlStateManager.disableBlend();
+        FontUtil.drawStringWithShadow(s, (float) (xPosition + 19 - 2 - FontUtil.getStringWidth(s)), (float) (yPosition + 6 + 3), color);
+        GlStateManager.enableLighting();
+        GlStateManager.enableDepth();
+        GlStateManager.enableBlend();
     }
 }
