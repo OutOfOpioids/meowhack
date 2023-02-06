@@ -3,10 +3,7 @@ package me.notkronos.meowhack.gui.clickgui.screens.configuration.component.compo
 import me.notkronos.meowhack.gui.clickgui.screens.DrawableComponent;
 import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.ClickType;
 import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.category.CategoryFrameComponent;
-import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.setting.BindComponent;
-import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.setting.BooleanComponent;
-import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.setting.NumberComponent;
-import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.setting.SettingComponent;
+import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.setting.*;
 import me.notkronos.meowhack.gui.util.animation.Animation;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
@@ -74,6 +71,9 @@ public class ModuleComponent extends DrawableComponent {
                 }
                 else if (setting.getValue() instanceof Integer) {
                     settingComponents.add(new NumberComponent(this, (Setting<Integer>) setting));
+                }
+                else if (setting.getValue() instanceof Enum) {
+                    settingComponents.add(new EnumComponent(this, (Setting<Enum<?>>) setting));
                 }
             });
         }

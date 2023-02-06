@@ -42,6 +42,15 @@ public class ColorUtil {
         return ColorUtil.toRGBA((int) (r * 255.0f), (int) (g * 255.0f), (int) (b * 255.0f), (int) (a * 255.0f));
     }
 
+    public static Color rainbow(long offset, int alpha, int saturation, int brightness, int speed) {
+        float hue = (float) (((double) System.currentTimeMillis() * (speed / 10) + (double) (offset * 500L)) % (30000 / (40.0f / 100)) / (30000 / (40.0f / 20F)));
+        int rgb = Color.HSBtoRGB(hue, (float)saturation, (float) brightness);
+        int red = rgb >> 16 & 255;
+        int green = rgb >> 8 & 255;
+        int blue = rgb & 255;
+        return new Color(red,green,blue,alpha);
+    }
+
 }
 
 

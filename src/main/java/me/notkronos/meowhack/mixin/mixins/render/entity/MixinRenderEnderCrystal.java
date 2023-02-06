@@ -28,6 +28,9 @@ public class MixinRenderEnderCrystal {
                 } else {
                     instance.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
                 }
+                if(CrystalChams.mode.getValue() == CrystalChams.Mode.BOTH || CrystalChams.mode.getValue() == CrystalChams.Mode.LINE) {
+                    CrystalChams.INSTANCE.onRenderModel(renderCrystalEvent);
+                }
             } else {
                 instance.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
             }

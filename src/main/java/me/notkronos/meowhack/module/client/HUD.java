@@ -345,28 +345,28 @@ public class HUD extends Module {
         }
         if(welcomer.getValue()) {
             String text = "Hey, " + mc.player.getDisplayNameString() + " you are based!";
-            FontUtil.drawStringWithShadow(text, width / 2.0F - FontUtil.getStringWidth(text) / 2.0F + 2.0F, 2.0F, 0xFFFFFF);
+            FontUtil.drawStringWithShadow(text, width / 2.0F - FontUtil.getStringWidth(text) / 2.0F + 2.0F, 2.0F, primaryColor);
         }
         if(combatItemCounter.getValue()) {
-            final int x = -2;
+            final int x = 2;
             final int y = (int) topRight;
             GL11.glEnable(GL11.GL_DEPTH_TEST);
             int offset = 0;
 
             mc.getRenderItem().renderItemAndEffectIntoGUI(new ItemStack(Item.getItemById(426), 1), x , y + offset);
-            renderItemOverlayIntoGUI(x, y + offset , "" + getItemCount(Item.getItemById(426)), primaryColor);
+            renderItemOverlayIntoGUI(x, y + offset , "" + getItemCount(Item.getItemById(426)), 0xffffff);
             offset += 20;
 
             mc.getRenderItem().renderItemAndEffectIntoGUI(new ItemStack(Item.getItemById(384), 1), x, y + offset);
-            renderItemOverlayIntoGUI(x , y +  offset, "" + getItemCount(Item.getItemById(384)), primaryColor);
+            renderItemOverlayIntoGUI(x , y +  offset, "" + getItemCount(Item.getItemById(384)), 0xffffff);
             offset += 20;
 
             mc.getRenderItem().renderItemAndEffectIntoGUI(new ItemStack(Item.getItemById(322), 1), x, y + offset);
-            renderItemOverlayIntoGUI(x, y + offset, "" + getItemCount(Item.getItemById(322)), primaryColor);
+            renderItemOverlayIntoGUI(x, y + offset, "" + getItemCount(Item.getItemById(322)), 0xffffff);
             offset += 20;
 
             mc.getRenderItem().renderItemAndEffectIntoGUI(new ItemStack(Item.getItemById(449), 1), x, y + offset);
-            renderItemOverlayIntoGUI(x , y + offset, "" + getItemCount(Item.getItemById(449)), primaryColor);
+            renderItemOverlayIntoGUI(x , y + offset, "" + getItemCount(Item.getItemById(449)), 0xffffff);
 
             GL11.glDisable(GL11.GL_DEPTH_TEST);
             GL11.glDisable(GL11.GL_LIGHTING);

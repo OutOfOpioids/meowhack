@@ -80,6 +80,40 @@ public class Setting<T> {
         max = in;
     }
 
+    private int index;
+
+    @SuppressWarnings("unchecked")
+    public T getNextMode() {
+        if (value instanceof Enum<?>) {
+            Enum<?> enumVal = (Enum<?>) value;
+
+            // search all values
+            String[] values = Arrays.stream(enumVal.getClass().getEnumConstants()).filter(in -> !isExclusion((T) in)).map(Enum::name).toArray(String[]::new);
+            index = index + 1 > values.length - 1 ? 0 : index + 1;
+
+            // use value index
+            return (T) Enum.valueOf(enumVal.getClass(), values[index]);
+        }
+
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public T getLastMode() {
+        if (value instanceof Enum<?>) {
+            Enum<?> enumVal = (Enum<?>) value;
+
+            // search all values
+            String[] values = Arrays.stream(enumVal.getClass().getEnumConstants()).filter(in -> !isExclusion((T) in)).map(Enum::name).toArray(String[]::new);
+            index = index - 1 < 0 ? values.length - 1 : index - 1;
+
+            // use value index
+            return (T) Enum.valueOf(enumVal.getClass(), values[index]);
+        }
+
+        return null;
+    }
+
     public int getRoundingScale() {
         return 1;
     }
