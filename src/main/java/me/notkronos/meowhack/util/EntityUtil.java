@@ -1,6 +1,5 @@
 package me.notkronos.meowhack.util;
 
-import me.notkronos.meowhack.Meowhack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,7 +29,7 @@ public class EntityUtil {
 
 //(int) mc.player.getDistance(player)
     public static Map<String, Boolean> getTextRadarPlayers() {
-        Map<String, Boolean> output = new HashMap<String, Boolean>();
+        Map<String, Boolean> output = new HashMap<>();
         final DecimalFormat dfHealth = new DecimalFormat("#.#");
         dfHealth.setRoundingMode(RoundingMode.CEILING);
         final DecimalFormat dfDistance = new DecimalFormat("#.#");
@@ -41,7 +40,7 @@ public class EntityUtil {
             if (player.getName().equals(mc.player.getName())) {
                 continue;
             }
-            String playerName = player.getName();
+
             final int hpRaw = (int) getHealth(player);
             final String hp = dfHealth.format(hpRaw);
             healthSB.append("§");
@@ -62,8 +61,6 @@ public class EntityUtil {
                 distanceSB.append("a");
             } else if (distanceInt >= 10) {
                 distanceSB.append("6");
-            } else if (distanceInt >= 50) { //Why is it always false?
-                distanceSB.append("7");
             } else {
                 distanceSB.append("c");
             }
@@ -72,13 +69,18 @@ public class EntityUtil {
             BlockPos blockPos = new BlockPos(Math.floor(player.posX), Math.floor(player.posY + 0.2), Math.floor(player.posZ));
             //may be caused by this line, I'm not sure tho.
             if ((mc.world.getBlockState(blockPos).getBlock() == Blocks.ENDER_CHEST || mc.world.getBlockState(blockPos).getBlock() == Blocks.OBSIDIAN) && blockPos.distanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) <= 20) {
-                if (!(blockPos.distanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) <= 1.5)) {
-                    output.put("[B]" + healthSB.toString() + " " + ("§r") + player.getName() + " " + distanceSB.toString() + " " + "§f", true);
-                    Meowhack.LOGGER.info("detected a burrowed player"); //debug info for fixing the burrow radar.
+                if (isInBlock(output, healthSB, distanceSB, player, blockPos)) {
+                    output.put("[B] " + healthSB + " " + ("§r") + player.getName() + " " + distanceSB + " " + "§f", true);
                     continue;
                 }
             }
-            output.put(healthSB.toString() + " " + ("§r") + player.getName() + " " + distanceSB.toString() + " " + "§f", false);
+            if ((mc.world.getBlockState(blockPos).getBlock() == Blocks.BEDROCK) && blockPos.distanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) <= 20) {
+                if (isInBlock(output, healthSB, distanceSB, player, blockPos)) {
+                    output.put("[P] " + healthSB + " " + ("§r") + player.getName() + " " + distanceSB + " " + "§f", true);
+                    continue;
+                }
+            }
+            output.put(healthSB + " " + ("§r") + player.getName() + " " + distanceSB + " " + "§f", false);
 
             healthSB.setLength(0);
             distanceSB.setLength(0);
@@ -87,5 +89,9 @@ public class EntityUtil {
             output = MathUtil.sortByValue(output, false);
         }
         return output;
+    }
+
+    private static boolean isInBlock(Map<String, Boolean> output, StringBuilder healthSB, StringBuilder distanceSB, EntityPlayer player, BlockPos blockPos) {
+        return !(blockPos.distanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) <= 1.5);
     }
 }
