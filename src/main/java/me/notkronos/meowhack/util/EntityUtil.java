@@ -73,7 +73,7 @@ public class EntityUtil {
             //may be caused by this line, I'm not sure tho.
             if ((mc.world.getBlockState(blockPos).getBlock() == Blocks.ENDER_CHEST || mc.world.getBlockState(blockPos).getBlock() == Blocks.OBSIDIAN) && blockPos.distanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) <= 20) {
                 if (!(blockPos.distanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) <= 1.5)) {
-                    output.put(healthSB.toString() + " " + ("§r") + player.getName() + " " + distanceSB.toString() + " " + "§f", true);
+                    output.put("[B]" + healthSB.toString() + " " + ("§r") + player.getName() + " " + distanceSB.toString() + " " + "§f", true);
                     Meowhack.LOGGER.info("detected a burrowed player"); //debug info for fixing the burrow radar.
                     continue;
                 }
