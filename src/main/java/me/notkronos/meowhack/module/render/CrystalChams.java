@@ -29,8 +29,9 @@ public class CrystalChams extends Module {
 
     private final List<EntityEnderCrystal> crystalList = new ArrayList<>();
 
-    //Settings
+    //General Settings
     public static Setting<Boolean> noAnimation = new Setting<>("NoAnimation", false);
+    public static Setting<Boolean> XQZ = new Setting<>("XQZ", true);
     public static Setting<Enum<Mode>> mode = new Setting<>("Mode", Mode.NONE);
 
     //Line Settings
@@ -41,39 +42,34 @@ public class CrystalChams extends Module {
     public static Setting<Integer> lineBlue = new Setting<>("LineBlue", 0, 0, 255);
     public static Setting<Integer> lineAlpha = new Setting<>("LineAlpha", 0, 0, 255);
 
+    //Chams settings
+
+    public static Setting<Integer> chamsRed = new Setting<>("chamsRed", 0, 0, 255);
+    public static Setting<Integer> chamsGreen = new Setting<>("chamsGreen", 0, 0, 255);
+    public static Setting<Integer> chamsBlue = new Setting<>("chamsBlue", 0, 0, 255);
+    public static Setting<Integer> chamsAlpha = new Setting<>("chamsAlpha", 0, 0, 255);
+
+    //XQZ settings
+
+    public static Setting<Integer> xqzRed = new Setting<>("XQZRed", 0, 0, 255);
+    public static Setting<Integer> xqzGreen = new Setting<>("XQZGreen", 0, 0, 255);
+    public static Setting<Integer> xqzBlue = new Setting<>("XQZBlue", 0, 0, 255);
+    public static Setting<Integer> xqzAlpha = new Setting<>("XQZAlpha", 0, 0, 255);
+
     public void onRenderModel(RenderCrystalEvent.RenderCrystalPreEvent event) {
-        if(mode.value == Mode.BOTH || mode.value == Mode.LINE) {
-            Color lineColor = getLineColor();
-            glPushAttrib(GL_ALL_ATTRIB_BITS);
-            glEnable(GL_BLEND);
-            glDisable(GL_TEXTURE_2D);
-            glDisable(GL_LIGHTING);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-            glLineWidth(lineWidth.value + 1);
-            glColor4f(lineColor.getRed() / 255.0f,
-                    lineColor.getGreen() / 255.0f,
-                    lineColor.getBlue() / 255.0f,
-                    lineColor.getAlpha() / 255.0f
-            );
-
-            float ageInTicks;
-            if(noAnimation.getValue()) {
-                ageInTicks = 0.15f;
-            } else {
-                ageInTicks = event.getAgeInTicks();
-            }
-
-            event.getModelBase().render(event.getEntity(),
-                    event.getLimbSwing(),
-                    event.getLimbSwingAmount(),
-                    ageInTicks,
-                    event.getNetHeadYaw(),
-                    event.getHeadPitch(),
-                    event.getScaleFactor()
-            );
-
-            glPopAttrib();
+        if(mode.value == Mode.LINE) {
+           renderLines();
+           render(event);
+        }
+        else if(mode.value == Mode.CHAMS) {
+            renderChams();
+            render(event);
+        }
+        else if(mode.value == Mode.BOTH) {
+            renderLines();
+            render(event);
+            renderChams();
+            render(event);
         }
     }
 
@@ -95,6 +91,68 @@ public class CrystalChams extends Module {
                     if(crystal instanceof EntityEnderCrystal) crystalList.remove(crystal);
                 }
             }
+    }
+
+    public void renderLines() {
+        Color lineColor = getLineColor();
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glEnable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glDisable(GL_LIGHTING);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glLineWidth(lineWidth.value + 1);
+        glColor4f(lineColor.getRed() / 255.0f,
+                lineColor.getGreen() / 255.0f,
+                lineColor.getBlue() / 255.0f,
+                lineColor.getAlpha() / 255.0f
+        );
+    }
+    public void renderChams() {
+        Color chamsColor = new Color(chamsRed.value, chamsGreen.value, chamsBlue.value, chamsAlpha.value);
+        Color xqzColor = new Color(xqzRed.value, xqzGreen.value, xqzBlue.value, xqzAlpha.value);
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glEnable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glDisable(GL_LIGHTING);
+        glDisable(GL_ALPHA_TEST);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_STENCIL_TEST);
+        glEnable(GL_POLYGON_OFFSET_LINE);
+        if (XQZ.getValue()) {
+            glDepthMask(false);
+            glDisable(GL_DEPTH_TEST);
+            glColor4f(xqzColor.getRed() / 255.0f,
+                    xqzColor.getGreen() / 255.0f,
+                    xqzColor.getBlue() / 255.0f,
+                    xqzColor.getAlpha() / 255.0f
+            );
+        } else {
+            glColor4f(chamsColor.getRed() / 255.0f,
+                    chamsColor.getGreen() / 255.0f,
+                    chamsColor.getBlue() / 255.0f,
+                    chamsColor.getAlpha() / 255.0f
+            );
+        }
+    }
+    public void render(RenderCrystalEvent.RenderCrystalPreEvent event) {
+        float ageInTicks;
+        if(noAnimation.getValue()) {
+            ageInTicks = 0.15f;
+        } else {
+            ageInTicks = event.getAgeInTicks();
+        }
+
+        event.getModelBase().render(event.getEntity(),
+                event.getLimbSwing(),
+                event.getLimbSwingAmount(),
+                ageInTicks,
+                event.getNetHeadYaw(),
+                event.getHeadPitch(),
+                event.getScaleFactor()
+        );
+
+        glPopAttrib();
     }
 
     public Color getLineColor() {
