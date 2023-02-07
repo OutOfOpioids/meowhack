@@ -4,6 +4,7 @@ import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.event.events.entity.RenderCrystalEvent;
 import me.notkronos.meowhack.module.render.CrystalChams;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderEnderCrystal;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
@@ -36,16 +37,15 @@ public class MixinRenderEnderCrystal {
             }
         }
     }
-    @Inject(method = "doRender(Lnet/minecraft/entity/item/EntityEnderCrystal;DDDFF)V", at = @At("TAIL"))
+    @Inject(method = "doRender(Lnet/minecraft/entity/item/EntityEnderCrystal;DDDFF)V", at = @At("TAIL"), cancellable = true)
     public void onDoRender(EntityEnderCrystal entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
+        RenderCrystalEvent.RenderCrystalPostEvent renderCrystalEvent = new RenderCrystalEvent.RenderCrystalPostEvent(modelEnderCrystal, modelEnderCrystalNoBase, entity, x, y, z, 0, partialTicks);
         if(CrystalChams.INSTANCE.isEnabled()) {
             if (CrystalChams.noAnimation.getValue()) {
-                RenderCrystalEvent.RenderCrystalPostEvent renderCrystalEvent = new RenderCrystalEvent.RenderCrystalPostEvent(modelEnderCrystal, modelEnderCrystalNoBase, entity, x, y, z, 0, partialTicks);
                 Meowhack.EVENT_BUS.post(renderCrystalEvent);
             }
         }
         else {
-            RenderCrystalEvent.RenderCrystalPostEvent renderCrystalEvent = new RenderCrystalEvent.RenderCrystalPostEvent(modelEnderCrystal, modelEnderCrystalNoBase, entity, x, y, z, entityYaw, partialTicks);
             Meowhack.EVENT_BUS.post(renderCrystalEvent);
         }
     }
