@@ -19,18 +19,29 @@ public class ChatSuffix extends Module {
         INSTANCE = this;
         INSTANCE.enabled = false;
         INSTANCE.drawn = false;
+        Meowhack.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.PacketSendEvent event) {
-        if(event.getPacket() instanceof CPacketChatMessage) {
-            String message = ((CPacketChatMessage) event.getPacket()).getMessage() + " ⏐ ᴍᴇᴏᴡʜᴀᴄᴋ";
-            Pattern pattern = Pattern.compile("[+]", Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(Meowhack.VERSION);
-            if(matcher.find()) {
-                message += "-ʙᴇᴛᴀ";
+
+            if (isEnabled()) {
+                if (event.getPacket() instanceof CPacketChatMessage) {
+                    if (!((CPacketChatMessage) event.getPacket()).getMessage().startsWith("/")) {
+                        Meowhack.LOGGER.info("received a message");
+                        StringBuilder message = new StringBuilder();
+                        message.append(((CPacketChatMessage) event.getPacket()).getMessage())
+                                .append("ᴍᴇᴏᴡʜᴀᴄᴋ");
+
+                        Pattern pattern = Pattern.compile("[+]", Pattern.CASE_INSENSITIVE);
+                        Matcher matcher = pattern.matcher(Meowhack.VERSION);
+
+                        if (matcher.find()) {
+                            message.append("-ʙᴇᴛᴀ");
+                        }
+                        ((ICPacketChatMessageAccessor) event.getPacket()).setMessage(message.toString());
+                }
             }
-            ((ICPacketChatMessageAccessor) event.getPacket()).setMessage(message);
         }
     }
 }

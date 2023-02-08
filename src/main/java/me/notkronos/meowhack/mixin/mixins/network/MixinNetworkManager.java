@@ -20,4 +20,13 @@ public class MixinNetworkManager {
             callbackInfo.cancel();
         }
     }
+    @Inject(method = "sendPacket(Lnet/minecraft/network/Packet;)V", at = @At("HEAD"), cancellable = true)
+    public void onSendPacket(Packet<?> packetIn, CallbackInfo info) {
+        PacketEvent.PacketSendEvent packetSendEvent = new PacketEvent.PacketSendEvent(packetIn);
+        Meowhack.EVENT_BUS.post(packetSendEvent);
+
+        if (packetSendEvent.isCanceled()) {
+            info.cancel();
+        }
+    }
 }
