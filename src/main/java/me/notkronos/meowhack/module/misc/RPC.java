@@ -6,11 +6,15 @@ import club.minnced.discord.rpc.DiscordRichPresence;
 import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
+import me.notkronos.meowhack.setting.Setting;
+import me.notkronos.meowhack.util.rpc.IMAGE;
 
 import static me.notkronos.meowhack.util.Wrapper.mc;
 
 public class RPC extends Module {
     public static RPC INSTANCE;
+
+    public static Setting<Enum<IMAGE>> image = new Setting<>("image", IMAGE.OG);
 
     public RPC() {
         super("RPC", Category.MISC, "Displays discord RPC", new String[]{"DiscordRichPresence"});
@@ -46,7 +50,7 @@ public class RPC extends Module {
         presenceThread = new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
-                    richPresence.largeImageKey = "meowhack";
+                    richPresence.largeImageKey = getLargeImageKey();
                     richPresence.largeImageText = Meowhack.NAME + " " + Meowhack.VERSION;
                     richPresence.smallImageKey = "nya";
                     richPresence.smallImageText = "Nya :3";
@@ -74,4 +78,13 @@ public class RPC extends Module {
         discordPresence.Discord_ClearPresence();
     }
 
+    public static String getLargeImageKey() {
+        if(image.getValue() == IMAGE.OG) {
+            return "meowhack";
+        }
+        else if(image.getValue() == IMAGE.CATGIRL) {
+            return "kitsureii";
+        }
+        return "";
+    }
 }
