@@ -2,8 +2,8 @@ package me.notkronos.meowhack.setting.settings;
 
 import me.notkronos.meowhack.setting.Setting;
 
-public class IntegerSetting  extends Setting<Integer> {
-    public IntegerSetting(String name, Integer value, Integer min, Integer max) {
-        super(name, value, min, max);
+public class IntegerSetting  extends Setting<Float> {
+    public IntegerSetting(String name, Float value, Float fmin, Float fmax) {
+        super(name, value, fmin, fmax);
     }
 }

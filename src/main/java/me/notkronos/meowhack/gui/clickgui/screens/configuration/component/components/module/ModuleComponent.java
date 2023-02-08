@@ -75,6 +75,9 @@ public class ModuleComponent extends DrawableComponent {
                 else if (setting.getValue() instanceof Enum) {
                     settingComponents.add(new EnumComponent(this, (Setting<Enum<?>>) setting));
                 }
+                else if (setting.getValue() instanceof Float) {
+                    settingComponents.add(new FloatComponent(this, (Setting<Float>) setting));
+                }
             });
         }
     }

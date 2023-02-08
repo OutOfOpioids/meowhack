@@ -7,9 +7,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Setting<T> {
-    public String name;
 
+    public String name;
     public T value;
+
+    Integer max;
+    Integer min;
+    Float fmax;
+    Float fmin;
+    private int index;
 
     private Module module;
     private final List<T> exclusions = new ArrayList<>();
@@ -26,30 +32,11 @@ public class Setting<T> {
         this.max = max;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public T getValue() {
-        return value;
-    }
-
-    public void setValue(T value)
-    {
-            this.value = value;
-    }
-
-
-    public void setModule(Module in) {
-        module = in;
-    }
-
-    public Module getModule() {
-        return module;
-    }
-
-    public boolean isExclusion(T in) {
-        return exclusions.contains(in);
+    public Setting(String name, T value, Float fmin, Float fmax) {
+        this.name = name;
+        this.value = value;
+        this.fmin = fmin;
+        this.fmax = fmax;
     }
 
     @SafeVarargs
@@ -60,27 +47,6 @@ public class Setting<T> {
         // builder
         return this;
     }
-
-    Integer max;
-    Integer min;
-
-    public void setMin(Integer in) {
-        min = in;
-    }
-
-    public Integer getMin() {
-        return min;
-    }
-
-    public Integer getMax() {
-        return max;
-    }
-
-    public void setMax(Integer in) {
-        max = in;
-    }
-
-    private int index;
 
     @SuppressWarnings("unchecked")
     public T getNextMode() {
@@ -114,7 +80,43 @@ public class Setting<T> {
         return null;
     }
 
+    public boolean isExclusion(T in) {
+        return exclusions.contains(in);
+    }
     public int getRoundingScale() {
         return 1;
+    }
+
+    public void setValue(T value)
+    {
+        this.value = value;
+    }
+    public void setModule(Module in) {
+        module = in;
+    }
+    public void setMin(Integer in) {
+        min = in;
+    }
+    public void setMax(Integer in) {
+        max = in;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public T getValue() {
+        return value;
+    }
+    public Integer getMin() {
+        return min;
+    }
+    public Float getFmin() { return fmin; }
+    public Integer getMax() {
+        return max;
+    }
+    public Float getFmax() { return fmax; }
+
+    public Module getModule() {
+        return module;
     }
 }
