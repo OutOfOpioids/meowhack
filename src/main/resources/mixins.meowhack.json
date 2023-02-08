@@ -4,6 +4,7 @@
   "package": "me.notkronos.meowhack.mixin",
   "refmap": "mixins.meowhack.refmap.json",
   "mixins": [
+    "mixins.accessor.ICPacketChatMessageAccessor",
     "mixins.network.MixinNetworkManager",
     "mixins.world.MixinWorld"
   ],
