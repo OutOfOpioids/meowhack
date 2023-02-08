@@ -5,7 +5,7 @@ Minecraft utility mod for 1.12.2
 
 # Download
 
-https://github.com/NotKronos/meowhack/releases/download/v.1.3/meowhack-1.3.jar
+https://github.com/NotKronos/meowhack/releases/download/v.1.3.1/meowhack-1.3.1.jar
 
 # FAQ
 <ul>
