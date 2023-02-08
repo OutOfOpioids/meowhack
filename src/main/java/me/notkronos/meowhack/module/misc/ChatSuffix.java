@@ -24,14 +24,13 @@ public class ChatSuffix extends Module {
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.PacketSendEvent event) {
-
             if (isEnabled()) {
                 if (event.getPacket() instanceof CPacketChatMessage) {
                     if (!((CPacketChatMessage) event.getPacket()).getMessage().startsWith("/")) {
                         Meowhack.LOGGER.info("received a message");
                         StringBuilder message = new StringBuilder();
                         message.append(((CPacketChatMessage) event.getPacket()).getMessage())
-                                .append("ᴍᴇᴏᴡʜᴀᴄᴋ");
+                                .append(" |ᴍᴇᴏᴡʜᴀᴄᴋ");
 
                         Pattern pattern = Pattern.compile("[+]", Pattern.CASE_INSENSITIVE);
                         Matcher matcher = pattern.matcher(Meowhack.VERSION);
