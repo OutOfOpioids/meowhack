@@ -1,4 +1,4 @@
-package me.notkronos.meowhack.util.render;
+package me.notkronos.meowhack.util.shader;
 
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;

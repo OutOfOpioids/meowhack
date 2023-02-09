@@ -1,11 +1,10 @@
-package me.notkronos.meowhack.util.render;
+package me.notkronos.meowhack.util.shader.shaders;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.opengl.Display;
-
 import static me.notkronos.meowhack.util.Wrapper.mc;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.glEnd;

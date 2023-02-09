@@ -1,6 +1,7 @@
 package me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.setting;
 
 import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.module.ModuleComponent;
+import me.notkronos.meowhack.module.client.Colors;
 import me.notkronos.meowhack.setting.Setting;
 import me.notkronos.meowhack.util.MathUtil;
 import me.notkronos.meowhack.util.render.FontUtil;
@@ -16,6 +17,7 @@ import static org.lwjgl.opengl.GL11.glScaled;
  * @since 02/02/2022
  */
 public class FloatComponent extends SettingComponent<Float> {
+    private float featureHeight;
 
     // animation
     private int hoverAnimation;
@@ -32,8 +34,7 @@ public class FloatComponent extends SettingComponent<Float> {
         super.drawComponent();
 
         // feature height
-        // feature offset
-        float featureHeight = getModuleComponent().getCategoryFrameComponent().getPosition().y + getModuleComponent().getCategoryFrameComponent().getTitle() + getModuleComponent().getSettingComponentOffset() + getModuleComponent().getCategoryFrameComponent().getScroll() + 2;
+        featureHeight = getModuleComponent().getCategoryFrameComponent().getPosition().y + getModuleComponent().getCategoryFrameComponent().getTitle() + getModuleComponent().getSettingComponentOffset() + getModuleComponent().getCategoryFrameComponent().getScroll() + 2;
 
         // hover alpha animation
         if (isMouseOver(getModuleComponent().getCategoryFrameComponent().getPosition().x, featureHeight, getModuleComponent().getCategoryFrameComponent().getWidth(), HEIGHT) && hoverAnimation < 25) {
@@ -62,28 +63,29 @@ public class FloatComponent extends SettingComponent<Float> {
         glScaled(1.81818181, 1.81818181, 1.81818181);
 
         // module feature bounds
-        float lowestPoint = featureHeight + HEIGHT;
+        float highestPoint = featureHeight;
+        float lowestPoint = highestPoint + HEIGHT;
 
-        if (featureHeight >= getModuleComponent().getCategoryFrameComponent().getPosition().y + getModuleComponent().getCategoryFrameComponent().getTitle() + 2 && lowestPoint <= getModuleComponent().getCategoryFrameComponent().getPosition().y + getModuleComponent().getCategoryFrameComponent().getTitle() + getModuleComponent().getCategoryFrameComponent().getHeight() + 2) {
+        // check if it's able to be interacted with
+        if (highestPoint >= getModuleComponent().getCategoryFrameComponent().getPosition().y + getModuleComponent().getCategoryFrameComponent().getTitle() + 2 && lowestPoint <= getModuleComponent().getCategoryFrameComponent().getPosition().y + getModuleComponent().getCategoryFrameComponent().getTitle() + getModuleComponent().getCategoryFrameComponent().getHeight() + 2) {
             if (getMouse().isLeftHeld()) {
                 if (isMouseOver(getModuleComponent().getCategoryFrameComponent().getPosition().x, featureHeight + 13, getModuleComponent().getCategoryFrameComponent().getWidth(), HEIGHT - 13)) {
                     // the percentage of the slider that is filled
                     float percentFilled = ((getMouse().getPosition().x - getModuleComponent().getCategoryFrameComponent().getPosition().x) * 130 / ((getModuleComponent().getCategoryFrameComponent().getPosition().x + (getModuleComponent().getCategoryFrameComponent().getWidth() - 6)) - getModuleComponent().getCategoryFrameComponent().getPosition().x));
 
-                    int max = getSetting().getMax();
-                    int min = getSetting().getMin();
+                    Number max = getSetting().getFmax();
+                    Number min = getSetting().getFmin();
 
-                    // set the value based on the type
                     if (getSetting().getValue() != null) {
-                        double valueSlid = MathHelper.clamp(MathUtil.roundDouble(percentFilled * ((max - min) / 130.0D) + min, getSetting().getRoundingScale()), min, max);
+                        float valueSlid = MathHelper.clamp(MathUtil.roundFloat(percentFilled * (float) ((max.floatValue() - min.floatValue()) / 130.0D) + min.floatValue(), getSetting().getRoundingScale()), min.floatValue(), max.floatValue());
 
                         // exclude number
-                        if (getSetting().isExclusion((float) valueSlid)) {
-                            getSetting().setValue((float) valueSlid);
+                        if (getSetting().isExclusion(valueSlid)) {
                             getSetting().setValue((float) (valueSlid + Math.pow(1, -getSetting().getRoundingScale())));
                         }
+
                         else {
-                            getSetting().setValue((float) valueSlid);
+                            getSetting().setValue(valueSlid);
                         }
                     }
                 }
@@ -101,7 +103,8 @@ public class FloatComponent extends SettingComponent<Float> {
         }
 
         // slider length
-        float sliderWidth = 91 * (getSetting().getValue() - getSetting().getMin().floatValue()) / (getSetting().getMax().floatValue() - getSetting().getMin().floatValue());
+        float sliderWidth = 91 * (getSetting().getValue() - getSetting().getFmin()) / (getSetting().getFmax() - getSetting().getFmin());
+
 
         // clamp
         if (sliderWidth < 2) {
@@ -115,8 +118,8 @@ public class FloatComponent extends SettingComponent<Float> {
         // slider
         RenderUtil.drawRoundedRect(getModuleComponent().getCategoryFrameComponent().getPosition().x + 6, featureHeight + 14, getModuleComponent().getCategoryFrameComponent().getWidth() - 10, 3, 2, new Color(23 + hoverAnimation, 23 + hoverAnimation, 29 + hoverAnimation, 255));
 
-        if (getSetting().getValue().doubleValue() > getSetting().getMin().doubleValue()) {
-            RenderUtil.drawRoundedRect(getModuleComponent().getCategoryFrameComponent().getPosition().x + 6, featureHeight + 14, sliderWidth, 3, 2, Color.pink);
+        if (getSetting().getValue().doubleValue() > getSetting().getFmin().doubleValue()) {
+            RenderUtil.drawRoundedRect(getModuleComponent().getCategoryFrameComponent().getPosition().x + 6, featureHeight + 14, sliderWidth, 3, 2, new Color(Colors.red.value, Colors.green.value, Colors.blue.value, 255));
         }
 
         // RenderUtil.drawPolygon(getModuleComponent().getCategoryFrameComponent().getPosition().x + 4 + sliderWidth, featureHeight + 15.5, 2, 360, ColorUtil.getPrimaryColor());

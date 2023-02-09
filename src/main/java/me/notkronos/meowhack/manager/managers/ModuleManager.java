@@ -11,10 +11,7 @@ import me.notkronos.meowhack.module.combat.TotemPopCounter;
 import me.notkronos.meowhack.module.combat.VisualRange;
 import me.notkronos.meowhack.module.misc.ChatSuffix;
 import me.notkronos.meowhack.module.misc.RPC;
-import me.notkronos.meowhack.module.render.Ambience;
-import me.notkronos.meowhack.module.render.CrystalChams;
-import me.notkronos.meowhack.module.render.NoEnchantingTableLag;
-import me.notkronos.meowhack.module.render.Weather;
+import me.notkronos.meowhack.module.render.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +33,7 @@ public class ModuleManager extends Manager {
             new HUD(),
             new NoEnchantingTableLag(),
             new RPC(),
+            new Shader(),
             new TotemPopCounter(),
             new VisualRange(),
             new Weather()

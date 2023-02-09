@@ -52,8 +52,8 @@ public class Ambience extends Module {
     }
 
     public void setFogColors(EntityViewRenderEvent.FogColors event, int r, int g, int b) {
-        event.setRed(r);
-        event.setGreen(g);
-        event.setBlue(b);
+        event.setRed(r / 255.0f);
+        event.setGreen(g / 255.0f);
+        event.setBlue(b / 255.0f);
     }
 }

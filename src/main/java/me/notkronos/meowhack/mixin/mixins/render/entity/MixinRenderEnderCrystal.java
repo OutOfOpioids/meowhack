@@ -4,7 +4,6 @@ import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.event.events.entity.RenderCrystalEvent;
 import me.notkronos.meowhack.module.render.CrystalChams;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderEnderCrystal;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
