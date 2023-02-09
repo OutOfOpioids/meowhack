@@ -93,7 +93,7 @@ public class FramebufferWrapper
         mc.getFramebuffer().bindFramebuffer(true);
 
         // mc.entityRenderer.setupOverlayRendering();
-        // mc.entityRenderer.setupOverlayRendering();
+        mc.entityRenderer.setupOverlayRendering();
         for (Runnable runnable : renderOp) runnable.run();
         drawFramebuffer(framebuffer);
 

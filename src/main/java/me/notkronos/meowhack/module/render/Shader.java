@@ -63,9 +63,18 @@ public class Shader extends Module {
     @SubscribeEvent
     public void onRenderItemInFirstPersonEvent(RenderItemInFirstPersonEvent.RenderItemInFirstPersonPreEvent event)
     {
-        if (!forceRender) {
+        if (!forceRender && self.getValue()) {
             event.setCanceled(true);
         }
+    }
+
+    private void render(RenderItemInFirstPersonEvent.RenderItemInFirstPersonPreEvent event)
+    {
+        mc.getItemRenderer().renderItemSide(
+                event.getEntity(),
+                event.getItemStack(),
+                event.getTransformType(),
+                event.isLeftHanded());
     }
 
     @SubscribeEvent

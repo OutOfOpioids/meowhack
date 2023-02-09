@@ -38,7 +38,7 @@ public abstract class FramebufferShader extends Shader {
         GlStateManager.pushAttrib();
 
         framebuffer = setupFrameBuffer(framebuffer);
-        // framebuffer.framebufferClear();
+        framebuffer.framebufferClear();
         framebuffer.bindFramebuffer(true);
         entityShadows = mc.gameSettings.entityShadows;
         mc.gameSettings.entityShadows = false;
