@@ -73,14 +73,14 @@ public abstract class MixinItemRenderer
         Meowhack.EVENT_BUS.post(post);
     }
 
-    /* @Redirect(
+  @Redirect(
             method = "renderItemInFirstPerson(Lnet/minecraft/client/entity/AbstractClientPlayer;FFLnet/minecraft/util/EnumHand;FLnet/minecraft/item/ItemStack;F)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemRenderer;renderArmFirstPerson(FFLnet/minecraft/util/EnumHandSide;)V"))
     public void mrHook(ItemRenderer itemRenderer, float p_187456_1_, float p_187456_2_, EnumHandSide p_187456_3_) {
-        if (HAND_CHAMS.isEnabled()) {
-            if (HAND_CHAMS.get().mode.getValue() == ChamsMode.Normal) {
-                if (HAND_CHAMS.get().chams.getValue()) {
-                    Color handColor = HAND_CHAMS.get().color.getValue();
+        if (Shader.INSTANCE.isEnabled()) {
+            if (Shader.hands.getValue()) {
+                if (!Shader.handRainbow.getValue()) {
+                    Color handColor = Shader.color;
                     glPushMatrix();
                     glPushAttrib(GL_ALL_ATTRIB_BITS);
                     glDisable(GL_TEXTURE_2D);
@@ -94,8 +94,23 @@ public abstract class MixinItemRenderer
                     glPopAttrib();
                     glPopMatrix();
                 }
+                else {
+                    glPushAttrib(GL_ALL_ATTRIB_BITS);
+                    glDisable(GL_LIGHTING);
+                    glEnable(GL_BLEND);
+                    glDisable(GL_ALPHA_TEST);
+                    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                    glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
+                    glDisable(GL_TEXTURE_2D);
+                    glEnable(GL_POLYGON_OFFSET_LINE);
+                    glEnable(GL_STENCIL_TEST);
+                    renderArmFirstPerson(p_187456_1_, p_187456_2_, p_187456_3_);
+                    glEnable(GL_TEXTURE_2D);
+                    renderEffect(p_187456_1_, p_187456_2_, p_187456_3_);
+                    glPopAttrib();
+                }
 
-                if (HAND_CHAMS.get().wireframe.getValue()) {
+               /*  if () {
                     Color handColor = HAND_CHAMS.get().wireFrameColor.getValue();
                     glPushMatrix();
                     glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -113,24 +128,10 @@ public abstract class MixinItemRenderer
                     glEnable(GL_TEXTURE_2D);
                     glPopAttrib();
                     glPopMatrix();
-                }
+                } */
             } else {
-                glPushAttrib(GL_ALL_ATTRIB_BITS);
-                glDisable(GL_LIGHTING);
-                glEnable(GL_BLEND);
-                glDisable(GL_ALPHA_TEST);
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
-                glDisable(GL_TEXTURE_2D);
-                glEnable(GL_POLYGON_OFFSET_LINE);
-                glEnable(GL_STENCIL_TEST);
                 renderArmFirstPerson(p_187456_1_, p_187456_2_, p_187456_3_);
-                glEnable(GL_TEXTURE_2D);
-                renderEffect(p_187456_1_, p_187456_2_, p_187456_3_);
-                glPopAttrib();
             }
-        } else {
-            renderArmFirstPerson(p_187456_1_, p_187456_2_, p_187456_3_);
         }
     }
 
@@ -177,5 +178,5 @@ public abstract class MixinItemRenderer
         GlStateManager.depthFunc(515);
         GlStateManager.disableBlend();
         Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
-    } */
+    }
 }

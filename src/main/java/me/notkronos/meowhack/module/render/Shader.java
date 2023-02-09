@@ -26,6 +26,7 @@ public class Shader extends Module {
 
     //Entity type Settings
     public static Setting<Boolean> self = new Setting<>("Self", true);
+    public static Setting<Boolean> hands = new Setting<>("Hands", true);
     public static Setting<Boolean> players = new Setting<>("Players", true);
     public static Setting<Boolean> crystals = new Setting<>("Crystals", true);
     public static Setting<Boolean> exp = new Setting<>("Exp", true);
@@ -45,6 +46,7 @@ public class Shader extends Module {
     public static Setting<Float> radius = new Setting<>("Radius", 3.0f, 0.1f, 6.0f);
     public static Setting<Boolean> filled = new Setting<>("Filled", true);
     public static Setting<Float> blend = new Setting<>("FilledBlend", 0.25f, 0.1f, 1.0f);
+    public static Setting<Boolean> handRainbow = new Setting<>("HandRainbow", false);
 
     //Shader Stuff
     protected final GlShader shader = new GlShader("shader");
