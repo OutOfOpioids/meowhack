@@ -62,13 +62,7 @@ public class Shader extends Module {
         if(INSTANCE.isEnabled()) {
             if (!forceRender && self.getValue()) {
                 event.setCanceled(true);
-            } /* else {
-                mc.getItemRenderer().renderItemSide(
-                        event.getEntity(),
-                        event.getItemStack(),
-                        event.getTransformType(),
-                        event.isLeftHanded());
-            } */
+            }
         }
     }
 
@@ -85,7 +79,7 @@ public class Shader extends Module {
                 GlStateManager.enableAlpha();
                 ItemShader shader = new ItemShader();
                 shader.mix = blend.getValue();
-                shader.alpha = new Color(red.getValue(), green.getValue(), blue.getValue(), alpha.getValue()).getAlpha() / 255.0f;
+                shader.alpha = new Color(red.getValue(), green.getValue(), blue.getValue(), alpha.getValue()).getAlpha();
                 shader.startDraw(mc.getRenderPartialTicks());
                 forceRender = true;
                 ((IEntityRenderer) mc.entityRenderer).invokeRenderHand(mc.getRenderPartialTicks(), 2);
