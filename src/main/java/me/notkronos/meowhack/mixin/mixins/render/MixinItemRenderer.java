@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,13 +18,10 @@ import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
 
-import static me.notkronos.meowhack.util.Wrapper.mc;
 import static org.lwjgl.opengl.GL11.*;
 
 @Mixin(ItemRenderer.class)
@@ -34,7 +30,7 @@ public abstract class MixinItemRenderer
     @Shadow protected abstract void
     renderArmFirstPerson(float p_187456_1_, float p_187456_2_, EnumHandSide p_187456_3_);
 
-    @Shadow public abstract void renderItemSide(EntityLivingBase entitylivingbaseIn, ItemStack heldStack, ItemCameraTransforms.TransformType transform, boolean leftHanded);
+    //@Shadow public abstract void renderItemSide(EntityLivingBase entitylivingbaseIn, ItemStack heldStack, ItemCameraTransforms.TransformType transform, boolean leftHanded);
 
     private static final ResourceLocation RESOURCE = new ResourceLocation("textures/rainbow.png");
 
@@ -69,18 +65,18 @@ public abstract class MixinItemRenderer
         {
             itemRenderer.renderItemSide(entitylivingbaseIn, pre.getItemStack(), pre.getTransformType(), leftHanded);
         }
-        RenderItemInFirstPersonEvent.RenderItemInFirstPersonPostEvent post = new RenderItemInFirstPersonEvent.RenderItemInFirstPersonPostEvent(entitylivingbaseIn, heldStack, transform, leftHanded);
+        RenderItemInFirstPersonEvent.RenderItemInFirstPersonPostEvent post = new RenderItemInFirstPersonEvent.RenderItemInFirstPersonPostEvent(heldStack, entitylivingbaseIn, transform, leftHanded);
         Meowhack.EVENT_BUS.post(post);
     }
 
-  @Redirect(
+    @Redirect(
             method = "renderItemInFirstPerson(Lnet/minecraft/client/entity/AbstractClientPlayer;FFLnet/minecraft/util/EnumHand;FLnet/minecraft/item/ItemStack;F)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemRenderer;renderArmFirstPerson(FFLnet/minecraft/util/EnumHandSide;)V"))
     public void mrHook(ItemRenderer itemRenderer, float p_187456_1_, float p_187456_2_, EnumHandSide p_187456_3_) {
         if (Shader.INSTANCE.isEnabled()) {
             if (Shader.hands.getValue()) {
                 if (!Shader.handRainbow.getValue()) {
-                    Color handColor = Shader.color;
+                    Color handColor = new Color(Shader.red.getValue(), Shader.green.getValue(), Shader.blue.getValue(), Shader.alpha.getValue());
                     glPushMatrix();
                     glPushAttrib(GL_ALL_ATTRIB_BITS);
                     glDisable(GL_TEXTURE_2D);

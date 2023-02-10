@@ -240,6 +240,15 @@ public class ConfigManager extends Manager {
                                         }
                                     }
 
+                                    if (setting.getValue() instanceof Float) {
+                                        if (inputTOML.getBoolean(identifier) != null) {
+                                            Double dvalue = inputTOML.getDouble(identifier, 0D);
+                                            float value = dvalue.floatValue();
+                                            ((Setting<Float>) setting).setValue(value);
+                                        }
+                                    }
+
+
                                     else if (setting.getValue() instanceof Bind) {
 
                                         // save non-module binds
@@ -331,7 +340,7 @@ public class ConfigManager extends Manager {
                             }
                         });
                     } catch (Exception exception) {
-                            exception.printStackTrace();
+                        exception.printStackTrace();
                     }
                 }
             });
