@@ -78,7 +78,11 @@ public class Shader extends Module {
                 GlStateManager.depthMask(true);
                 GlStateManager.enableAlpha();
                 ItemShader shader = new ItemShader();
-                shader.mix = blend.getValue();
+                if(filled.value) {
+                    shader.mix = blend.getValue();
+                } else {
+                    shader.mix = 0.0f;
+                }
                 shader.alpha = new Color(red.getValue(), green.getValue(), blue.getValue(), alpha.getValue()).getAlpha();
                 shader.startDraw(mc.getRenderPartialTicks());
                 forceRender = true;
