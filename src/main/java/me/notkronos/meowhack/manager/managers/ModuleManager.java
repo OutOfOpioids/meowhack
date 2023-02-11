@@ -30,6 +30,7 @@ public class ModuleManager extends Manager {
             new Colors(),
             new CrystalChams(),
             new CustomFont(),
+            new HoleESP(),
             new HUD(),
             new NoEnchantingTableLag(),
             new RPC(),

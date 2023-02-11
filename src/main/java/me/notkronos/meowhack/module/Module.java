@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Module {
+public abstract class Module {
     protected boolean enabled;
     protected boolean drawn = true;
 
@@ -125,4 +125,8 @@ public class Module {
     public void onDisable() {
 
     }
+
+    public void onRender3D() {
+
+    };
 }

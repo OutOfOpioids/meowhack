@@ -37,6 +37,7 @@ public class Meowhack {
     private final List<Manager> managers = new ArrayList<>();
     private ModuleManager moduleManager;
     private TickManager tickManager;
+    private HoleManager holeManager;
     public static final Logger LOGGER = LogManager.getLogger("meowhack");
 
     @Mod.EventHandler
@@ -63,6 +64,9 @@ public class Meowhack {
         ConfigManager configManager = new ConfigManager();
         managers.add(configManager);
 
+        HoleManager holeManager = new HoleManager();
+        managers.add(holeManager);
+
         clickGUI = new ClickGUIScreen();
 
         LOGGER.info("Meowhack initialized.");
@@ -79,8 +83,11 @@ public class Meowhack {
     public List<Manager> getAllManagers() {
         return managers;
     }
-
     public ClickGUIScreen getClickGUI() {
         return clickGUI;
+    }
+
+    public HoleManager getHoleManager() {
+        return holeManager;
     }
 }

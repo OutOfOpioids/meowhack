@@ -10,6 +10,7 @@ import me.notkronos.meowhack.util.Wrapper;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.server.SPacketEntityStatus;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -90,6 +91,28 @@ public class EventManager extends Manager implements Wrapper {
                     manager.onRender2D();
                 } catch (Exception exception) {
                     exception.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onRender3D(RenderWorldLastEvent event) {
+        // module onRender3D
+        for (Module module : meowhack.getModuleManager().getAllModules()) {
+
+            // check if the module is safe to run
+            if (nullCheck()) {
+
+                // check if module should run
+                if (module.isEnabled()) {
+
+                    // run
+                    try {
+                        module.onRender3D();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
                 }
             }
         }
