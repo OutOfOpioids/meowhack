@@ -5,6 +5,7 @@
   "refmap": "mixins.meowhack.refmap.json",
   "mixins": [
     "mixins.accessor.ICPacketChatMessageAccessor",
+    "mixins.entity.MixinEntityLivingBase",
     "mixins.network.MixinNetworkManager",
     "mixins.world.MixinWorld"
   ],

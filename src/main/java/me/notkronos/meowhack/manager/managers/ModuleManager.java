@@ -37,6 +37,7 @@ public class ModuleManager extends Manager {
             new NoEnchantingTableLag(),
             new RPC(),
             new Shader(),
+            new SwingSpeed(),
             new TotemPopCounter(),
             new VisualRange(),
             new Weather()
