@@ -26,7 +26,7 @@ public class Weather extends Module {
             new ResourceLocation("textures/environment/snow.png");
 
     public static Setting<Boolean> snow = new Setting<>("Snow", true);
-    public static Setting<Integer> height = new Setting<>("Height", 80, 0, 255);
+    public static Setting<Integer> height = new Setting<>("Height", 0, 0, 255);
     public static float strength = 0.25f;
 
     public Weather() {

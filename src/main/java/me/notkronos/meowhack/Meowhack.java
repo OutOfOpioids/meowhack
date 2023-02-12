@@ -68,6 +68,7 @@ public class Meowhack {
         managers.add(configManager);
 
         holeManager = new HoleManager();
+        managers.add(holeManager);
 
         clickGUI = new ClickGUIScreen();
 
