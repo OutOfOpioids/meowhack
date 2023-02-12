@@ -53,12 +53,13 @@ public class HoleESP extends Module {
     //Colors
 
     Color voidColor = new Color(255, 0, 0, 100);
-    Color obsidianColor = new Color(red.getValue(), green.getValue(), blue.getValue(), obsidianAlpha.getValue());
-    Color mixedColor = new Color(red.getValue(), green.getValue(), blue.getValue(), mixedAlpha.getValue());
-    Color bedrockColor = new Color(red.getValue(), green.getValue(), blue.getValue(), bedrockAlpha.getValue());
 
     @Override
     public void onRender3D() {
+        //Update the colors
+        Color obsidianColor = new Color(red.getValue(), green.getValue(), blue.getValue(), obsidianAlpha.getValue());
+        Color mixedColor = new Color(red.getValue(), green.getValue(), blue.getValue(), mixedAlpha.getValue());
+        Color bedrockColor = new Color(red.getValue(), green.getValue(), blue.getValue(), bedrockAlpha.getValue());
 
         // get the holes
         List<HoleManager.Hole> holes;
