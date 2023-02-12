@@ -19,7 +19,7 @@ import java.util.List;
 public class Meowhack {
     public static final String MODID = "meowhack";
     public static final String NAME = "Meowhack";
-    public static final String VERSION = "1.3.1+35e43d01";
+    public static final String VERSION = "1.3.1+0a670363";
     public static boolean SETUP = false;
     public static String PREFIX = "++";
 
@@ -36,6 +36,9 @@ public class Meowhack {
 
     private final List<Manager> managers = new ArrayList<>();
     private ModuleManager moduleManager;
+    private ConfigManager configManager;
+    private EventManager eventManager;
+    private ThreadManager threadManager;
     private TickManager tickManager;
     private HoleManager holeManager;
     public static final Logger LOGGER = LogManager.getLogger("meowhack");
@@ -52,20 +55,19 @@ public class Meowhack {
         moduleManager = new ModuleManager();
         managers.add(moduleManager);
 
-        EventManager eventManager = new EventManager();
+        eventManager = new EventManager();
         managers.add(eventManager);
 
-        ThreadManager threadManager = new ThreadManager();
+        threadManager = new ThreadManager();
         managers.add(threadManager);
 
         tickManager = new TickManager();
         managers.add(tickManager);
 
-        ConfigManager configManager = new ConfigManager();
+        configManager = new ConfigManager();
         managers.add(configManager);
 
-        HoleManager holeManager = new HoleManager();
-        managers.add(holeManager);
+        holeManager = new HoleManager();
 
         clickGUI = new ClickGUIScreen();
 
@@ -76,18 +78,29 @@ public class Meowhack {
         SETUP = true;
     }
 
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+    public EventManager getEventManager() {
+        return eventManager;
+    }
+    public HoleManager getHoleManager() {
+        return holeManager;
+    }
     public ModuleManager getModuleManager() {
         return moduleManager;
     }
-    public TickManager getTickManager() { return tickManager; }
+    public TickManager getTickManager() {
+        return tickManager;
+    }
+    public ThreadManager getThreadManager() {
+        return threadManager;
+    }
+
     public List<Manager> getAllManagers() {
         return managers;
     }
     public ClickGUIScreen getClickGUI() {
         return clickGUI;
-    }
-
-    public HoleManager getHoleManager() {
-        return holeManager;
     }
 }

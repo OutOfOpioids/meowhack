@@ -1,5 +1,6 @@
 package me.notkronos.meowhack.module.render;
 
+import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.manager.managers.HoleManager;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
@@ -11,9 +12,10 @@ import net.minecraft.util.math.BlockPos;
 
 
 import java.awt.*;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static me.notkronos.meowhack.util.Wrapper.mc;
-import static me.notkronos.meowhack.util.Wrapper.meowhack;
 
 public class HoleESP extends Module {
     public static HoleESP INSTANCE;
@@ -59,108 +61,113 @@ public class HoleESP extends Module {
     public void onRender3D() {
 
         // get the holes
-        meowhack.getHoleManager().getHoles().forEach(hole -> {
+        List<HoleManager.Hole> holes;
+        holes = Meowhack.INSTANCE.getHoleManager().getHoles();
+        if(holes.isEmpty()) {
+            Meowhack.LOGGER.info("List is empty?!?!");
+        } else {
+            for (HoleManager.Hole hole :holes) {
+                if (hole != null) {
+                    // the position of the hole
+                    BlockPos holePosition = hole.getHole();
 
-            // the position of the hole
-            BlockPos holePosition = hole.getHole();
+                    // check if they are in range
+                    if (mc.player.getDistance(holePosition.getX(), holePosition.getY(), holePosition.getZ()) < range.getValue()) {
 
-            // check if they are in range
-            if (mc.player.getDistance(holePosition.getX(), holePosition.getY(), holePosition.getZ()) < range.getValue()) {
+                        // void holes
+                        if (voids.getValue()) {
+                            if (hole.getType().equals(HoleManager.Type.VOID)) {
+                                RenderUtil.drawBox(new RenderBuilder()
+                                        .position(hole.getHole())
+                                        .color(voidColor)
+                                        .box(Box.FILL)
+                                        .setup()
+                                        .line(1.5F)
+                                        .depth(true)
+                                        .blend()
+                                        .texture()
+                                );
+                            }
+                        }
 
-                // void holes
-                if (voids.getValue()) {
-                    if (hole.getType().equals(HoleManager.Type.VOID)) {
-                        RenderUtil.drawBox(new RenderBuilder()
-                                .position(hole.getHole())
-                                .color(voidColor)
-                                .box(Box.FILL)
-                                .setup()
-                                .line(1.5F)
-                                .depth(true)
-                                .blend()
-                                .texture()
-                        );
+                        // draw the hole
+                        switch (hole.getType()) {
+                            case OBSIDIAN:
+                                drawSmall(hole, mainHeight, main, mainWidth, obsidianColor);
+                                drawSmall(hole, outlineHeight, outline, outlineWidth, obsidianColor);
+                                break;
+                            case MIXED:
+                                drawSmall(hole, mainHeight, main, mainWidth, mixedColor);
+                                drawSmall(hole, outlineHeight, outline, outlineWidth, mixedColor);
+                                break;
+                            case BEDROCK:
+                                drawSmall(hole, mainHeight, main, mainWidth, bedrockColor);
+                                drawSmall(hole, outlineHeight, outline, outlineWidth, bedrockColor);
+                                break;
+                        }
+
+                        // draw double holes, scale length and width
+                        if (doubles.getValue()) {
+                            switch (hole.getType()) {
+                                case DOUBLE_OBSIDIAN_X:
+                                    drawMediumX(hole, mainHeight, main, mainWidth, obsidianColor);
+                                    drawMediumX(hole, outlineHeight, outline, outlineWidth, obsidianColor);
+                                    break;
+                                case DOUBLE_MIXED_X:
+                                    drawMediumX(hole, mainHeight, main, mainWidth, mixedColor);
+                                    drawMediumX(hole, outlineHeight, outline, outlineWidth, mixedColor);
+                                    break;
+                                case DOUBLE_BEDROCK_X:
+                                    drawMediumX(hole, mainHeight, main, mainWidth, bedrockColor);
+                                    drawMediumX(hole, outlineHeight, outline, outlineWidth, bedrockColor);
+                                    break;
+                                case DOUBLE_OBSIDIAN_Z:
+                                    drawMediumZ(hole, mainHeight, main, mainWidth, obsidianColor);
+                                    drawMediumZ(hole, outlineHeight, outline, outlineWidth, obsidianColor);
+                                    break;
+                                case DOUBLE_MIXED_Z:
+                                    drawMediumZ(hole, mainHeight, main, mainWidth, mixedColor);
+                                    drawMediumZ(hole, outlineHeight, outline, outlineWidth, mixedColor);
+                                    break;
+                                case DOUBLE_BEDROCK_Z:
+                                    drawMediumZ(hole, mainHeight, main, mainWidth, bedrockColor);
+                                    drawMediumZ(hole, outlineHeight, outline, outlineWidth, bedrockColor);
+                                    break;
+                            }
+                        }
+
+                        // draw quad holes, scale length and width
+                        if (quads.getValue()) {
+                            switch (hole.getType()) {
+                                case QUAD_OBSIDIAN:
+                                    drawQuad(hole, mainHeight, main, mainWidth, obsidianColor);
+                                    drawQuad(hole, outlineHeight, outline, outlineWidth, obsidianColor);
+                                    break;
+                                case QUAD_BEDROCK:
+                                    drawQuad(hole, mainHeight, main, mainWidth, bedrockColor);
+                                    drawQuad(hole, outlineHeight, outline, outlineWidth, bedrockColor);
+                                    break;
+                                case QUAD_MIXED:
+                                    drawQuad(hole, mainHeight, main, mainWidth, mixedColor);
+                                    drawQuad(hole, outlineHeight, outline, outlineWidth, mixedColor);
+                                    break;
+                            }
+                        }
                     }
-                }
-
-                // draw the hole
-                switch (hole.getType()) {
-                    case OBSIDIAN:
-                        drawSmallObsidian(hole, mainHeight, main, mainWidth);
-                        drawSmallObsidian(hole, outlineHeight, outline, outlineWidth);
-                        break;
-                    case MIXED:
-                        drawSmallMixed(hole, mainHeight, main, mainWidth);
-                        drawSmallMixed(hole, outlineHeight, outline, outlineWidth);
-                        break;
-                    case BEDROCK:
-                        drawSmallBedrock(hole, mainHeight, main, mainWidth);
-                        drawSmallBedrock(hole, outlineHeight, outline, outlineWidth);
-                        break;
-                }
-
-                // draw double holes, scale length and width
-                if (doubles.getValue()) {
-                    switch (hole.getType()) {
-                        case DOUBLE_OBSIDIAN_X:
-                            drawMediumObsidianX(hole, mainHeight, main, mainWidth);
-                            drawMediumObsidianX(hole, outlineHeight, outline, outlineWidth);
-                            break;
-                        case DOUBLE_MIXED_X:
-                            drawMediumMixedX(hole, mainHeight, main, mainWidth);
-                            drawMediumMixedX(hole, outlineHeight, outline, outlineWidth);
-                            break;
-                        case DOUBLE_BEDROCK_X:
-                            drawMediumBedrockX(hole, mainHeight, bedrockColor, main, mainWidth);
-                            drawMediumBedrockX(hole, outlineHeight, bedrockColor, outline, outlineWidth);
-                            break;
-                        case DOUBLE_OBSIDIAN_Z:
-                            DrawMediumObsidianZ(hole, mainHeight, main, mainWidth);
-                            DrawMediumObsidianZ(hole, outlineHeight, outline, outlineWidth);
-                            break;
-                        case DOUBLE_MIXED_Z:
-                            DrawMediumMixedZ(hole, mainHeight, main, mainWidth);
-                            DrawMediumMixedZ(hole, outlineHeight, outline, outlineWidth);
-                            break;
-                        case DOUBLE_BEDROCK_Z:
-                            DrawMediumBedrockZ(hole, mainHeight, main, mainWidth);
-                            DrawMediumBedrockZ(hole, outlineHeight, outline, outlineWidth);
-                            break;
-                    }
-                }
-
-                // draw quad holes, scale length and width
-                if (quads.getValue()) {
-                    switch (hole.getType()) {
-                        case QUAD_OBSIDIAN:
-                            DrawQuadObsidian(hole, mainHeight, main, mainWidth);
-                            DrawQuadObsidian(hole, outlineHeight, outline, outlineWidth);
-                            break;
-                        case QUAD_BEDROCK:
-                            DrawQuadBedrock(hole, mainHeight, main, mainWidth);
-                            DrawQuadBedrock(hole, outlineHeight, outline, outlineWidth);
-                            break;
-                        case QUAD_MIXED:
-                            drawQuadMixed(hole, mainHeight, main, mainWidth);
-                            drawQuadMixed(hole, outlineHeight, outline, outlineWidth);
-                            break;
-                    }
+                } else {
+                    Meowhack.LOGGER.info("Hole is null?!?!?!?");
                 }
             }
-        });
+        }
     }
 
-    private void drawQuadMixed(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth) {
-        drawQuad(hole, mainHeight, main, mainWidth, mixedColor);
-    }
-
-    private void drawQuad(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth, Color mixedColor) {
+    private void drawQuad(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth, Color color) {
         RenderUtil.drawBox(new RenderBuilder()
                 .position(hole.getHole())
                 .height(mainHeight.getValue() - 1)
                 .length(1)
                 .width(1)
-                .color(mixedColor)
+                .color(color)
                 .box(main.getValue())
                 .setup()
                 .line(mainWidth.getValue())
@@ -173,25 +180,13 @@ public class HoleESP extends Module {
         );
     }
 
-    private void DrawQuadBedrock(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth) {
-        drawQuad(hole, mainHeight, main, mainWidth, bedrockColor);
-    }
-
-    private void DrawQuadObsidian(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth) {
-        drawQuad(hole, mainHeight, main, mainWidth, obsidianColor);
-    }
-
-    private void DrawMediumBedrockZ(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth) {
-        drawMediumZ(hole, mainHeight, main, mainWidth, bedrockColor);
-    }
-
-    private void drawMediumZ(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth, Color bedrockColor) {
+    private void drawMediumZ(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth, Color color) {
         RenderUtil.drawBox(new RenderBuilder()
                 .position(hole.getHole())
                 .height(mainHeight.getValue() - 1)
                 .length(0)
                 .width(1)
-                .color(bedrockColor)
+                .color(color)
                 .box(main.getValue())
                 .setup()
                 .line(mainWidth.getValue())
@@ -204,21 +199,13 @@ public class HoleESP extends Module {
         );
     }
 
-    private void DrawMediumMixedZ(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth) {
-        drawMediumZ(hole, mainHeight, main, mainWidth, mixedColor);
-    }
-
-    private void DrawMediumObsidianZ(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth) {
-        drawMediumZ(hole, mainHeight, main, mainWidth, obsidianColor);
-    }
-
-    private void drawMediumBedrockX(HoleManager.Hole hole, Setting<Float> mainHeight, Color bedrockColor, Setting<Box> main, Setting<Float> mainWidth) {
+    private void drawMediumX(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth, Color color) {
         RenderUtil.drawBox(new RenderBuilder()
                 .position(hole.getHole())
                 .height(mainHeight.getValue() - 1)
                 .length(1)
                 .width(0)
-                .color(bedrockColor)
+                .color(color)
                 .box(main.getValue())
                 .setup()
                 .line(mainWidth.getValue())
@@ -231,25 +218,13 @@ public class HoleESP extends Module {
         );
     }
 
-    private void drawMediumMixedX(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth) {
-        drawMediumBedrockX(hole, mainHeight, mixedColor, main, mainWidth);
-    }
-
-    private void drawMediumObsidianX(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth) {
-        drawMediumBedrockX(hole, mainHeight, obsidianColor, main, mainWidth);
-    }
-
-    private void drawSmallBedrock(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth) {
-        drawSmall(hole, mainHeight, main, mainWidth, bedrockColor);
-    }
-
-    private void drawSmall(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth, Color bedrockColor) {
+    private void drawSmall(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth, Color color) {
         RenderUtil.drawBox(new RenderBuilder()
                 .position(hole.getHole())
                 .height(mainHeight.getValue() - 1)
                 .length(0)
                 .width(0)
-                .color(bedrockColor)
+                .color(color)
                 .box(main.getValue())
                 .setup()
                 .line(mainWidth.getValue())
@@ -260,13 +235,5 @@ public class HoleESP extends Module {
                 .blend()
                 .texture()
         );
-    }
-
-    private void drawSmallMixed(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth) {
-        drawSmall(hole, mainHeight, main, mainWidth, mixedColor);
-    }
-
-    private void drawSmallObsidian(HoleManager.Hole hole, Setting<Float> mainHeight, Setting<Box> main, Setting<Float> mainWidth) {
-        drawSmall(hole, mainHeight, main, mainWidth, obsidianColor);
     }
 }

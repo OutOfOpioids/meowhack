@@ -1,5 +1,6 @@
 package me.notkronos.meowhack.manager.managers;
 
+import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.util.BlockUtil;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -70,7 +71,6 @@ public class HoleManager extends Manager {
 
     @Override
     public void onThread() {
-        // search for holes on our client thread, process is too CPU intensive to be run on mc thread
         holes = searchHoles();
     }
 
@@ -101,12 +101,9 @@ public class HoleManager extends Manager {
                 if (!mc.world.getBlockState(blockPosition.add(0, -1, 0)).getMaterial().isReplaceable()) {
 
                     // boolean to keep track of whether or not the hole is able to be entered
-                    boolean standable = false;
+                    boolean standable = mc.world.getBlockState(blockPosition.add(0, 1, 0)).getMaterial().isReplaceable() && mc.world.getBlockState(blockPosition.add(0, 2, 0)).getMaterial().isReplaceable();
 
                     // check above position
-                    if (mc.world.getBlockState(blockPosition.add(0, 1, 0)).getMaterial().isReplaceable() && mc.world.getBlockState(blockPosition.add(0, 2, 0)).getMaterial().isReplaceable()) {
-                        standable = true;
-                    }
 
                     // number of sides that are resistant or unbreakable
                     int resistantSides = 0;
@@ -141,18 +138,21 @@ public class HoleManager extends Manager {
                         // all unbreakable = bedrock hole
                         if (unbreakableSides == HOLE.length) {
                             searchedHoles.add(new Hole(blockPosition, Type.BEDROCK));
+                            Meowhack.LOGGER.info("registered a bedrock hole");
                             continue;
                         }
 
                         // all resistant = obsidian hole
                         else if (resistantSides == HOLE.length) {
                             searchedHoles.add(new Hole(blockPosition, Type.OBSIDIAN));
+                            Meowhack.LOGGER.info("registered an obsidian hole");
                             continue;
                         }
 
                         // resistant + unbreakable = mixed hole
                         else if (unbreakableSides + resistantSides == HOLE.length) {
                             searchedHoles.add(new Hole(blockPosition, Type.MIXED));
+                            Meowhack.LOGGER.info("registered a mixed hole");
                             continue;
                         }
 
@@ -170,12 +170,9 @@ public class HoleManager extends Manager {
                         if (!mc.world.getBlockState(blockPosition.add(1, -1, 0)).getMaterial().isReplaceable()) {
 
                             // boolean to keep track of whether or not the hole is able to be entered
-                            boolean doubleXStandable = false;
+                            boolean doubleXStandable = mc.world.getBlockState(blockPosition.add(0, 1, 0)).getMaterial().isReplaceable() && mc.world.getBlockState(blockPosition.add(0, 2, 0)).getMaterial().isReplaceable() || mc.world.getBlockState(blockPosition.add(1, 1, 0)).getMaterial().isReplaceable() && mc.world.getBlockState(blockPosition.add(1, 2, 0)).getMaterial().isReplaceable();
 
                             // check above position
-                            if (mc.world.getBlockState(blockPosition.add(0, 1, 0)).getMaterial().isReplaceable() && mc.world.getBlockState(blockPosition.add(0, 2, 0)).getMaterial().isReplaceable() || mc.world.getBlockState(blockPosition.add(1, 1, 0)).getMaterial().isReplaceable() && mc.world.getBlockState(blockPosition.add(1, 2, 0)).getMaterial().isReplaceable()) {
-                                doubleXStandable = true;
-                            }
 
                             // check all offsets
                             for (Vec3i holeSide : DOUBLE_HOLE_X) {
@@ -237,12 +234,9 @@ public class HoleManager extends Manager {
                         if (!mc.world.getBlockState(blockPosition.add(0, -1, 1)).getMaterial().isReplaceable()) {
 
                             // boolean to keep track of whether or not the hole is able to be entered
-                            boolean doubleZStandable = false;
+                            boolean doubleZStandable = mc.world.getBlockState(blockPosition.add(0, 1, 0)).getMaterial().isReplaceable() && mc.world.getBlockState(blockPosition.add(0, 2, 0)).getMaterial().isReplaceable() || mc.world.getBlockState(blockPosition.add(0, 1, 1)).getMaterial().isReplaceable() && mc.world.getBlockState(blockPosition.add(0, 2, 1)).getMaterial().isReplaceable();
 
                             // check above position
-                            if (mc.world.getBlockState(blockPosition.add(0, 1, 0)).getMaterial().isReplaceable() && mc.world.getBlockState(blockPosition.add(0, 2, 0)).getMaterial().isReplaceable() || mc.world.getBlockState(blockPosition.add(0, 1, 1)).getMaterial().isReplaceable() && mc.world.getBlockState(blockPosition.add(0, 2, 1)).getMaterial().isReplaceable()) {
-                                doubleZStandable = true;
-                            }
 
                             // check all offsets
                             for (Vec3i holeSide : DOUBLE_HOLE_Z) {
@@ -302,7 +296,7 @@ public class HoleManager extends Manager {
                         // check lower positions
                         if (!mc.world.getBlockState(blockPosition.add(0, -1, 1)).getMaterial().isReplaceable() && !mc.world.getBlockState(blockPosition.add(1, -1, 0)).getMaterial().isReplaceable() && !mc.world.getBlockState(blockPosition.add(1, -1, 1)).getMaterial().isReplaceable()) {
 
-                            // boolean to keep track of whether or not the hole is able to be entered
+                            // boolean to keep track of whether the hole is able to be entered
                             boolean quadStandable;
 
                             // check above position

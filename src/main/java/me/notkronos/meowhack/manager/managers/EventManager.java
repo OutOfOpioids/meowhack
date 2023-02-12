@@ -6,6 +6,7 @@ import me.notkronos.meowhack.event.events.network.PacketEvent;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.module.client.HUD;
+import me.notkronos.meowhack.module.render.HoleESP;
 import me.notkronos.meowhack.util.Wrapper;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.server.SPacketEntityStatus;
@@ -98,23 +99,11 @@ public class EventManager extends Manager implements Wrapper {
 
     @SubscribeEvent
     public void onRender3D(RenderWorldLastEvent event) {
-        // module onRender3D
-        for (Module module : meowhack.getModuleManager().getAllModules()) {
+        try {
+            HoleESP.INSTANCE.onRender3D();
+        } catch(Exception e) {
+            e.printStackTrace();
 
-            // check if the module is safe to run
-            if (nullCheck()) {
-
-                // check if module should run
-                if (module.isEnabled()) {
-
-                    // run
-                    try {
-                        module.onRender3D();
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-                }
-            }
         }
     }
 
