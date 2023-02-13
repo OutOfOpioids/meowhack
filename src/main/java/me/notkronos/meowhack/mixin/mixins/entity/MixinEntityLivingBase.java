@@ -22,7 +22,7 @@ public abstract class MixinEntityLivingBase{
             int modifier = SwingSpeed.speed.value;
             ci.setReturnValue(modifier);
         } else {
-            ci.setReturnValue(1);
+            ci.setReturnValue(8);
         }
     }
 }
