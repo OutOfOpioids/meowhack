@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="FacetManager">
+    <facet type="minecraft" name="Minecraft">
+      <configuration>
+        <userChosenTypes>
+          <map>
+            <entry key="ARCHITECTURY" value="false" />
+            <entry key="FORGE" value="true" />
+            <entry key="FABRIC" value="false" />
+          </map>
+        </userChosenTypes>
+      </configuration>
+    </facet>
+  </component>
+</module>
