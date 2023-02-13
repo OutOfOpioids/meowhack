@@ -68,6 +68,7 @@ public class HUD extends Module {
     public static Setting<Boolean> armor = new Setting<>("Armor", true);
     public static Setting<Boolean> welcomer = new Setting<>("Welcomer", true);
     public static Setting<Boolean> combatItemCounter = new Setting<>("CombatItemCounter", false);
+    public static Setting<Float> range = new Setting<>("BurrowCheckerRange", 5.0f, 0.0f, 20.0f);
     private static final float ELEMENT_SIZE = FontUtil.getFontHeight() + 1;
 
     @Override

@@ -1,5 +1,6 @@
 package me.notkronos.meowhack.util;
 
+import me.notkronos.meowhack.module.client.HUD;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -92,6 +93,7 @@ public class EntityUtil {
     }
 
     private static boolean isInBlock(Map<String, Boolean> output, StringBuilder healthSB, StringBuilder distanceSB, EntityPlayer player, BlockPos blockPos) {
-        return !(blockPos.distanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) <= 1.5);
+        float range = HUD.range.value;
+        return !(blockPos.distanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) <= range);
     }
 }
