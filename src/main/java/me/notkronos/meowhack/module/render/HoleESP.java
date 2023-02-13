@@ -56,107 +56,109 @@ public class HoleESP extends Module {
 
     @Override
     public void onRender3D() {
-        //Update the colors
-        Color obsidianColor = new Color(red.getValue(), green.getValue(), blue.getValue(), obsidianAlpha.getValue());
-        Color mixedColor = new Color(red.getValue(), green.getValue(), blue.getValue(), mixedAlpha.getValue());
-        Color bedrockColor = new Color(red.getValue(), green.getValue(), blue.getValue(), bedrockAlpha.getValue());
+        if (isEnabled()) {
+            //Update the colors
+            Color obsidianColor = new Color(red.getValue(), green.getValue(), blue.getValue(), obsidianAlpha.getValue());
+            Color mixedColor = new Color(red.getValue(), green.getValue(), blue.getValue(), mixedAlpha.getValue());
+            Color bedrockColor = new Color(red.getValue(), green.getValue(), blue.getValue(), bedrockAlpha.getValue());
 
-        // get the holes
-        List<HoleManager.Hole> holes;
-        holes = Meowhack.INSTANCE.getHoleManager().getHoles();
-        if(holes.isEmpty()) {
-            Meowhack.LOGGER.info("List is empty?!?!");
-        } else {
-            for (HoleManager.Hole hole :holes) {
-                if (hole != null) {
-                    // the position of the hole
-                    BlockPos holePosition = hole.getHole();
+            // get the holes
+            List<HoleManager.Hole> holes;
+            holes = Meowhack.INSTANCE.getHoleManager().getHoles();
+            if (holes.isEmpty()) {
+                Meowhack.LOGGER.info("List is empty?!?!");
+            } else {
+                for (HoleManager.Hole hole : holes) {
+                    if (hole != null) {
+                        // the position of the hole
+                        BlockPos holePosition = hole.getHole();
 
-                    // check if they are in range
-                    if (mc.player.getDistance(holePosition.getX(), holePosition.getY(), holePosition.getZ()) < range.getValue()) {
+                        // check if they are in range
+                        if (mc.player.getDistance(holePosition.getX(), holePosition.getY(), holePosition.getZ()) < range.getValue()) {
 
-                        // void holes
-                        if (voids.getValue()) {
-                            if (hole.getType().equals(HoleManager.Type.VOID)) {
-                                RenderUtil.drawBox(new RenderBuilder()
-                                        .position(hole.getHole())
-                                        .color(voidColor)
-                                        .box(Box.FILL)
-                                        .setup()
-                                        .line(1.5F)
-                                        .depth(true)
-                                        .blend()
-                                        .texture()
-                                );
+                            // void holes
+                            if (voids.getValue()) {
+                                if (hole.getType().equals(HoleManager.Type.VOID)) {
+                                    RenderUtil.drawBox(new RenderBuilder()
+                                            .position(hole.getHole())
+                                            .color(voidColor)
+                                            .box(Box.FILL)
+                                            .setup()
+                                            .line(1.5F)
+                                            .depth(true)
+                                            .blend()
+                                            .texture()
+                                    );
+                                }
                             }
-                        }
 
-                        // draw the hole
-                        switch (hole.getType()) {
-                            case OBSIDIAN:
-                                drawSmall(hole, mainHeight, main, mainWidth, obsidianColor);
-                                drawSmall(hole, outlineHeight, outline, outlineWidth, obsidianColor);
-                                break;
-                            case MIXED:
-                                drawSmall(hole, mainHeight, main, mainWidth, mixedColor);
-                                drawSmall(hole, outlineHeight, outline, outlineWidth, mixedColor);
-                                break;
-                            case BEDROCK:
-                                drawSmall(hole, mainHeight, main, mainWidth, bedrockColor);
-                                drawSmall(hole, outlineHeight, outline, outlineWidth, bedrockColor);
-                                break;
-                        }
-
-                        // draw double holes, scale length and width
-                        if (doubles.getValue()) {
+                            // draw the hole
                             switch (hole.getType()) {
-                                case DOUBLE_OBSIDIAN_X:
-                                    drawMediumX(hole, mainHeight, main, mainWidth, obsidianColor);
-                                    drawMediumX(hole, outlineHeight, outline, outlineWidth, obsidianColor);
+                                case OBSIDIAN:
+                                    drawSmall(hole, mainHeight, main, mainWidth, obsidianColor);
+                                    drawSmall(hole, outlineHeight, outline, outlineWidth, obsidianColor);
                                     break;
-                                case DOUBLE_MIXED_X:
-                                    drawMediumX(hole, mainHeight, main, mainWidth, mixedColor);
-                                    drawMediumX(hole, outlineHeight, outline, outlineWidth, mixedColor);
+                                case MIXED:
+                                    drawSmall(hole, mainHeight, main, mainWidth, mixedColor);
+                                    drawSmall(hole, outlineHeight, outline, outlineWidth, mixedColor);
                                     break;
-                                case DOUBLE_BEDROCK_X:
-                                    drawMediumX(hole, mainHeight, main, mainWidth, bedrockColor);
-                                    drawMediumX(hole, outlineHeight, outline, outlineWidth, bedrockColor);
-                                    break;
-                                case DOUBLE_OBSIDIAN_Z:
-                                    drawMediumZ(hole, mainHeight, main, mainWidth, obsidianColor);
-                                    drawMediumZ(hole, outlineHeight, outline, outlineWidth, obsidianColor);
-                                    break;
-                                case DOUBLE_MIXED_Z:
-                                    drawMediumZ(hole, mainHeight, main, mainWidth, mixedColor);
-                                    drawMediumZ(hole, outlineHeight, outline, outlineWidth, mixedColor);
-                                    break;
-                                case DOUBLE_BEDROCK_Z:
-                                    drawMediumZ(hole, mainHeight, main, mainWidth, bedrockColor);
-                                    drawMediumZ(hole, outlineHeight, outline, outlineWidth, bedrockColor);
+                                case BEDROCK:
+                                    drawSmall(hole, mainHeight, main, mainWidth, bedrockColor);
+                                    drawSmall(hole, outlineHeight, outline, outlineWidth, bedrockColor);
                                     break;
                             }
-                        }
 
-                        // draw quad holes, scale length and width
-                        if (quads.getValue()) {
-                            switch (hole.getType()) {
-                                case QUAD_OBSIDIAN:
-                                    drawQuad(hole, mainHeight, main, mainWidth, obsidianColor);
-                                    drawQuad(hole, outlineHeight, outline, outlineWidth, obsidianColor);
-                                    break;
-                                case QUAD_BEDROCK:
-                                    drawQuad(hole, mainHeight, main, mainWidth, bedrockColor);
-                                    drawQuad(hole, outlineHeight, outline, outlineWidth, bedrockColor);
-                                    break;
-                                case QUAD_MIXED:
-                                    drawQuad(hole, mainHeight, main, mainWidth, mixedColor);
-                                    drawQuad(hole, outlineHeight, outline, outlineWidth, mixedColor);
-                                    break;
+                            // draw double holes, scale length and width
+                            if (doubles.getValue()) {
+                                switch (hole.getType()) {
+                                    case DOUBLE_OBSIDIAN_X:
+                                        drawMediumX(hole, mainHeight, main, mainWidth, obsidianColor);
+                                        drawMediumX(hole, outlineHeight, outline, outlineWidth, obsidianColor);
+                                        break;
+                                    case DOUBLE_MIXED_X:
+                                        drawMediumX(hole, mainHeight, main, mainWidth, mixedColor);
+                                        drawMediumX(hole, outlineHeight, outline, outlineWidth, mixedColor);
+                                        break;
+                                    case DOUBLE_BEDROCK_X:
+                                        drawMediumX(hole, mainHeight, main, mainWidth, bedrockColor);
+                                        drawMediumX(hole, outlineHeight, outline, outlineWidth, bedrockColor);
+                                        break;
+                                    case DOUBLE_OBSIDIAN_Z:
+                                        drawMediumZ(hole, mainHeight, main, mainWidth, obsidianColor);
+                                        drawMediumZ(hole, outlineHeight, outline, outlineWidth, obsidianColor);
+                                        break;
+                                    case DOUBLE_MIXED_Z:
+                                        drawMediumZ(hole, mainHeight, main, mainWidth, mixedColor);
+                                        drawMediumZ(hole, outlineHeight, outline, outlineWidth, mixedColor);
+                                        break;
+                                    case DOUBLE_BEDROCK_Z:
+                                        drawMediumZ(hole, mainHeight, main, mainWidth, bedrockColor);
+                                        drawMediumZ(hole, outlineHeight, outline, outlineWidth, bedrockColor);
+                                        break;
+                                }
+                            }
+
+                            // draw quad holes, scale length and width
+                            if (quads.getValue()) {
+                                switch (hole.getType()) {
+                                    case QUAD_OBSIDIAN:
+                                        drawQuad(hole, mainHeight, main, mainWidth, obsidianColor);
+                                        drawQuad(hole, outlineHeight, outline, outlineWidth, obsidianColor);
+                                        break;
+                                    case QUAD_BEDROCK:
+                                        drawQuad(hole, mainHeight, main, mainWidth, bedrockColor);
+                                        drawQuad(hole, outlineHeight, outline, outlineWidth, bedrockColor);
+                                        break;
+                                    case QUAD_MIXED:
+                                        drawQuad(hole, mainHeight, main, mainWidth, mixedColor);
+                                        drawQuad(hole, outlineHeight, outline, outlineWidth, mixedColor);
+                                        break;
+                                }
                             }
                         }
+                    } else {
+                        Meowhack.LOGGER.info("Hole is null?!?!?!?");
                     }
-                } else {
-                    Meowhack.LOGGER.info("Hole is null?!?!?!?");
                 }
             }
         }
