@@ -12,6 +12,7 @@ import me.notkronos.meowhack.module.combat.VisualRange;
 import me.notkronos.meowhack.module.misc.AutoMeow;
 import me.notkronos.meowhack.module.misc.ChatSuffix;
 import me.notkronos.meowhack.module.misc.RPC;
+import me.notkronos.meowhack.module.movement.Sprint;
 import me.notkronos.meowhack.module.render.*;
 
 import java.util.Arrays;
@@ -34,9 +35,11 @@ public class ModuleManager extends Manager {
             new CustomFont(),
             new HoleESP(),
             new HUD(),
+            new NoBob(),
             new NoEnchantingTableLag(),
             new RPC(),
             new Shader(),
+            new Sprint(),
             new SwingSpeed(),
             new TotemPopCounter(),
             new VisualRange(),
