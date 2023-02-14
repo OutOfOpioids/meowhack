@@ -9,6 +9,7 @@ import me.notkronos.meowhack.module.client.HUD;
 import me.notkronos.meowhack.module.combat.ChestplateSwap;
 import me.notkronos.meowhack.module.combat.TotemPopCounter;
 import me.notkronos.meowhack.module.combat.VisualRange;
+import me.notkronos.meowhack.module.misc.Announcer;
 import me.notkronos.meowhack.module.misc.AutoMeow;
 import me.notkronos.meowhack.module.misc.ChatSuffix;
 import me.notkronos.meowhack.module.misc.RPC;
@@ -25,6 +26,7 @@ public class ModuleManager extends Manager {
     public ModuleManager() {
         super("ModuleManager");
         modules = Arrays.asList(
+            new Announcer(),
             new Ambience(),
             new AutoMeow(),
             new ChatSuffix(),
