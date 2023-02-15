@@ -29,10 +29,12 @@ public class Announcer extends Module {
     public void onTotemPop(TotemPopEvent event) {
         if (isEnabled()) {
             if (announcePops.getValue()) {
-                if(meow.getValue()) {
-                    mc.player.sendChatMessage(event.getPopEntity().getName() + " meow meow meow meow meow meowhack!");
-                } else {
-                    mc.player.sendChatMessage(event.getPopEntity().getName() + " popped a totem thanks to meowhack!");
+                if(event.getPopEntity() != mc.player) {
+                    if (meow.getValue()) {
+                        mc.player.sendChatMessage(event.getPopEntity().getName() + " meow meow meow meow meow meowhack!");
+                    } else {
+                        mc.player.sendChatMessage(event.getPopEntity().getName() + " popped a totem thanks to meowhack!");
+                    }
                 }
             }
         }
