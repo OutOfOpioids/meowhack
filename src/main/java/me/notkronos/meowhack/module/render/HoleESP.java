@@ -66,7 +66,7 @@ public class HoleESP extends Module {
             List<HoleManager.Hole> holes;
             holes = Meowhack.INSTANCE.getHoleManager().getHoles();
             if (holes.isEmpty()) {
-                Meowhack.LOGGER.info("List is empty?!?!");
+                return;
             } else {
                 for (HoleManager.Hole hole : holes) {
                     if (hole != null) {
@@ -156,8 +156,6 @@ public class HoleESP extends Module {
                                 }
                             }
                         }
-                    } else {
-                        Meowhack.LOGGER.info("Hole is null?!?!?!?");
                     }
                 }
             }

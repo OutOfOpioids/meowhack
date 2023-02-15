@@ -138,21 +138,18 @@ public class HoleManager extends Manager {
                         // all unbreakable = bedrock hole
                         if (unbreakableSides == HOLE.length) {
                             searchedHoles.add(new Hole(blockPosition, Type.BEDROCK));
-                            Meowhack.LOGGER.info("registered a bedrock hole");
                             continue;
                         }
 
                         // all resistant = obsidian hole
                         else if (resistantSides == HOLE.length) {
                             searchedHoles.add(new Hole(blockPosition, Type.OBSIDIAN));
-                            Meowhack.LOGGER.info("registered an obsidian hole");
                             continue;
                         }
 
                         // resistant + unbreakable = mixed hole
                         else if (unbreakableSides + resistantSides == HOLE.length) {
                             searchedHoles.add(new Hole(blockPosition, Type.MIXED));
-                            Meowhack.LOGGER.info("registered a mixed hole");
                             continue;
                         }
 
