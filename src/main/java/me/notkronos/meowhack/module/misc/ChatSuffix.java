@@ -24,6 +24,12 @@ public class ChatSuffix extends Module {
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.PacketSendEvent event) {
+        // Prevent the module from appending the watermark to client cmds
+        if(event.getPacket() instanceof CPacketChatMessage) {
+            if(((CPacketChatMessage) event.getPacket()).getMessage().startsWith(Meowhack.PREFIX)) {
+                return;
+            }
+        } else {
             if (isEnabled()) {
                 if (event.getPacket() instanceof CPacketChatMessage) {
                     if (!((CPacketChatMessage) event.getPacket()).getMessage().startsWith("/")) {
@@ -39,6 +45,7 @@ public class ChatSuffix extends Module {
                             message.append("-ʙᴇᴛᴀ");
                         }
                         ((ICPacketChatMessageAccessor) event.getPacket()).setMessage(message.toString());
+                    }
                 }
             }
         }

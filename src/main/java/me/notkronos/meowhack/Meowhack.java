@@ -35,12 +35,15 @@ public class Meowhack {
     public static EventBus EVENT_BUS = MinecraftForge.EVENT_BUS;
 
     private final List<Manager> managers = new ArrayList<>();
-    private ModuleManager moduleManager;
+
     private ConfigManager configManager;
+    private CommandManager commandManager;
     private EventManager eventManager;
-    private ThreadManager threadManager;
-    private TickManager tickManager;
     private HoleManager holeManager;
+    private ModuleManager moduleManager;
+    private TickManager tickManager;
+    private ThreadManager threadManager;
+
     public static final Logger LOGGER = LogManager.getLogger("meowhack");
 
     @Mod.EventHandler
@@ -52,23 +55,23 @@ public class Meowhack {
         LOGGER.info("Initializing meowhack.");
         Display.setTitle(NAME + " v." + VERSION);
 
-        moduleManager = new ModuleManager();
-        managers.add(moduleManager);
+        commandManager = new CommandManager();
+        managers.add(commandManager);
 
         eventManager = new EventManager();
         managers.add(eventManager);
 
-        threadManager = new ThreadManager();
-        managers.add(threadManager);
+        holeManager = new HoleManager();
+        managers.add(holeManager);
+
+        moduleManager = new ModuleManager();
+        managers.add(moduleManager);
 
         tickManager = new TickManager();
         managers.add(tickManager);
 
-        configManager = new ConfigManager();
-        managers.add(configManager);
-
-        holeManager = new HoleManager();
-        managers.add(holeManager);
+        threadManager = new ThreadManager();
+        managers.add(threadManager);
 
         clickGUI = new ClickGUIScreen();
 
@@ -76,9 +79,17 @@ public class Meowhack {
     }
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+
+        //this has to be done after Module Manager was initialized and I don't want to mess up the alphabetic order lol
+        configManager = new ConfigManager();
+        managers.add(configManager);
+
         SETUP = true;
     }
 
+    public CommandManager getCommandManager() {
+        return commandManager;
+    }
     public ConfigManager getConfigManager() {
         return configManager;
     }

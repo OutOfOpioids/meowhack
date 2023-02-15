@@ -18,6 +18,7 @@ import me.notkronos.meowhack.module.render.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class ModuleManager extends Manager {
 
@@ -60,5 +61,12 @@ public class ModuleManager extends Manager {
 
     public List<Module> getAllModules() {
         return modules;
+    }
+
+    public Module getModule(Predicate<? super Module> predicate) {
+        return modules.stream()
+                .filter(predicate)
+                .findFirst()
+                .orElse(null);
     }
 }
