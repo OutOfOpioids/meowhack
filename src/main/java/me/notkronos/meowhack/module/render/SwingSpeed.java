@@ -14,5 +14,16 @@ public class SwingSpeed extends Module {
         INSTANCE.drawn = false;
     }
 
+    //Mode Settings
+
+    public static Setting<Enum<Mode>> mode = new Setting<>("Mode", Mode.SELF);
+
+    //Swing Settings
     public static Setting<Integer> speed = new Setting<>("Speed", 16, -1, 32);
+
+    public enum Mode {
+        SELF,
+        OTHERS,
+        BOTH
+    }
 }
