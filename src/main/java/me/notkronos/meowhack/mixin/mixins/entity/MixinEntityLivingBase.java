@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.UUID;
@@ -22,13 +23,26 @@ public abstract class MixinEntityLivingBase extends Entity {
         super(world);
     }
     @Shadow protected abstract boolean isPlayer();
-
+    @Shadow public boolean isSwingInProgress;
+    @Shadow public int swingProgressInt;
     private final SwingSpeed SWING_SPEED = SwingSpeed.INSTANCE;
+    int modifier = SwingSpeed.speed.value;
+
+    @Inject(method="swingArm", at = @At(value = "HEAD"), cancellable = true)
+    protected void onSwingArm(CallbackInfo ci) {
+        if(SWING_SPEED.isEnabled()) {
+            if (this.isSwingInProgress) {
+                if (swingProgressInt <= modifier / 4) {
+                    ci.cancel();
+                }
+            }
+        }
+    }
 
     @Inject(method = "getArmSwingAnimationEnd", at = @At(value = "HEAD"), cancellable = true)
     protected void onGetArmSwingAnimationEnd(CallbackInfoReturnable<Integer> ci){
         if(SWING_SPEED.isEnabled()) {
-            int modifier = SwingSpeed.speed.value;
+
             if (!this.isPlayer()) return;
 
             UUID playerUUID = this.getUniqueID();
