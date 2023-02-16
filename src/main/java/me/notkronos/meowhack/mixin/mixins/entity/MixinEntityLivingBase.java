@@ -4,6 +4,8 @@ import me.notkronos.meowhack.module.render.SwingSpeed;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemEndCrystal;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,16 +27,20 @@ public abstract class MixinEntityLivingBase extends Entity {
     @Shadow protected abstract boolean isPlayer();
     @Shadow public boolean isSwingInProgress;
     @Shadow public int swingProgressInt;
+
+    @Shadow public abstract ItemStack getActiveItemStack();
+
     private final SwingSpeed SWING_SPEED = SwingSpeed.INSTANCE;
     int modifier = SwingSpeed.speed.value;
 
     @Inject(method="swingArm", at = @At(value = "HEAD"), cancellable = true)
     protected void onSwingArm(CallbackInfo ci) {
         if(SWING_SPEED.isEnabled()) {
-            if (this.isSwingInProgress) {
-                if (swingProgressInt <= modifier / 4) {
+            if(SWING_SPEED.isCausedByRClick) {
+                if(getActiveItemStack().getItem() instanceof ItemEndCrystal) {
                     ci.cancel();
                 }
+                SWING_SPEED.isCausedByRClick = false;
             }
         }
     }

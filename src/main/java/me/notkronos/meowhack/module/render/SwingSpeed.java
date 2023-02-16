@@ -21,6 +21,8 @@ public class SwingSpeed extends Module {
     //Swing Settings
     public static Setting<Integer> speed = new Setting<>("Speed", 16, -1, 32);
 
+    public boolean isCausedByRClick = false;
+
     public enum Mode {
         SELF,
         OTHERS,
