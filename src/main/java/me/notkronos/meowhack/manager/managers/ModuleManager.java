@@ -6,13 +6,8 @@ import me.notkronos.meowhack.module.client.ClickGUIModule;
 import me.notkronos.meowhack.module.client.Colors;
 import me.notkronos.meowhack.module.client.CustomFont;
 import me.notkronos.meowhack.module.client.HUD;
-import me.notkronos.meowhack.module.combat.ChestplateSwap;
-import me.notkronos.meowhack.module.combat.TotemPopCounter;
-import me.notkronos.meowhack.module.combat.VisualRange;
-import me.notkronos.meowhack.module.misc.Announcer;
-import me.notkronos.meowhack.module.misc.AutoMeow;
-import me.notkronos.meowhack.module.misc.ChatSuffix;
-import me.notkronos.meowhack.module.misc.RPC;
+import me.notkronos.meowhack.module.combat.*;
+import me.notkronos.meowhack.module.misc.*;
 import me.notkronos.meowhack.module.movement.Sprint;
 import me.notkronos.meowhack.module.render.*;
 
@@ -31,6 +26,7 @@ public class ModuleManager extends Manager {
             new Ambience(),
             new AutoMeow(),
             new ChatSuffix(),
+            new ChatTimestamp(),
             new ChestplateSwap(),
             new ClickGUIModule(),
             new Colors(),
@@ -40,9 +36,11 @@ public class ModuleManager extends Manager {
             new HUD(),
             new NoBob(),
             new NoEnchantingTableLag(),
+            new PopLag(),
             new RPC(),
             new Shader(),
             new Sprint(),
+            new StrengthDetect(),
             new SwingSpeed(),
             new TotemPopCounter(),
             new VisualRange(),
