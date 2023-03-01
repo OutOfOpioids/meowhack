@@ -1,7 +1,5 @@
 package me.notkronos.meowhack.module.misc;
 
-
-import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
