@@ -24,29 +24,19 @@ public class ChatSuffix extends Module {
 
     @SubscribeEvent
     public void onPacketSend(PacketEvent.PacketSendEvent event) {
-        // Prevent the module from appending the watermark to client cmds
-        if(event.getPacket() instanceof CPacketChatMessage) {
-            if(((CPacketChatMessage) event.getPacket()).getMessage().startsWith(Meowhack.PREFIX)) {
-                return;
-            }
-        } else {
-            if (isEnabled()) {
-                if (event.getPacket() instanceof CPacketChatMessage) {
-                    if (!((CPacketChatMessage) event.getPacket()).getMessage().startsWith("/")) {
-                        Meowhack.LOGGER.info("received a message");
-                        StringBuilder message = new StringBuilder();
-                        message.append(((CPacketChatMessage) event.getPacket()).getMessage())
-                                .append(" | ᴍᴇᴏᴡʜᴀᴄᴋ");
-
-                        Pattern pattern = Pattern.compile("[+]", Pattern.CASE_INSENSITIVE);
-                        Matcher matcher = pattern.matcher(Meowhack.VERSION);
-
-                        if (matcher.find()) {
-                            message.append("-ʙᴇᴛᴀ");
-                        }
-                        ((ICPacketChatMessageAccessor) event.getPacket()).setMessage(message.toString());
-                    }
+        if (isEnabled()) {
+            if (event.getPacket() instanceof CPacketChatMessage) {
+                Meowhack.LOGGER.info("received a message");
+                StringBuilder message = new StringBuilder();
+                Meowhack.LOGGER.info("this is not an issue wth command detection!");
+                message.append(((CPacketChatMessage) event.getPacket()).getMessage())
+                        .append(" | ᴍᴇᴏᴡʜᴀᴄᴋ");
+                Pattern pattern = Pattern.compile("[+]", Pattern.CASE_INSENSITIVE);
+                Matcher matcher = pattern.matcher(Meowhack.VERSION);
+                if (matcher.find()) {
+                    message.append("-ʙᴇᴛᴀ");
                 }
+                ((ICPacketChatMessageAccessor) event.getPacket()).setMessage(message.toString());
             }
         }
     }
