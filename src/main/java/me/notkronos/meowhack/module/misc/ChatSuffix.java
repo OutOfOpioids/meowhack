@@ -26,9 +26,7 @@ public class ChatSuffix extends Module {
     public void onPacketSend(PacketEvent.PacketSendEvent event) {
         if (isEnabled()) {
             if (event.getPacket() instanceof CPacketChatMessage) {
-                Meowhack.LOGGER.info("received a message");
                 StringBuilder message = new StringBuilder();
-                Meowhack.LOGGER.info("this is not an issue wth command detection!");
                 message.append(((CPacketChatMessage) event.getPacket()).getMessage())
                         .append(" | ᴍᴇᴏᴡʜᴀᴄᴋ");
                 Pattern pattern = Pattern.compile("[+]", Pattern.CASE_INSENSITIVE);

@@ -24,4 +24,6 @@ public abstract class Command implements Wrapper {
     public abstract String getUseCase();
 
     public abstract int getArgSize();
+
+    public abstract String getName();
 }

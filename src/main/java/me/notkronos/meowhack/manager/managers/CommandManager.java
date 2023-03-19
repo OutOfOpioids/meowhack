@@ -39,14 +39,14 @@ public class CommandManager extends Manager {
             mc.ingameGUI.getChatGUI().addToSentMessages(event.getMessage());
 
             //remove prefix
-            command = command.substring(1);
+            command = command.substring(Meowhack.PREFIX.length());
 
             //parse
             String[] args = command.split(" ");
             String commandName = args[0];
+            Meowhack.LOGGER.info(commandName);
             args = Arrays.copyOfRange(args, 1, args.length);
-            Command executable = meowhack.getCommandManager().getCommand(cmd -> cmd.equals(commandName));
-
+            Command executable = Meowhack.INSTANCE.getCommandManager().getCommand(command1 -> command1.getName().equals(commandName));
             if(executable != null) {
                 executable.onExecute(args);
             } else {
