@@ -9,11 +9,9 @@ import net.minecraft.network.play.server.SPacketChat;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static me.notkronos.meowhack.module.client.HUD.time;
 
 public class ChatTimestamp extends Module {
     public static ChatTimestamp INSTANCE;
@@ -21,8 +19,8 @@ public class ChatTimestamp extends Module {
     public ChatTimestamp() {
         super("ChatTimestamp", Category.MISC, "Adds timestamps before chat messages", new String[]{});
         INSTANCE = this;
-        this.enabled = true;
-        this.drawn = false;
+        INSTANCE.enabled = true;
+        INSTANCE.drawn = false;
     }
 
     @SubscribeEvent
