@@ -45,7 +45,7 @@ public class PopLag extends Module {
     public static PopLag INSTANCE;
     protected final Stopwatch popLagTimer = new Stopwatch();
     public PopLag() {
-        super("PopLag", Category.MISC, "Tries to lag opponent's game to cause totem fails", new String[]{});
+        super("PopLag", Category.COMBAT, "Tries to lag opponent's game to cause totem fails", new String[]{});
         INSTANCE = this;
         this.enabled = false;
         this.drawn = true;

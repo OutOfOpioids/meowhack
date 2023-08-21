@@ -107,15 +107,4 @@ public class EventManager extends Manager implements Wrapper {
         }
     }
 
-    @SubscribeEvent
-    public void onPacketReceived(PacketEvent.PacketReceiveEvent event) {
-        if (event.getPacket() instanceof SPacketEntityStatus) {
-            SPacketEntityStatus packet = (SPacketEntityStatus) event.getPacket();
-            if (packet.getOpCode() == 35) {
-                packet.getEntity(EventManager.mc.world);
-                Entity entity = packet.getEntity(EventManager.mc.world);
-                Meowhack.EVENT_BUS.post(new TotemPopEvent(entity));
-            }
-        }
-    }
 }

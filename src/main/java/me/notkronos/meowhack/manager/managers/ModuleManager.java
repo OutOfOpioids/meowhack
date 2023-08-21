@@ -23,6 +23,7 @@ public class ModuleManager extends Manager {
         super("ModuleManager");
         modules = Arrays.asList(
             new Announcer(),
+            new AntiPoplag(),
             new Ambience(),
             new AutoMeow(),
             new ChatSuffix(),
