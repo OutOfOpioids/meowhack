@@ -71,7 +71,7 @@ public class HoleManager extends Manager {
 
     @Override
     public void onThread() {
-        holes = searchHoles();
+        if(mc.world != null) holes = searchHoles();
     }
 
     /**

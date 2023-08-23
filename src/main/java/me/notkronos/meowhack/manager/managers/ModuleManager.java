@@ -40,6 +40,7 @@ public class ModuleManager extends Manager {
             new PopLag(),
             new RPC(),
             new Shader(),
+            new Spammer(),
             new Sprint(),
             new StrengthDetect(),
             new SwingSpeed(),

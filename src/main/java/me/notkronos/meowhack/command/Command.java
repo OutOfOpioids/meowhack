@@ -2,6 +2,8 @@ package me.notkronos.meowhack.command;
 
 import me.notkronos.meowhack.util.Wrapper;
 
+import java.io.IOException;
+
 public abstract class Command implements Wrapper {
 
     String name;
@@ -19,7 +21,7 @@ public abstract class Command implements Wrapper {
         this.alias = alias;
     }
 
-    public abstract void onExecute(String[] args);
+    public abstract void onExecute(String[] args) throws IOException;
 
     public abstract String getUseCase();
 
