@@ -6,7 +6,6 @@ import me.notkronos.meowhack.util.render.FontRenderer;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
-import me.notkronos.meowhack.util.FileSystemUtil;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.awt.*;
 import java.io.InputStream;
@@ -53,7 +52,7 @@ public class CustomFont extends Module {
         try {
 
             // font stream
-            InputStream fontStream = Files.newInputStream(FileSystemUtil.FONTS.resolve(in).toFile().toPath());
+            InputStream fontStream = null; //Files.newInputStream(FileSystemUtil.FONTS.resolve(in).toFile().toPath());
 
             // if the client font exists
             // creates and derives the font

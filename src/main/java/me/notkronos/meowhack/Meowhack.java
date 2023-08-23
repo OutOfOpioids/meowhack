@@ -3,15 +3,18 @@ package me.notkronos.meowhack;
 import me.notkronos.meowhack.gui.clickgui.ClickGUIScreen;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.manager.managers.*;
+import me.notkronos.meowhack.util.file.FileSystemUtil;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,10 +84,18 @@ public class Meowhack {
     public void postInit(FMLPostInitializationEvent event) {
 
         //this has to be done after Module Manager was initialized and I don't want to mess up the alphabetic order lol
+        FileSystemUtil.createFileSystem();
         configManager = new ConfigManager();
         managers.add(configManager);
+        getConfigManager().loadModules();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> getConfigManager().saveModules()));
 
         SETUP = true;
+    }
+
+    @Mod.EventHandler
+    public void onShutdown(FMLServerStoppingEvent event) {
+        getConfigManager().saveModules();
     }
 
     public CommandManager getCommandManager() {

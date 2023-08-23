@@ -1,10 +1,12 @@
 package me.notkronos.meowhack.setting;
 
 import me.notkronos.meowhack.module.Module;
+import me.notkronos.meowhack.util.EnumUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class Setting<T> {
 
@@ -118,5 +120,9 @@ public class Setting<T> {
 
     public Module getModule() {
         return module;
+    }
+
+    public void setValueFromString(String in) {
+        this.value = (T) EnumUtil.fromString((Enum<?>) value, in);
     }
 }
