@@ -1,5 +1,6 @@
 package me.notkronos.meowhack.module.misc;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.command.commands.SpammerFile;
 import me.notkronos.meowhack.module.Category;
@@ -10,7 +11,7 @@ import me.notkronos.meowhack.util.chat.MessageSender;
 import static me.notkronos.meowhack.util.Wrapper.mc;
 
 public class Spammer extends Module {
-    private String[] hazelSpam = {
+    private final String[] hazelSpam = {
             "holy shit i love C10",
             "im omw to get estrogen",
             "dan heng is my beautiful little princess",
@@ -26,11 +27,13 @@ public class Spammer extends Module {
 
     public static Spammer INSTANCE;
     private long time = 0;
+    public boolean isFileSet = false;
+    private boolean isWarningSent = false;
 
     MessageSender messageSender = new MessageSender();
 
     public Spammer() {
-        super("Spammer", Category.MISC, "Meows so you don't have to!", new String[]{});
+        super("Spammer", Category.MISC, "Spams the chat with messages inside of a specified file", new String[]{});
         INSTANCE = this;
         INSTANCE.enabled = true;
         INSTANCE.drawn = true;
@@ -46,8 +49,9 @@ public class Spammer extends Module {
             long tick = mc.world.getTotalWorldTime();
             if (tick - this.time >= 20L * time) {
                 if(mode.getValue() == modeEnum.file) {
-                    if(!SpammerFile.INSTANCE.isFileSet) {
-                        Meowhack.LOGGER.info("You need to set a spammer file first");
+                    if(!isFileSet && !isWarningSent) {
+                        messageSender.sendMessageClientSide(ChatFormatting.RED + "SpammerFile is not set. Please set it using " + Meowhack.PREFIX + "spammerfile <name>");
+                        isWarningSent = true;
                     } else if(spam != null) {
                         mc.player.sendChatMessage(spam[(int) (Math.random() * spam.length)]);
                         this.time = tick;
@@ -66,5 +70,5 @@ public class Spammer extends Module {
 }
 
 enum modeEnum {
-    file, hazelSpammer;
+    file, hazelSpammer
 }

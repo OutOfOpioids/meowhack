@@ -18,8 +18,6 @@ public class SpammerFile extends Command {
         public static SpammerFile INSTANCE;
         private final String name = "spammerfile";
 
-        public Boolean isFileSet = false;
-
         private final MessageSender messageSender = new MessageSender();
 
         public SpammerFile() {
@@ -37,9 +35,13 @@ public class SpammerFile extends Command {
                 if (path.toFile() != null) {
                     String[] allLines = new String[0];
                     try {
+                        if(!path.toFile().exists()) {
+                            messageSender.sendMessageClientSide(ChatFormatting.RED + "File " + filename + ".txt does not exist." + ChatFormatting.RESET + " Please create it in the Meowhack folder.");
+                            return;
+                        }
                         allLines = Files.readAllLines(path).toArray(new String[0]);
                         Spammer.INSTANCE.spam = allLines;
-                        isFileSet = true;
+                        Spammer.INSTANCE.isFileSet = true;
                         messageSender.sendMessageClientSide(ChatFormatting.GREEN + "Spammer file set to " + filename + ".txt");
                     } catch (IOException e) {
                         throw new RuntimeException(e);

@@ -60,6 +60,11 @@ public class ConfigManager extends Manager {
         try {
             if(!FileSystemUtil.getDefaultConfigPath().toFile().exists())
                 FileSystemUtil.getDefaultConfigPath().toFile().createNewFile();
+
+            //Prevent crash if config is empty
+            if(Files.size(FileSystemUtil.getDefaultConfigPath()) <= 0) {
+                return;
+            }
             String config = new String(Files.readAllBytes(FileSystemUtil.getDefaultConfigPath()));
             JsonObject configObject = gson.fromJson(config, JsonObject.class);
             for(Module module : Meowhack.INSTANCE.getModuleManager().getAllModules()) {
