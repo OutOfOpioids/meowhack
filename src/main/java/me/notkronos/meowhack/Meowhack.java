@@ -42,6 +42,7 @@ public class Meowhack {
     private ConfigManager configManager;
     private CommandManager commandManager;
     private EventManager eventManager;
+    private FriendManager friendManager;
     private HoleManager holeManager;
     private ModuleManager moduleManager;
     private TickManager tickManager;
@@ -64,6 +65,9 @@ public class Meowhack {
         eventManager = new EventManager();
         managers.add(eventManager);
 
+        friendManager = new FriendManager();
+        managers.add(friendManager);
+
         holeManager = new HoleManager();
         managers.add(holeManager);
 
@@ -83,11 +87,16 @@ public class Meowhack {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
 
-        //this has to be done after Module Manager was initialized and I don't want to mess up the alphabetic order lol
+        //This has to be done after Module Manager was initialized and I don't want to mess up the alphabetic order
         FileSystemUtil.createFileSystem();
         configManager = new ConfigManager();
         managers.add(configManager);
+
+        //Load configs
         getConfigManager().loadModules();
+        getConfigManager().loadFriends();
+
+        //Add a shutdown hook to save the config
         Runtime.getRuntime().addShutdownHook(new Thread(() -> getConfigManager().saveModules()));
 
         SETUP = true;
@@ -96,6 +105,7 @@ public class Meowhack {
     @Mod.EventHandler
     public void onShutdown(FMLServerStoppingEvent event) {
         getConfigManager().saveModules();
+        getConfigManager().saveFriends();
     }
 
     public CommandManager getCommandManager() {
@@ -106,6 +116,9 @@ public class Meowhack {
     }
     public EventManager getEventManager() {
         return eventManager;
+    }
+    public FriendManager getFriendManager() {
+        return friendManager;
     }
     public HoleManager getHoleManager() {
         return holeManager;

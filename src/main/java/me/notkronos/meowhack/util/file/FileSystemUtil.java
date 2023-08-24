@@ -39,6 +39,9 @@ public class FileSystemUtil {
     public static Path getDefaultConfigPath() {
         return Paths.get(getConfigPath().toString() + "/default.json");
     }
+    public static Path getFriendsPath() {
+        return Paths.get(FOLDER_STRING + "/friends.txt");
+    }
     public static Path getSpammerPath() {
         return Paths.get(FOLDER_STRING + "/spammer");
     }

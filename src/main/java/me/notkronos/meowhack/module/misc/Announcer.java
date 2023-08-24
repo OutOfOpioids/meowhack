@@ -30,6 +30,10 @@ public class Announcer extends Module {
         if (isEnabled()) {
             if (announcePops.getValue()) {
                 if(event.getPopEntity() != mc.player) {
+                    //Avoid announcing friend totem pops
+                    if(Meowhack.INSTANCE.getFriendManager().isFriend(event.getPopEntity().getName())) {
+                        return;
+                    }
                     if (meow.getValue()) {
                         mc.player.sendChatMessage(event.getPopEntity().getName() + " meow meow meow meow meow meowhack!");
                     } else {

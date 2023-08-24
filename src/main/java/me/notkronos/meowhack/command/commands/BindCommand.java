@@ -32,7 +32,7 @@ public class BindCommand extends Command {
                 messageSender.sendMessageClientSide(ChatFormatting.RED + "Module " + args[0] + " doesn't exist");
             }
         } else {
-            messageSender.sendMessageClientSide(ChatFormatting.RED + "Bind takes 2 arguments." + ChatFormatting.RESET +  " Correct usage is " + Meowhack.PREFIX + "drawn " + getUseCase());
+            messageSender.sendMessageClientSide(ChatFormatting.RED + "Bind takes 2 arguments." + ChatFormatting.RESET +  " Correct usage is " + Meowhack.PREFIX + "bind " + getUseCase());
         }
     }
 

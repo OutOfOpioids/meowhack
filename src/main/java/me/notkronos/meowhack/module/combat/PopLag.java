@@ -64,6 +64,9 @@ public class PopLag extends Module {
                     && event.getPopEntity() instanceof EntityPlayer) {
                 event.getPopEntity().getName();
                 String name = event.getPopEntity().getName();
+                if(Meowhack.INSTANCE.getFriendManager().isFriend(name)) {
+                    return;
+                }
                 player.connection.sendPacket(new CPacketChatMessage(
                         "/msg " + name + " " + LAG_MESSAGE));
                 popLagTimer.reset();

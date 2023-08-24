@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ConfigManager extends Manager {
@@ -93,6 +94,36 @@ public class ConfigManager extends Manager {
                     }
                 }
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveFriends() {
+        List<String> friends = Meowhack.INSTANCE.getFriendManager().getFriends();
+        try {
+            if (!FileSystemUtil.getFriendsPath().toFile().exists()) {
+                FileSystemUtil.getFriendsPath().toFile().createNewFile();
+            }
+
+            Writer writer = Files.newBufferedWriter(FileSystemUtil.getFriendsPath());
+            for (String friend : friends) {
+                writer.write(friend + "\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadFriends() {
+        try {
+            if (!FileSystemUtil.getFriendsPath().toFile().exists()) {
+                FileSystemUtil.getFriendsPath().toFile().createNewFile();
+            }
+
+            List<String> friends = Files.readAllLines(FileSystemUtil.getFriendsPath());
+            Meowhack.INSTANCE.getFriendManager().setFriends(friends);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
