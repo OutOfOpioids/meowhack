@@ -6,7 +6,6 @@ import me.notkronos.meowhack.util.EnumUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class Setting<T> {
 

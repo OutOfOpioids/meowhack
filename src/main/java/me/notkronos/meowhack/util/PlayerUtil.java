@@ -1,6 +1,5 @@
 package me.notkronos.meowhack.util;
 
-import net.minecraft.item.EnumAction;
 import net.minecraft.util.math.BlockPos;
 
 public class PlayerUtil implements Wrapper {

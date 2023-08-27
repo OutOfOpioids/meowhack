@@ -4,11 +4,11 @@ import me.notkronos.meowhack.event.events.network.PacketEvent;
 import me.notkronos.meowhack.mixin.mixins.accessor.ITextComponentStringAccessor;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
-import me.notkronos.meowhack.setting.Setting;
 import net.minecraft.network.play.server.SPacketChat;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

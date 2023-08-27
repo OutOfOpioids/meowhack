@@ -2,14 +2,14 @@ package me.notkronos.meowhack.module.client;
 
 import me.notkronos.meowhack.event.events.client.SettingUpdateEvent;
 import me.notkronos.meowhack.event.events.render.RenderFontEvent;
-import me.notkronos.meowhack.util.render.FontRenderer;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
+import me.notkronos.meowhack.util.render.FontRenderer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
 import java.awt.*;
 import java.io.InputStream;
-import java.nio.file.Files;
 
 public class CustomFont extends Module {
     public static CustomFont INSTANCE;

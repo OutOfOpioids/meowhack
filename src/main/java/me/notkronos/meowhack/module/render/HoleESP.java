@@ -10,10 +10,8 @@ import me.notkronos.meowhack.util.render.RenderBuilder.Box;
 import me.notkronos.meowhack.util.render.RenderUtil;
 import net.minecraft.util.math.BlockPos;
 
-
 import java.awt.*;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import static me.notkronos.meowhack.util.Wrapper.mc;
 

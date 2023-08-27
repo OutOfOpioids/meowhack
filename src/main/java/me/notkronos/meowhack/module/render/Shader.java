@@ -9,7 +9,6 @@ import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
 import me.notkronos.meowhack.util.shader.ItemShader;
 import me.notkronos.meowhack.util.shader.shaders.FramebufferWrapper;
-import me.notkronos.meowhack.util.shader.GlShader;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.Display;

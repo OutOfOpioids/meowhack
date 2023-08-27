@@ -1,6 +1,5 @@
 package me.notkronos.meowhack.manager.managers;
 
-import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.manager.Manager;
 
 import java.util.ArrayList;

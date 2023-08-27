@@ -2,6 +2,7 @@ package me.notkronos.meowhack.util.shader.shaders;
 
 import me.notkronos.meowhack.Meowhack;
 import org.lwjgl.opengl.GL11;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;

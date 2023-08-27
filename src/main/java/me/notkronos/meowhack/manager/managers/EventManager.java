@@ -1,15 +1,11 @@
 package me.notkronos.meowhack.manager.managers;
 
 import me.notkronos.meowhack.Meowhack;
-import me.notkronos.meowhack.event.events.combat.TotemPopEvent;
-import me.notkronos.meowhack.event.events.network.PacketEvent;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.module.client.HUD;
 import me.notkronos.meowhack.module.render.HoleESP;
 import me.notkronos.meowhack.util.Wrapper;
-import net.minecraft.entity.Entity;
-import net.minecraft.network.play.server.SPacketEntityStatus;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;

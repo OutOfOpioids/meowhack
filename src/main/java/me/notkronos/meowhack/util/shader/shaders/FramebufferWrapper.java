@@ -5,9 +5,9 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.opengl.Display;
+
 import static me.notkronos.meowhack.util.Wrapper.mc;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.glEnd;
 
 /**
  * Allows rendering to a framebuffer with more ease than with the normal Minecraft Framebuffer class.
