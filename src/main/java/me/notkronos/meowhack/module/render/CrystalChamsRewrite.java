@@ -78,11 +78,11 @@ public class CrystalChamsRewrite extends Module {
     @SubscribeEvent
     public void onRenderCrystalPost(RenderCrystalEvent.RenderCrystalPostEvent event) {
         if (isEnabled()) {
-            float rotation = event.getEntityEnderCrystal().innerRotation + event.getPartialTicks();
+            float rotation = (event.getEntityEnderCrystal().innerRotation + event.getPartialTicks()) * 3;
             float rotationMoved;
             if (!noAnimation.value) {
                 rotationMoved = MathHelper.sin(rotation * 0.2F) / 2 + 0.5F;
-                rotationMoved += StrictMath.pow(rotationMoved, 2) * 0.3;
+                rotationMoved += (StrictMath.pow(rotationMoved, 2)) * 0.2f;
             } else {
                 rotationMoved = 0.15f;
             }
@@ -138,8 +138,8 @@ public class CrystalChamsRewrite extends Module {
                 glEnable(GL_TEXTURE_2D);
                 GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_COLOR, GlStateManager.DestFactor.ONE);
 
-                // render twice (one glint isn't bright enough)
-                for (int i = 0; i < 2; i++) {
+                // render twice (one glint isn't bright enough) <--- whoever thought that is true is retarded
+                for (int i = 0; i < 1; i++) { // too lazy to just remove the loop LOL!
 
                     // bind the enchantment glint texture
                     mc.getRenderManager().renderEngine.bindTexture(GLINT_TEXTURE);
@@ -153,7 +153,7 @@ public class CrystalChamsRewrite extends Module {
                     GlStateManager.translate(0, (event.getEntityEnderCrystal().ticksExisted + mc.getRenderPartialTicks()) * (0.001F + (i * 0.003F)) * 4, 0);
                     GlStateManager.matrixMode(GL_MODELVIEW);
                     glTranslatef(0, 0, 0);
-
+                    event.getModelNoBase().render(event.getEntityEnderCrystal(), 0, rotation, rotationMoved, 0, 0, 0.0625F);
                     // load the matrix
                     GlStateManager.matrixMode(5890);
                     GlStateManager.loadIdentity();
@@ -161,7 +161,7 @@ public class CrystalChamsRewrite extends Module {
                 }
                 glDisable(GL_TEXTURE_2D);
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                event.getModelNoBase().render(event.getEntityEnderCrystal(), 0, rotation, rotationMoved, 0, 0, 0.0625F);
+
             }
 
             if (XQZ.value) {
