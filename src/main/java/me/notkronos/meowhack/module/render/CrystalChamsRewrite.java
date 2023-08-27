@@ -5,13 +5,10 @@ import me.notkronos.meowhack.event.events.entity.RenderCrystalEvent;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
-import me.notkronos.meowhack.util.ColorUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.awt.*;
 
 import static me.notkronos.meowhack.module.render.CrystalChamsRewrite.Mode.*;
 import static me.notkronos.meowhack.util.Wrapper.mc;
@@ -25,11 +22,12 @@ public class CrystalChamsRewrite extends Module {
         INSTANCE = this;
         INSTANCE.enabled = false;
         INSTANCE.drawn = true;
-        Meowhack.INSTANCE.EVENT_BUS.register(this);
+        Meowhack.EVENT_BUS.register(this);
     }
 
     public static Setting<Enum<Mode>> mode = new Setting<>("Mode", LINES);
     public static Setting<Boolean> noAnimation = new Setting<>("NoAnimation", false);
+    public static Setting<Float> rotationSpeed = new Setting<>("RotationSpeed", 1.0f, 0.1f, 5.0f);
     public static Setting<Float> scale = new Setting<>("Scale", 1.0f, 0.1f, 2.0f);
 
     public static Setting<Boolean> XQZ = new Setting<>("XQZ", true);
@@ -67,7 +65,7 @@ public class CrystalChamsRewrite extends Module {
             }
 
             if (texture.getValue()) {
-                event.getModelBase().render(event.getEntity(), 0, event.getLimbSwingAmount(), ageInTicks, 0, 0, event.getScaleFactor());
+                event.getModelBase().render(event.getEntity(), 0, event.getLimbSwingAmount() * rotationSpeed.value, ageInTicks, 0, 0, event.getScaleFactor());
             }
 
             glScaled(1 / scale.value, 1 / scale.value, 1 / scale.value);
@@ -80,14 +78,10 @@ public class CrystalChamsRewrite extends Module {
     public void onRenderCrystalPost(RenderCrystalEvent.RenderCrystalPostEvent event) {
         if (isEnabled()) {
             float f = (float) event.getEntityEnderCrystal().innerRotation + event.getPartialTicks();
-            float rotation = f * 3;
             float rotationMoved;
-            if (!noAnimation.value) {
-                rotationMoved = MathHelper.sin(f * 0.2F) / 2.0f + 0.5F;
-                rotationMoved = rotationMoved * rotationMoved + rotationMoved;
-            } else {
-                rotationMoved = 0.15f;
-            }
+            rotationMoved = MathHelper.sin(f * 0.2F) / 2.0f + 0.5F;
+            rotationMoved = rotationMoved * rotationMoved + rotationMoved;
+
             glPushMatrix();
             glPushAttrib(GL_ALL_ATTRIB_BITS);
 
@@ -96,11 +90,8 @@ public class CrystalChamsRewrite extends Module {
                 glDisable(GL_DEPTH_TEST);
             }
 
-            // scale and translate the model
             glTranslated(event.getX(), event.getY(), event.getZ());
             glScaled(scale.getValue(), scale.getValue(), scale.getValue());
-
-            // remove the texture
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
@@ -112,26 +103,13 @@ public class CrystalChamsRewrite extends Module {
             if (mode.getValue().equals(BOTH) || mode.getValue().equals(CHAMS)) {
                 glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
                 glColor4f(
-                        getChamsColor().getRed() / 255.0f,
-                        getChamsColor().getGreen() / 255.0f,
-                        getChamsColor().getBlue() / 255.0f,
+                        chamsRed.value / 255.0f,
+                        chamsGreen.value / 255.0f,
+                        chamsBlue.value / 255.0f,
                         chamsAlpha.value / 255.0f
-                        //chamsAlpha.value
 
                 );
-                event.getModelNoBase().render(event.getEntityEnderCrystal(), 0, rotation * 3, rotationMoved, 0, 0, 0.0625F);
-            }
-
-            // update the rendering mode of the polygons
-            if (mode.getValue().equals(LINES) || mode.getValue().equals(BOTH)) {
-                glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-                glLineWidth(lineWidth.value + 1);
-                glColor4f(getLineColor().getRed() / 255.0f,
-                        getLineColor().getGreen() / 255.0f,
-                        getLineColor().getBlue() / 255.0f,
-                        getLineColor().getAlpha() / 255.0f
-                );
-                event.getModelNoBase().render(event.getEntityEnderCrystal(), 0, rotation * 3, rotationMoved, 0, 0, 0.0625F);
+                event.getModelNoBase().render(event.getEntityEnderCrystal(), 0, f * 3 * rotationSpeed.value, noAnimation.value ? 0.15f : rotationMoved * 0.2f, 0, 0, 0.0625F);
             }
 
             if (shine.getValue()) {
@@ -149,11 +127,11 @@ public class CrystalChamsRewrite extends Module {
                     GlStateManager.loadIdentity();
                     float textureScale = 0.33333334F;
                     GlStateManager.scale(textureScale, textureScale, textureScale);
-                    GlStateManager.rotate(30 - (i * 60), 0, 0, 1);
+                    GlStateManager.rotate(30, 0, 0, 1);
                     GlStateManager.translate(0, (event.getEntityEnderCrystal().ticksExisted + mc.getRenderPartialTicks()) * (0.001F + (i * 0.003F)) * 4, 0);
                     GlStateManager.matrixMode(GL_MODELVIEW);
                     glTranslatef(0, 0, 0);
-                    event.getModelNoBase().render(event.getEntityEnderCrystal(), 0, rotation * 3, rotationMoved, 0, 0, 0.0625F);
+                    event.getModelNoBase().render(event.getEntityEnderCrystal(), 0, f * 3 * rotationSpeed.value, noAnimation.value ? 0.15f : rotationMoved * 0.2f, 0, 0, 0.0625F);
                     // load the matrix
                     GlStateManager.matrixMode(5890);
                     GlStateManager.loadIdentity();
@@ -161,7 +139,21 @@ public class CrystalChamsRewrite extends Module {
                 }
                 glDisable(GL_TEXTURE_2D);
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            }
 
+            if (mode.getValue().equals(LINES) || mode.getValue().equals(BOTH)) {
+                glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+                glEnable(GL_LINE_SMOOTH);
+                glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+                glLineWidth(lineWidth.value + 1);
+                glColor4f(
+                        lineRed.value / 255.0f,
+                        lineGreen.value / 255.0f,
+                        lineBlue.value / 255.0f,
+                        lineAlpha.value / 255.0f
+                );
+                event.getModelNoBase().render(event.getEntityEnderCrystal(), 0, f * 3 * rotationSpeed.value, noAnimation.value ? 0.15f : rotationMoved * 0.2f, 0, 0, 0.0625F);
+                glDisable(GL_LINE_SMOOTH);
             }
 
             if (XQZ.value) {
@@ -185,19 +177,9 @@ public class CrystalChamsRewrite extends Module {
         }
     }
 
-    public Color getLineColor() {
-        int rgba = ColorUtil.toRGBA(lineRed.value, lineGreen.value, lineBlue.value, lineAlpha.value);
-        return new Color(rgba);
-    }
-
-    public Color getChamsColor() {
-        int rgba = ColorUtil.toRGBA(chamsRed.value, chamsGreen.value, chamsBlue.value, chamsAlpha.value);
-        return new Color(rgba);
-    }
-
     public enum Mode {
         LINES,
         CHAMS,
-        BOTH;
+        BOTH
     }
 }
