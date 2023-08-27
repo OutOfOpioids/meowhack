@@ -7,9 +7,7 @@ import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
-import me.notkronos.meowhack.setting.settings.IntegerSetting;
 import me.notkronos.meowhack.util.Bind;
-import me.notkronos.meowhack.util.EnumUtil;
 import me.notkronos.meowhack.util.file.FileSystemUtil;
 
 import java.io.IOException;

@@ -6,9 +6,12 @@ import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
 import me.notkronos.meowhack.util.ColorUtil;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.network.play.server.SPacketDestroyEntities;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,6 +22,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class CrystalChams extends Module {
     public static CrystalChams INSTANCE;
+
+    private final ResourceLocation GLINT_TEXTURE = new ResourceLocation("textures/misc/enchanted_item_glint.png");
 
     public CrystalChams() {
         super("CrystalChams", Category.RENDER, "Modifies crystal rendering", new String[]{"EndCrystalChams"});
@@ -32,6 +37,8 @@ public class CrystalChams extends Module {
     //General Settings
     public static Setting<Boolean> noAnimation = new Setting<>("NoAnimation", false);
     public static Setting<Boolean> XQZ = new Setting<>("XQZ", true);
+    public static Setting<Boolean> texture = new Setting<>("Texture", false);
+    public static Setting<Boolean> shine = new Setting<>("Shine", false);
     public static Setting<Enum<Mode>> mode = new Setting<>("Mode", Mode.NONE);
 
     //Line Settings
@@ -93,10 +100,18 @@ public class CrystalChams extends Module {
             }
     }
 
+    //make it only affect EndCrystals
+    public void XQZ() {
+        glDepthMask(false);
+        glDisable(GL_DEPTH_TEST);
+    }
+
     public void renderLines() {
         Color lineColor = getLineColor();
         glPushAttrib(GL_ALL_ATTRIB_BITS);
         glEnable(GL_BLEND);
+        glEnable(GL_LINE_SMOOTH);
+        glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
         glDisable(GL_TEXTURE_2D);
         glDisable(GL_LIGHTING);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -120,13 +135,11 @@ public class CrystalChams extends Module {
         glEnable(GL_STENCIL_TEST);
         glEnable(GL_POLYGON_OFFSET_LINE);
         if (XQZ.getValue()) {
-            glDepthMask(false);
-            glDisable(GL_DEPTH_TEST);
-            glColor4f(xqzColor.getRed() / 255.0f,
-                    xqzColor.getGreen() / 255.0f,
-                    xqzColor.getBlue() / 255.0f,
-                    xqzColor.getAlpha() / 255.0f
-            );
+                glColor4f(xqzColor.getRed() / 255.0f,
+                        xqzColor.getGreen() / 255.0f,
+                        xqzColor.getBlue() / 255.0f,
+                        xqzColor.getAlpha() / 255.0f
+                );
         } else {
             glColor4f(chamsColor.getRed() / 255.0f,
                     chamsColor.getGreen() / 255.0f,
@@ -135,14 +148,20 @@ public class CrystalChams extends Module {
             );
         }
     }
+
     public void render(RenderCrystalEvent.RenderCrystalPreEvent event) {
+        if (XQZ.value) {
+            XQZ();
+        }
         float ageInTicks;
-        if(noAnimation.getValue()) {
+        if (noAnimation.getValue()) {
             ageInTicks = 0.15f;
         } else {
             ageInTicks = event.getAgeInTicks();
         }
-
+        if(shine.value) {
+            GlStateManager.translate(0, (event.getEntity().ticksExisted + mc.getRenderPartialTicks()) * (0.001F + (0.009F)) * 4, 0);
+        }
         event.getModelBase().render(event.getEntity(),
                 event.getLimbSwing(),
                 event.getLimbSwingAmount(),
@@ -151,7 +170,6 @@ public class CrystalChams extends Module {
                 event.getHeadPitch(),
                 event.getScaleFactor()
         );
-
         glPopAttrib();
     }
 

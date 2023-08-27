@@ -7,7 +7,6 @@ import me.notkronos.meowhack.module.misc.Spammer;
 import me.notkronos.meowhack.util.chat.MessageSender;
 import me.notkronos.meowhack.util.file.FileSystemUtil;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

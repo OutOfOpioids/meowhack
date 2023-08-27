@@ -6,11 +6,6 @@ import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-/**
- * Called when an end crystal is rendered
- * @author linustouchtips
- * @since 05/23/2021
- */
 @Cancelable
 public class RenderCrystalEvent extends Event {
 

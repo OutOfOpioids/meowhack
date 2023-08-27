@@ -2,7 +2,6 @@ package me.notkronos.meowhack.module.misc;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import me.notkronos.meowhack.Meowhack;
-import me.notkronos.meowhack.command.commands.SpammerFile;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
