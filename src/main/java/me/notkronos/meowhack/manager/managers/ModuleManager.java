@@ -4,7 +4,7 @@ import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.module.client.ClickGUIModule;
 import me.notkronos.meowhack.module.client.Colors;
-import me.notkronos.meowhack.module.client.CustomFont;
+import me.notkronos.meowhack.module.client.CustomFontMod;
 import me.notkronos.meowhack.module.client.HUD;
 import me.notkronos.meowhack.module.combat.*;
 import me.notkronos.meowhack.module.misc.*;
@@ -33,7 +33,7 @@ public class ModuleManager extends Manager {
             new Colors(),
             new CrystalChams(),
             new CrystalChamsRewrite(),
-            new CustomFont(),
+            new CustomFontMod(),
             new FullBright(),
             new HoleESP(),
             new HUD(),

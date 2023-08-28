@@ -16,10 +16,6 @@ public class MixinFontRenderer {
     public void renderString(String text, float x, float y, int color, boolean dropShadow, CallbackInfoReturnable<Integer> info) {
         RenderFontEvent renderFontEvent = new RenderFontEvent();
         Meowhack.EVENT_BUS.post(renderFontEvent);
-
-        if (renderFontEvent.isCanceled()) {
-            info.setReturnValue(FontUtil.drawStringWithShadow(text, x, y, color));
-        }
     }
 
     @Inject(method = "getStringWidth", at = @At("HEAD"), cancellable = true)
