@@ -25,11 +25,11 @@ public class CommandManager extends Manager {
     public CommandManager() {
         super("CommandManager");
         commands.add(new BindCommand());
-        commands.add(new CustomFont());
         commands.add(new Drawn());
         commands.add(new Friend());
         commands.add(new Load());
         commands.add(new Save());
+        commands.add(new SetFont());
         commands.add(new SpammerFile());
         Meowhack.EVENT_BUS.register(this);
     }

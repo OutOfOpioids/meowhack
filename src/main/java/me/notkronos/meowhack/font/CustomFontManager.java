@@ -8,7 +8,7 @@ import static me.notkronos.meowhack.util.Wrapper.mc;
 
 public class CustomFontManager
 {
-    public static CustomFontRenderer customFont;
+    public static CustomFontRenderer customFont = new CustomFontRenderer(new Font("Verdana", 0, 14), true, true);
     public CustomFontManager() {
     }
 
@@ -49,9 +49,5 @@ public class CustomFontManager
             return CustomFontManager.customFont.getStringWidth(text);
         }
         return mc.fontRenderer.getStringWidth(text);
-    }
-
-    static {
-        CustomFontManager.customFont = new CustomFontRenderer(new Font("Verdana", 0, 18), true, false);
     }
 }
