@@ -459,7 +459,7 @@ public class RenderUtil implements Wrapper {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glShadeModel(GL_SMOOTH);
         glBegin(GL_QUADS);
-        glColor4f((float) c.getRed() / 255, (float) c.getGreen() / 255, (float) c.getBlue() / 255, (float) c.getAlpha() / 255);
+        GlStateManager.color((float) c.getRed() / 255, (float) c.getGreen() / 255, (float) c.getBlue() / 255, (float) c.getAlpha() / 255);
         glVertex2f(x, y);
         glVertex2f(x, y + height);
         glVertex2f(x + width, y + height);
@@ -472,22 +472,25 @@ public class RenderUtil implements Wrapper {
     }
 
     public static void drawRect(float x, float y, float width, float height, Color color) {
-        glPushMatrix();
-        glDisable(GL_TEXTURE_2D);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glShadeModel(GL_SMOOTH);
-        glBegin(GL_QUADS);
-        glColor4f((float) color.getRed() / 255, (float) color.getGreen() / 255, (float) color.getBlue() / 255, (float) color.getAlpha() / 255);
+        final float alpha = color.getAlpha();
+        final float red = color.getRed();
+        final float green = color.getGreen();
+        final float blue = color.getBlue();
+
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.glBegin(GL_QUADS);
+        GlStateManager.color(red / 255, green / 255, blue / 255, alpha);
         glVertex2f(x, y);
         glVertex2f(x, y + height);
         glVertex2f(x + width, y + height);
         glVertex2f(x + width, y);
-        glColor4f(0, 0, 0, 1);
-        glEnd();
-        glEnable(GL_TEXTURE_2D);
-        glDisable(GL_BLEND);
-        glPopMatrix();
+        GlStateManager.glEnd();
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
     }
 
     public static void drawBorder(float x, float y, float width, float height, Color color) {
@@ -500,6 +503,11 @@ public class RenderUtil implements Wrapper {
     public static void drawRoundedRect(double x, double y, double width, double height, double radius, Color color) {
         glPushAttrib(GL_POINTS);
 
+        final float alpha = color.getAlpha();
+        final float red = color.getRed();
+        final float green = color.getGreen();
+        final float blue = color.getBlue();
+
         glScaled(0.5, 0.5, 0.5); {
             x *= 2;
             y *= 2;
@@ -511,7 +519,7 @@ public class RenderUtil implements Wrapper {
 
             glEnable(GL_BLEND);
             glDisable(GL_TEXTURE_2D);
-            glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
+            GlStateManager.color(red / 255, green / 255, blue / 255, alpha);
             glEnable(GL_LINE_SMOOTH);
             glBegin(GL_POLYGON);
 

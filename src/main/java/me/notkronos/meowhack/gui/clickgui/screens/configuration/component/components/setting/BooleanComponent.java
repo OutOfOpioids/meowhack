@@ -61,7 +61,7 @@ public class BooleanComponent extends SettingComponent<Boolean> {
         glScaled(0.55, 0.55, 0.55); {
             float scaledX = (getModuleComponent().getCategoryFrameComponent().getPosition().x + 6) * 1.81818181F;
             float scaledY = (featureHeight + 5) * 1.81818181F;
-            FontUtil.drawStringWithShadow(getSetting().getName(), scaledX, scaledY, -1);
+            FontUtil.drawString(getSetting().getName(), scaledX, scaledY, 0xffffffff);
         }
 
         glScaled(1.81818181, 1.81818181, 1.81818181);

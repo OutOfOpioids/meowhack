@@ -54,10 +54,10 @@ public class EnumComponent extends SettingComponent<Enum<?>> {
             float scaledWidth = (getModuleComponent().getCategoryFrameComponent().getPosition().x + getModuleComponent().getCategoryFrameComponent().getWidth() - (FontUtil.getStringWidth(FormatUtil.formatEnum(getSetting().getValue())) * 0.55F) - 3) * 1.81818181F;
 
             // setting name
-            FontUtil.drawStringWithShadow(getSetting().getName(), scaledX, scaledY, -1);
+            FontUtil.drawString(getSetting().getName(), scaledX, scaledY, 0xffffffff);
 
             // setting value
-            FontUtil.drawStringWithShadow(FormatUtil.formatEnum(getSetting().getValue()), scaledWidth, scaledY, -1);
+            FontUtil.drawString(FormatUtil.formatEnum(getSetting().getValue()), scaledWidth, scaledY, 0xffffffff);
         }
 
         glScaled(1.81818181, 1.81818181, 1.81818181);

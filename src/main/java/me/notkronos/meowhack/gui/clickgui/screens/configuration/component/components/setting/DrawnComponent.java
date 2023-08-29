@@ -52,10 +52,10 @@ public class DrawnComponent extends SettingComponent<AtomicBoolean> {
             float scaledWidth = (getModuleComponent().getCategoryFrameComponent().getPosition().x + getModuleComponent().getCategoryFrameComponent().getWidth() - (FontUtil.getStringWidth(String.valueOf(getModuleComponent().getModule().isDrawn())) * 0.55F) - 3) * 1.81818181F;
 
             // drawn name
-            FontUtil.drawStringWithShadow(getSetting().getName(), scaledX, scaledY, -1);
+            FontUtil.drawString(getSetting().getName(), scaledX, scaledY, 0xffffffff);
 
             // drawn value
-            FontUtil.drawStringWithShadow(String.valueOf(getModuleComponent().getModule()), scaledWidth, scaledY, -1);
+            FontUtil.drawString(String.valueOf(getModuleComponent().getModule()), scaledWidth, scaledY, 0xffffffff);
         }
 
         glScaled(1.81818181, 1.81818181, 1.81818181);

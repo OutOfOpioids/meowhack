@@ -60,10 +60,10 @@ public class BindComponent extends SettingComponent<Bind> {
             float scaledWidth = (getModuleComponent().getCategoryFrameComponent().getPosition().x + getModuleComponent().getCategoryFrameComponent().getWidth() - (FontUtil.getStringWidth(binding ? "Listening ..." : keyName) * 0.55F) - 3) * 1.81818181F;
 
             // setting name
-            FontUtil.drawStringWithShadow(getSetting().getName(), scaledX, scaledY, -1);
+            FontUtil.drawString(getSetting().getName(), scaledX, scaledY, 0xffffffff);
 
             // bind value
-            FontUtil.drawStringWithShadow(binding ? "Listening ..." : keyName, scaledWidth, scaledY, -1);
+            FontUtil.drawString(binding ? "Listening ..." : keyName, scaledWidth, scaledY, 0xffffffff);
         }
 
         glScaled(1.81818181, 1.81818181, 1.81818181);

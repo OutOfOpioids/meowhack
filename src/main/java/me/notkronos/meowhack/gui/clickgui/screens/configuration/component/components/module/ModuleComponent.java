@@ -6,6 +6,7 @@ import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.compon
 import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.setting.*;
 import me.notkronos.meowhack.gui.util.animation.Animation;
 import me.notkronos.meowhack.module.Module;
+import me.notkronos.meowhack.module.client.Colors;
 import me.notkronos.meowhack.setting.Setting;
 import me.notkronos.meowhack.util.Bind;
 import me.notkronos.meowhack.util.ColorUtil;
@@ -130,15 +131,15 @@ public class ModuleComponent extends DrawableComponent {
                 float scaledY = (featureHeight + 4.5F) * 1.25F;
                 float scaledWidth = (categoryFrameComponent.getPosition().x + categoryFrameComponent.getWidth() - (FontUtil.getStringWidth("...") * 0.8F) - 3) * 1.25F;
                 if(module.isEnabled()) {
-                    FontUtil.drawStringWithShadow(getModule().getName(), scaledX, scaledY, primaryColor);
-                    FontUtil.drawStringWithShadow("...", scaledWidth, scaledY - 3, new Color(255, 255, 255).getRGB());
+                    FontUtil.drawString(getModule().getName(), scaledX, scaledY, new Color(Colors.red.value, Colors.green.value, Colors.blue.value).getRGB());
+                    FontUtil.drawString("...", scaledWidth, scaledY - 3, new Color(255, 255, 255).getRGB());
                 } else {
                     if(!Arrays.asList(coreModules).contains((module.getName()))) {
-                        FontUtil.drawStringWithShadow(getModule().getName(), scaledX, scaledY, new Color(255, 255, 255).getRGB());
-                        FontUtil.drawStringWithShadow("...", scaledWidth, scaledY - 3, new Color(255, 255, 255).getRGB());
+                        FontUtil.drawString(getModule().getName(), scaledX, scaledY, new Color(255, 255, 255).getRGB());
+                        FontUtil.drawString("...", scaledWidth, scaledY - 3, new Color(255, 255, 255).getRGB());
                     } else {
-                        FontUtil.drawStringWithShadow(getModule().getName(), scaledX, scaledY, primaryColor);
-                        FontUtil.drawStringWithShadow("...", scaledWidth, scaledY - 3, new Color(255, 255, 255).getRGB());
+                        FontUtil.drawString(getModule().getName(), scaledX, scaledY, new Color(Colors.red.value, Colors.green.value, Colors.blue.value).getRGB());
+                        FontUtil.drawString("...", scaledWidth, scaledY - 3, new Color(255, 255, 255).getRGB());
                     }
                 }
             }

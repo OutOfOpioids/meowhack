@@ -101,7 +101,7 @@ public class CategoryFrameComponent extends FrameComponent<Category> implements 
             float scaledY = (getPosition().y + TITLE - 14) * 0.95238095F;
 
             // draw text
-            FontUtil.drawStringWithShadow(windowTitle, scaledX, scaledY, new Color(255, 255, 255).getRGB());
+            FontUtil.drawString(windowTitle, scaledX, scaledY, new Color(255, 255, 255).getRGB());
         }
 
         glScaled(0.95238095, 0.95238095, 0.95238095);
