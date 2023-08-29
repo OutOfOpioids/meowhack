@@ -19,6 +19,7 @@
     "mixins.render.entity.IEntityRenderer",
     "mixins.render.entity.MixinEntityRenderer",
     "mixins.render.entity.MixinRenderEnderCrystal",
+    "mixins.render.entity.MixinRenderLivingBase",
     "mixins.render.gui.MixinFontRenderer",
     "mixins.render.tileEntity.MixinTileEntityEnchantmentTableRenderer"
   ]

@@ -39,6 +39,7 @@ public class ModuleManager extends Manager {
             new HUD(),
             new NoBob(),
             new NoEnchantingTableLag(),
+            new PlayerChams(),
             new PopLag(),
             new RPC(),
             new Shader(),
