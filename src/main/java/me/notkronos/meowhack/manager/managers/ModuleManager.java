@@ -34,6 +34,7 @@ public class ModuleManager extends Manager {
             new CrystalChams(),
             new CrystalChamsRewrite(),
             new CustomFontMod(),
+            new DeathEffects(),
             new FullBright(),
             new HoleESP(),
             new HUD(),
