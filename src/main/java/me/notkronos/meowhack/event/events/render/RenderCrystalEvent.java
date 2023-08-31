@@ -1,4 +1,4 @@
-package me.notkronos.meowhack.event.events.entity;
+package me.notkronos.meowhack.event.events.render;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;

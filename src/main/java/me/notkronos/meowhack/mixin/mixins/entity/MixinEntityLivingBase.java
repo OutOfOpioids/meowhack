@@ -1,5 +1,7 @@
 package me.notkronos.meowhack.mixin.mixins.entity;
 
+import me.notkronos.meowhack.Meowhack;
+import me.notkronos.meowhack.event.events.entity.DeathEvent;
 import me.notkronos.meowhack.module.render.SwingSpeed;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -8,11 +10,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
@@ -25,6 +30,10 @@ public abstract class MixinEntityLivingBase extends Entity {
     public MixinEntityLivingBase(World world) {
         super(world);
     }
+
+    @Shadow
+    @Final
+    private static DataParameter<Float> HEALTH;
 
     @Shadow
     protected abstract boolean isPlayer();
@@ -76,6 +85,17 @@ public abstract class MixinEntityLivingBase extends Entity {
                     }
                 }
             }
+        }
+    }
+
+    @Inject(method = "notifyDataManagerChange", at = @At("RETURN"))
+    public void notifyDataManagerChange(DataParameter<?> key, CallbackInfo ci) {
+        if (key.equals(HEALTH)
+                && this.dataManager.get(HEALTH) <= 0.0
+                && this.world != null
+                && this.world.isRemote)
+        {
+            Meowhack.EVENT_BUS.post(new DeathEvent(EntityLivingBase.class.cast(this)));
         }
     }
 }

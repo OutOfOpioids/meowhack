@@ -1,8 +1,7 @@
 package me.notkronos.meowhack.mixin.mixins.render.entity;
 
 import me.notkronos.meowhack.Meowhack;
-import me.notkronos.meowhack.event.events.entity.RenderCrystalEvent;
-import me.notkronos.meowhack.module.render.CrystalChams;
+import me.notkronos.meowhack.event.events.render.RenderCrystalEvent;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderEnderCrystal;
 import net.minecraft.entity.Entity;
@@ -22,19 +21,7 @@ public class MixinRenderEnderCrystal {
         RenderCrystalEvent.RenderCrystalPreEvent renderCrystalEvent = new RenderCrystalEvent.RenderCrystalPreEvent(instance, entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
         Meowhack.EVENT_BUS.post(renderCrystalEvent);
         if (!renderCrystalEvent.isCanceled()) {
-            if(CrystalChams.INSTANCE.isEnabled()) {
-                if(CrystalChams.noAnimation.getValue()) {
-                    //Finding these values was so fucking annoying
-                    instance.render(entityIn, 0.0f, limbSwingAmount, 0.15f, 0.0f, 0.0f, 0.0625f);
-                } else {
-                    instance.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-                }
-                if(CrystalChams.mode.getValue() == CrystalChams.Mode.BOTH || CrystalChams.mode.getValue() == CrystalChams.Mode.LINE) {
-                    CrystalChams.INSTANCE.onRenderModel(renderCrystalEvent);
-                }
-            } else {
-                instance.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-            }
+            instance.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
         }
     }
     @Inject(method = "doRender(Lnet/minecraft/entity/item/EntityEnderCrystal;DDDFF)V", at = @At("TAIL"), cancellable = true)
