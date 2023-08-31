@@ -1,6 +1,7 @@
 package me.notkronos.meowhack.gui.clickgui;
 
 import me.notkronos.meowhack.Meowhack;
+import me.notkronos.meowhack.font.CustomFontRenderer;
 import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.ClickType;
 import me.notkronos.meowhack.gui.clickgui.screens.configuration.component.components.category.CategoryFrameComponent;
 import me.notkronos.meowhack.gui.util.InterfaceWrapper;
@@ -8,6 +9,8 @@ import me.notkronos.meowhack.gui.util.MousePosition;
 import me.notkronos.meowhack.gui.util.ScissorStack;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.client.ClickGUIModule;
+import me.notkronos.meowhack.module.client.CustomFontMod;
+import me.notkronos.meowhack.util.render.FontUtil;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.math.Vec2f;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -15,6 +18,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -172,6 +176,16 @@ public class ClickGUIScreen extends GuiScreen implements InterfaceWrapper {
         categoryFrameComponents.forEach(categoryFrameComponent -> {
             categoryFrameComponent.setOpen(false);
         });
+
+        if(CustomFontMod.INSTANCE.isEnabled()) {
+            FontUtil.customFont = new CustomFontRenderer(
+                    new Font("Verdana",
+                            CustomFontMod.fontStyle.value,
+                            CustomFontMod.fontSize.value),
+                    CustomFontMod.antiAlias.value,
+                    CustomFontMod.metrics.value
+            );
+        }
 
         Meowhack.EVENT_BUS.unregister(this);
 

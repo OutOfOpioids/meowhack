@@ -29,7 +29,6 @@ public class CommandManager extends Manager {
         commands.add(new Friend());
         commands.add(new Load());
         commands.add(new Save());
-        commands.add(new SetFont());
         commands.add(new SpammerFile());
         Meowhack.EVENT_BUS.register(this);
     }

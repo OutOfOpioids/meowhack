@@ -1,15 +1,9 @@
 package me.notkronos.meowhack.module.client;
 
 import me.notkronos.meowhack.Meowhack;
-import me.notkronos.meowhack.event.events.client.SettingUpdateEvent;
-import me.notkronos.meowhack.font.CustomFontManager;
-import me.notkronos.meowhack.font.CustomFontRenderer;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.awt.*;
 
 public class CustomFontMod extends Module
 {
@@ -30,16 +24,4 @@ public class CustomFontMod extends Module
     public static Setting<Boolean> metrics = new Setting<>("Metrics", true);
     public static Setting<Boolean> shadow = new Setting<>("Shadow", true);
     public static Setting<Integer> fontOffset = new Setting<>("Font Offset", 0, -5, 5);
-
-    @Override
-    //TODO: optimize
-    public void onRender2D() {
-        CustomFontManager.customFont = new CustomFontRenderer(
-                new Font("Verdana",
-                        CustomFontMod.fontStyle.value,
-                        CustomFontMod.fontSize.value),
-                CustomFontMod.antiAlias.value,
-                CustomFontMod.metrics.value
-        );
-    }
 }
