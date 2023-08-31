@@ -53,8 +53,9 @@ public class TotemPopCounter extends Module implements Wrapper {
     @SubscribeEvent
     public void onDeath(DeathEvent event) {
         if(totemPops.containsKey(event.getEntity())) {
+            int pops = totemPops.get(event.getEntity());
             messageSender.sendMessageClientSide(TextFormatting.RED + "[Meowhack] " + TextFormatting.WHITE
-                    + event.getEntity().getName() + " died after popping " + TextFormatting.GREEN + totemPops.get(event.getEntity()) + TextFormatting.WHITE + " totems.");
+                    + event.getEntity().getName() + " died after popping " + TextFormatting.GREEN + totemPops.get(event.getEntity()) + TextFormatting.WHITE + (pops == 1 ? " totem." : " totems."));
         }
     }
 
