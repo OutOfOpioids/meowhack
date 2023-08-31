@@ -28,7 +28,7 @@ public class AntiPoplag extends Module {
 
     @SubscribeEvent
     public void onPacketReceive(PacketEvent.PacketReceiveEvent event) {
-        if (event.getPacket() instanceof SPacketChat) {
+        if (event.getPacket() instanceof SPacketChat && this.enabled) {
             String message = ((SPacketChat) event.getPacket()).getChatComponent().getUnformattedText();
             Pattern pattern = Pattern.compile("[^\t\r\n\\x20-\\x7E]+", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(message);
