@@ -33,6 +33,7 @@ public class CrystalChamsRewrite extends Module {
     public static Setting<Boolean> XQZ = new Setting<>("XQZ", true);
     public static Setting<Boolean> texture = new Setting<>("Texture", false);
     public static Setting<Boolean> shine = new Setting<>("Shine", false);
+    public static Setting<Integer> shineStrength = new Setting<>("ShineStrength", 1, 1, 3);
 
     public static Setting<Integer> lineWidth = new Setting<>("LineWidth", 1, 1, 3);
 
@@ -116,8 +117,7 @@ public class CrystalChamsRewrite extends Module {
                 glEnable(GL_TEXTURE_2D);
                 GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_COLOR, GlStateManager.DestFactor.ONE);
 
-                // render twice (one glint isn't bright enough) <--- whoever thought that is true is retarded
-                for (int i = 0; i < 1; i++) { // too lazy to just remove the loop LOL!
+                for (int i = 0; i < shineStrength.value; i++) {
 
                     // bind the enchantment glint texture
                     mc.getRenderManager().renderEngine.bindTexture(GLINT_TEXTURE);
@@ -127,7 +127,7 @@ public class CrystalChamsRewrite extends Module {
                     GlStateManager.loadIdentity();
                     float textureScale = 0.33333334F;
                     GlStateManager.scale(textureScale, textureScale, textureScale);
-                    GlStateManager.rotate(30, 0, 0, 1);
+                    GlStateManager.rotate(30 - (i * 60), 0, 0, 1);
                     GlStateManager.translate(0, (event.getEntityEnderCrystal().ticksExisted + mc.getRenderPartialTicks()) * (0.001F + (i * 0.003F)) * 4, 0);
                     GlStateManager.matrixMode(GL_MODELVIEW);
                     glTranslatef(0, 0, 0);
