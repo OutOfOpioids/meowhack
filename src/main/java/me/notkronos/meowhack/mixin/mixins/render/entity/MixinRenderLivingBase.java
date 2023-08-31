@@ -1,7 +1,7 @@
 package me.notkronos.meowhack.mixin.mixins.render.entity;
 
 import me.notkronos.meowhack.Meowhack;
-import me.notkronos.meowhack.event.events.entity.RenderLivingEntityEvent;
+import me.notkronos.meowhack.event.events.render.RenderLivingEntityEvent;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.entity.Entity;

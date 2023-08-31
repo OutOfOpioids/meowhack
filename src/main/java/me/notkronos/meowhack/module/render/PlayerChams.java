@@ -1,15 +1,13 @@
 package me.notkronos.meowhack.module.render;
 
 import me.notkronos.meowhack.Meowhack;
-import me.notkronos.meowhack.event.events.entity.RenderCrystalEvent;
-import me.notkronos.meowhack.event.events.entity.RenderLivingEntityEvent;
+import me.notkronos.meowhack.event.events.render.RenderLivingEntityEvent;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static me.notkronos.meowhack.module.render.PlayerChams.Mode.*;

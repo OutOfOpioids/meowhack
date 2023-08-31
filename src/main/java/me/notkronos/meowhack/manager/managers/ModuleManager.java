@@ -31,7 +31,6 @@ public class ModuleManager extends Manager {
             new ChestplateSwap(),
             new ClickGUIModule(),
             new Colors(),
-            new CrystalChams(),
             new CrystalChamsRewrite(),
             new CustomFontMod(),
             new DeathEffects(),
