@@ -40,6 +40,7 @@ public class ModuleManager extends Manager {
             new NoBob(),
             new NoEnchantingTableLag(),
             new PlayerChams(),
+            new PlayerModel(),
             new PopLag(),
             new RPC(),
             new Shader(),

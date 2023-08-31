@@ -18,15 +18,15 @@ public class DeathEffects extends Module {
     public static DeathEffects INSTANCE;
 
     public DeathEffects() {
-        super("DeathEffects", Category.RENDER.RENDER, "Adds death effects", new String[]{});
+        super("DeathEffects", Category.RENDER, "Adds death effects", new String[]{});
         INSTANCE = this;
         INSTANCE.enabled = false;
         INSTANCE.drawn = true;
         Meowhack.EVENT_BUS.register(this);
     }
 
-    public Setting<Boolean> lightning = new Setting<>("Lightning", true);
-    public Setting<Boolean> sound = new Setting<>("Sound", true);
+    public static Setting<Boolean> lightning = new Setting<>("Lightning", true);
+    public static Setting<Boolean> sound = new Setting<>("Sound", true);
 
     @SubscribeEvent
     public void onDeathEvent(DeathEvent event) {
