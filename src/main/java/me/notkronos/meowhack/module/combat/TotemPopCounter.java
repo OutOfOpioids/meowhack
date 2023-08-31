@@ -2,6 +2,7 @@ package me.notkronos.meowhack.module.combat;
 
 import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.event.events.combat.TotemPopEvent;
+import me.notkronos.meowhack.event.events.entity.DeathEvent;
 import me.notkronos.meowhack.event.events.entity.EntityWorldEvent;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
@@ -46,6 +47,14 @@ public class TotemPopCounter extends Module implements Wrapper {
                         + player.getName() + " popped " + TextFormatting.GREEN + pops + TextFormatting.WHITE + " totems.";
             }
             messageSender.sendMessageClientSide(message);
+        }
+    }
+
+    @SubscribeEvent
+    public void onDeath(DeathEvent event) {
+        if(totemPops.containsKey(event.getEntity())) {
+            messageSender.sendMessageClientSide(TextFormatting.RED + "[Meowhack] " + TextFormatting.WHITE
+                    + event.getEntity().getName() + " died after popping " + TextFormatting.GREEN + totemPops.get(event.getEntity()) + TextFormatting.WHITE + " totems.");
         }
     }
 
