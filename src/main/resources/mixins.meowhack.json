@@ -7,6 +7,7 @@
     "mixins.accessor.ICPacketChatMessageAccessor",
     "mixins.accessor.ITextComponentStringAccessor",
     "mixins.entity.MixinEntityLivingBase",
+    "mixins.entity.player.MixinAbstractClientPlayer",
     "mixins.network.MixinNetworkManager",
     "mixins.world.MixinWorld"
   ],
@@ -16,6 +17,7 @@
     "mixins.accessor.ITimerAccessor",
     "mixins.entity.player.MixinEntityPlayerSP",
     "mixins.render.MixinItemRenderer",
+    "mixins.render.MixinParticleTotem",
     "mixins.render.entity.IEntityRenderer",
     "mixins.render.entity.MixinEntityRenderer",
     "mixins.render.entity.MixinRenderEnderCrystal",
