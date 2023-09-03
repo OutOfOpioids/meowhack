@@ -1,5 +1,7 @@
 package me.notkronos.meowhack.util.shader;
 
+import me.notkronos.meowhack.Meowhack;
+import me.notkronos.meowhack.module.render.Shader;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
@@ -10,10 +12,8 @@ public class ItemShader extends FramebufferShader
 {
     public float mix = 0.0f;
     public float alpha = 1.0f;
-
-    public ItemShader() {
-
-        super("itemglow.frag");
+    public ItemShader(String fragmentShader) {
+        super(fragmentShader);
     }
 
     @Override
@@ -21,14 +21,18 @@ public class ItemShader extends FramebufferShader
     {
         setupUniform("texture");
         setupUniform("texelSize");
-        setupUniform("color");
+        setupUniform("radius");
         setupUniform("divider");
         setupUniform("radius");
         setupUniform("maxSample");
-        setupUniform("dimensions");
         setupUniform("mixFactor");
         setupUniform("minAlpha");
-        setupUniform("image");
+        setupUniform("firstGradientColor");
+        setupUniform("secondGradientColor");
+        setupUniform("speed");
+        setupUniform("stretch");
+        setupUniform("dimensions");
+        setupUniform("time");
     }
 
     @Override
@@ -36,17 +40,18 @@ public class ItemShader extends FramebufferShader
     {
         GL20.glUniform1i(getUniform("texture"), -1);
         GL20.glUniform2f(getUniform("texelSize"), 1F / mc.displayWidth * (radius * quality), 1F / mc.displayHeight * (radius * quality));
-        GL20.glUniform3f(getUniform("color"), red, green, blue);
-        GL20.glUniform1f(getUniform("divider"), 140F);
         GL20.glUniform1f(getUniform("radius"), radius);
+        GL20.glUniform1f(getUniform("divider"), 140F);
         GL20.glUniform1f(getUniform("maxSample"), 10F);
-        GL20.glUniform2f(getUniform("dimensions"), mc.displayWidth, mc.displayHeight);
         GL20.glUniform1f(getUniform("mixFactor"), mix);
         GL20.glUniform1f(getUniform("minAlpha"), alpha);
-        GL13.glActiveTexture(GL13.GL_TEXTURE8);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, 8);
-        GL20.glUniform1i(getUniform("image"), 0);
-        GL13.glActiveTexture(GL13.GL_TEXTURE0);
+        GL20.glUniform3f(getUniform("firstGradientColor"), Shader.fGradRed.value / 255f, Shader.fGradGreen.value / 255f, Shader.fGradBlue.value / 255f);
+        GL20.glUniform3f(getUniform("secondGradientColor"), Shader.sGradRed.value / 255f, Shader.sGradGreen.value / 255f, Shader.sGradBlue.value / 255f);
+        GL20.glUniform1f(getUniform("speed"), Shader.speed.value);
+        GL20.glUniform1f(getUniform("stretch"), Shader.stretch.value);
+        GL20.glUniform2f(getUniform("dimensions"), mc.displayWidth, mc.displayHeight);
+        float t = (System.currentTimeMillis() - Meowhack.INSTANCE.initTime) / 1000F;
+        GL20.glUniform1f(getUniform("time"), t);
     }
 
 }

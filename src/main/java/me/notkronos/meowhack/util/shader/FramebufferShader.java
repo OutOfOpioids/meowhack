@@ -45,16 +45,12 @@ public abstract class FramebufferShader extends Shader {
         ((IEntityRenderer) mc.entityRenderer).invokeSetupCameraTransform(partialTicks, 0);
     }
 
-    public void stopDraw(final Color color, final float radius, final float quality, Runnable... shaderOps) {
+    public void stopDraw(final float radius, final float quality, Runnable... shaderOps) {
         mc.gameSettings.entityShadows = entityShadows;
         GlStateManager.enableBlend();
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         mc.getFramebuffer().bindFramebuffer(true);
 
-        red = color.getRed() / 255F;
-        green = color.getGreen() / 255F;
-        blue = color.getBlue() / 255F;
-        alpha = color.getAlpha() / 255F;
         this.radius = radius;
         this.quality = quality;
 

@@ -76,7 +76,7 @@ public abstract class MixinItemRenderer
         if (Shader.INSTANCE.isEnabled()) {
             if (Shader.hands.getValue()) {
                 if (!Shader.handRainbow.getValue()) {
-                    Color handColor = new Color(Shader.red.getValue(), Shader.green.getValue(), Shader.blue.getValue(), Shader.alpha.getValue());
+                    Color handColor = new Color(Shader.fGradRed.getValue(), Shader.fGradGreen.getValue(), Shader.fGradBlue.getValue(), 255);
                     glPushMatrix();
                     glPushAttrib(GL_ALL_ATTRIB_BITS);
                     glDisable(GL_TEXTURE_2D);

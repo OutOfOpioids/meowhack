@@ -30,13 +30,20 @@ public class Shader extends Module {
     public static Setting<Boolean> items = new Setting<>("Items", true);
 
     //Color Settings
-    public static Setting<Integer> red = new Setting<>("Red", 10, 1, 255);
-    public static Setting<Integer> green = new Setting<>("Green", 1, 1, 255);
-    public static Setting<Integer> blue = new Setting<>("Blue", 10, 1, 255);
-    public static Setting<Integer> alpha = new Setting<>("Alpha", 110, 1, 255);
+    public static Setting<Integer> fGradRed = new Setting<>("FirstColorRed", 255, 0, 255);
+    public static Setting<Integer> fGradGreen = new Setting<>("FirstColorGreen", 255, 0, 255);
+    public static Setting<Integer> fGradBlue = new Setting<>("FirstGradientBlue", 255, 0, 255);
+
+    public static Setting<Integer> sGradRed = new Setting<>("SecondColorRed", 255, 0, 255);
+    public static Setting<Integer> sGradGreen = new Setting<>("SecondColorGreen", 255, 0, 255);
+    public static Setting<Integer> sGradBlue = new Setting<>("SecondColorBlue", 255, 0, 255);
+
     public static Setting<Boolean> global = new Setting<>("UseGlobalColor", false);
 
     //Shader Settings
+    public static Setting<ShaderMode> mode = new Setting<>("Mode", ShaderMode.HORIZONTAL_GRADIENT);
+    public static Setting<Float> speed = new Setting<>("ScrollSpeed", 2.0f, 0.1f, 10.0f);
+    public static Setting<Float> stretch = new Setting<>("Stretch", 0.0f, 0.1f, 2.0f);
     public static Setting<Float> radius = new Setting<>("Radius", 3.0f, 0.1f, 6.0f);
     public static Setting<Boolean> filled = new Setting<>("Filled", true);
     public static Setting<Float> blend = new Setting<>("FilledBlend", 0.25f, 0.1f, 1.0f);
@@ -76,18 +83,24 @@ public class Shader extends Module {
                 GlStateManager.enableDepth();
                 GlStateManager.depthMask(true);
                 GlStateManager.enableAlpha();
-                ItemShader shader = new ItemShader();
+                ItemShader shader;
+                if(mode.value == ShaderMode.HORIZONTAL_GRADIENT) {
+                    shader = new ItemShader("hgrad.frag");
+                } else if(mode.value == ShaderMode.VERTICAL_GRADIENT) {
+                    shader = new ItemShader("vgrad.frag");
+                } else {
+                    shader = new ItemShader("itemglow.frag");
+                }
                 if(filled.value) {
                     shader.mix = blend.getValue();
                 } else {
                     shader.mix = 0.0f;
                 }
-                shader.alpha = new Color(red.getValue(), green.getValue(), blue.getValue(), alpha.getValue()).getAlpha();
                 shader.startDraw(mc.getRenderPartialTicks());
                 forceRender = true;
                 ((IEntityRenderer) mc.entityRenderer).invokeRenderHand(mc.getRenderPartialTicks(), 2);
                 forceRender = false;
-                shader.stopDraw(new Color(red.getValue(), green.getValue(), blue.getValue(), alpha.getValue()), radius.getValue(), 1.0f);
+                shader.stopDraw(radius.getValue(), 1.0f);
                 GlStateManager.disableBlend();
                 GlStateManager.disableAlpha();
                 GlStateManager.disableDepth();
@@ -95,5 +108,11 @@ public class Shader extends Module {
                 GlStateManager.popMatrix();
             }
         }
+    }
+
+    private enum ShaderMode {
+        HORIZONTAL_GRADIENT,
+        VERTICAL_GRADIENT,
+        STATIC
     }
 }
