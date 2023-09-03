@@ -1,7 +1,7 @@
 package me.notkronos.meowhack.mixin.mixins.render.tileEntity;
 
 import me.notkronos.meowhack.Meowhack;
-import me.notkronos.meowhack.event.events.entity.tileEntity.RenderEnchantmentTableEvent;
+import me.notkronos.meowhack.event.events.render.tileEntity.RenderEnchantmentTableEvent;
 import net.minecraft.client.renderer.tileentity.TileEntityEnchantmentTableRenderer;
 import net.minecraft.tileentity.TileEntityEnchantmentTable;
 import org.spongepowered.asm.mixin.Mixin;

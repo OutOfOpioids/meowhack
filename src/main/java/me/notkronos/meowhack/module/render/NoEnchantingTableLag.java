@@ -1,7 +1,7 @@
 package me.notkronos.meowhack.module.render;
 
 import me.notkronos.meowhack.Meowhack;
-import me.notkronos.meowhack.event.events.entity.tileEntity.RenderEnchantmentTableEvent;
+import me.notkronos.meowhack.event.events.render.tileEntity.RenderEnchantmentTableEvent;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
