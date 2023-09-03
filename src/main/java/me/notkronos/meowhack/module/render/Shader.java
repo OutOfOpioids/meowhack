@@ -1,21 +1,26 @@
 package me.notkronos.meowhack.module.render;
 
 import me.notkronos.meowhack.Meowhack;
+import me.notkronos.meowhack.event.events.render.RenderCrystalEvent;
 import me.notkronos.meowhack.event.events.render.RenderItemInFirstPersonEvent;
 import me.notkronos.meowhack.event.events.render.RenderWorldEvent;
 import me.notkronos.meowhack.mixin.mixins.render.entity.IEntityRenderer;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
+import me.notkronos.meowhack.util.shader.GlShader;
 import me.notkronos.meowhack.util.shader.ItemShader;
 import me.notkronos.meowhack.util.shader.shaders.FramebufferWrapper;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.math.Vec2f;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
 
 import static me.notkronos.meowhack.util.Wrapper.mc;
+import static org.lwjgl.opengl.GL11.*;
 
 public class Shader extends Module {
     public static Shader INSTANCE;
@@ -107,6 +112,48 @@ public class Shader extends Module {
                 GlStateManager.popAttrib();
                 GlStateManager.popMatrix();
             }
+        }
+    }
+    protected GlShader shader1;
+    @SubscribeEvent
+    public void onRenderCrystal(RenderCrystalEvent.RenderCrystalPreEvent event) {
+        if(mode.value == ShaderMode.HORIZONTAL_GRADIENT) {
+            shader1 = new GlShader("hgrad");
+        } else {
+            shader1 = new GlShader("vgrad");
+        }
+        if(INSTANCE.isEnabled() && crystals.getValue()) {
+            event.setCanceled(true);
+            glPushAttrib(GL_ALL_ATTRIB_BITS);
+            glPushMatrix();
+            Color color = new Color(fGradRed.getValue(), fGradGreen.getValue(), fGradBlue.getValue());
+            shader1.bind();
+            shader1.set("time", (System.currentTimeMillis() - Meowhack.INSTANCE.initTime) / 1000.0f);
+            shader1.set("dimensions", new Vec2f(mc.displayWidth, mc.displayHeight));
+            shader1.set("texture", -1);
+            shader1.set("texelSize", new Vec2f(1F / mc.displayWidth * (radius.value * 1.0f), 1F / mc.displayHeight * (radius.value * 1.0f)));
+            shader1.set("radius", radius.value);
+            shader1.set("divider", 140F);
+            shader1.set("maxSample", 10F);
+            shader1.set("mixFactor", blend.value);
+            shader1.set("minAlpha", 1.0f);
+            shader1.set("firstGradientColor", new Vec3d(Shader.fGradRed.value / 255f, Shader.fGradGreen.value / 255f, Shader.fGradBlue.value / 255f));
+            shader1.set("secondGradientColor", new Vec3d(Shader.sGradRed.value / 255f, Shader.sGradGreen.value / 255f, Shader.sGradBlue.value / 255f));
+            shader1.set("speed", Shader.speed.value);
+            shader1.set("stretch", Shader.stretch.value);
+            GlStateManager.pushMatrix();
+            GlStateManager.color(1.0f, 1.0f, 1.0f, color.getAlpha());
+            glEnable(GL_POLYGON_OFFSET_FILL);
+            glEnable(GL_BLEND);
+            glPolygonOffset(1.0f, -2000000f);
+            event.getModelBase().render(event.getEntity(), event.getLimbSwing(), event.getLimbSwingAmount(), event.getAgeInTicks(), event.getNetHeadYaw(), event.getHeadPitch(), event.getScaleFactor());
+            glDisable(GL_POLYGON_OFFSET_FILL);
+            glDisable(GL_BLEND);
+            glPolygonOffset(1.0f, 2000000f);
+            GlStateManager.popMatrix();
+            shader1.unbind();
+            glPopMatrix();
+            glPopAttrib();
         }
     }
 
