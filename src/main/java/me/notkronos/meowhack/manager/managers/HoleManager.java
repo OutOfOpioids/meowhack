@@ -361,7 +361,6 @@ public class HoleManager extends Manager {
                 }
             }
         }
-
         return searchedHoles;
     }
 
@@ -374,9 +373,9 @@ public class HoleManager extends Manager {
     }
 
     /**
-     * Checks whether or not a position is a hole
+     * Checks whether a position is a hole
      * @param in The position to check
-     * @return Whether or not a position is a hole
+     * @return Whether a position is a hole
      */
     public boolean isHole(BlockPos in) {
         // check each of the hole offsets

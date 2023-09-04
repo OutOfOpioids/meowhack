@@ -20,51 +20,31 @@ public class EventManager extends Manager implements Wrapper {
 
     @SubscribeEvent
     public void onUpdate(LivingEvent.LivingUpdateEvent event) {
-
-        // check if the update event is for the local player
-        if (nullCheck() && event.getEntity().getEntityWorld().isRemote && event.getEntityLiving().equals(mc.player)) {
+        for (Manager manager : getMeowhack().getAllManagers()) {
+            if (!nullCheck()) continue;
             try {
-                HUD.INSTANCE.onUpdate();
+                manager.onUpdate();
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
         }
 
-            // manager onUpdate
-            for (Manager manager : getMeowhack().getAllManagers()) {
-
-                // check if the manager is safe to run
-                if (nullCheck()) {
-
-                    // run
-                    try {
-                        manager.onUpdate();
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-                }
-            }
+        if (!nullCheck() && !event.getEntity().getEntityWorld().isRemote && !event.getEntityLiving().equals(mc.player)) return;
+        try {
+            HUD.INSTANCE.onUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
+    }
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-
-        // module onTick
         for (Module module : getMeowhack().getModuleManager().getAllModules()) {
-
-            // check if the module is safe to run
-            if (nullCheck()) {
-
-                // check if module should run
-                if (module.isEnabled()) {
-
-                    // run
-                    try {
-                        module.onTick();
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-                }
+            if (!nullCheck() || !module.isEnabled()) continue;
+            try {
+                module.onTick();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
     }
@@ -72,34 +52,30 @@ public class EventManager extends Manager implements Wrapper {
     @SubscribeEvent
     public void onRender2d(RenderGameOverlayEvent.Text event) {
         for (Module module : getMeowhack().getModuleManager().getAllModules()) {
-            if (nullCheck()) {
-                if (module.isEnabled()) {
-                    try {
-                        module.onRender2D();
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-                }
+            if (!nullCheck() || !module.isEnabled()) continue;
+            try {
+                module.onRender2D();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
         for (Manager manager : getMeowhack().getAllManagers()) {
-            if (nullCheck()) {
-                try {
-                    manager.onRender2D();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+            if (!nullCheck()) continue;
+            try {
+                manager.onRender2D();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
     }
 
     @SubscribeEvent
     public void onRender3D(RenderWorldLastEvent event) {
+        if(!nullCheck()) return;
         try {
             HoleESP.INSTANCE.onRender3D();
         } catch(Exception e) {
             e.printStackTrace();
-
         }
     }
 
