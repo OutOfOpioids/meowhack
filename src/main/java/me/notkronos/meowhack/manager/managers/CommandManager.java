@@ -35,27 +35,29 @@ public class CommandManager extends Manager {
 
     @SubscribeEvent
     public void onChatInput(ClientChatEvent event) throws IOException {
-        String command = event.getMessage().trim();
+        String chatMessage = event.getMessage().trim();
 
-        if(command.startsWith(Meowhack.PREFIX)) {
-            event.setCanceled(true);
-            mc.ingameGUI.getChatGUI().addToSentMessages(event.getMessage());
-
-            //remove prefix
-            command = command.substring(Meowhack.PREFIX.length());
-
-            //parse
-            String[] args = command.split(" ");
-            String commandName = args[0];
-            Meowhack.LOGGER.info(commandName);
-            args = Arrays.copyOfRange(args, 1, args.length);
-            Command executable = Meowhack.INSTANCE.getCommandManager().getCommand(command1 -> command1.getName().toLowerCase().equals(commandName.toLowerCase()));
-            if(executable != null) {
-                executable.onExecute(args);
-            } else {
-                messageSender.sendMessageClientSide(ChatFormatting.RED + "[Meowhack] Unrecognized command!");
-            }
+        if(!chatMessage.startsWith(Meowhack.PREFIX)) {
+            return;
         }
+
+        event.setCanceled(true);
+        mc.ingameGUI.getChatGUI().addToSentMessages(event.getMessage());
+
+        chatMessage = chatMessage.substring(Meowhack.PREFIX.length());
+
+        String[] arguments = chatMessage.split(" ");
+        String command = arguments[0];
+        arguments = Arrays.copyOfRange(arguments, 1, arguments.length);
+
+        Command executableCommand = Meowhack.INSTANCE.getCommandManager().getCommand(command1 -> command1.getName().equalsIgnoreCase(command));
+
+        if(executableCommand != null) {
+            executableCommand.onExecute(arguments);
+        } else {
+            messageSender.sendMessageClientSide(ChatFormatting.RED + "[Meowhack] Unrecognized command!");
+        }
+
     }
 
     public Command getCommand(Predicate<? super Command> predicate) {

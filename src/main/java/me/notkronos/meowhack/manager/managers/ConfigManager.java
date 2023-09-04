@@ -56,43 +56,45 @@ public class ConfigManager extends Manager {
 
     public void loadModules() {
         try {
-            if(!FileSystemUtil.getDefaultConfigPath().toFile().exists())
+            if(!FileSystemUtil.getDefaultConfigPath().toFile().exists()) {
                 FileSystemUtil.getDefaultConfigPath().toFile().createNewFile();
+            }
 
             //Prevent crash if config is empty
             if(Files.size(FileSystemUtil.getDefaultConfigPath()) <= 0) {
                 return;
             }
+
             String config = new String(Files.readAllBytes(FileSystemUtil.getDefaultConfigPath()));
             JsonObject configObject = gson.fromJson(config, JsonObject.class);
+
             for(Module module : Meowhack.INSTANCE.getModuleManager().getAllModules()) {
-                if(configObject.has(module.getName())) {
-                    JsonObject moduleObject = configObject.getAsJsonObject(module.getName());
-                        for(Setting setting : module.getAllSettings()) {
-                        if(moduleObject.has(setting.getName())) {
-                            if(setting.value instanceof Integer) {
-                                setting.setValue(moduleObject.get(setting.getName()).getAsInt());
-                            } else if(setting.value instanceof Float) {
-                                setting.setValue(moduleObject.get(setting.getName()).getAsFloat());
-                            } else if(setting.value instanceof Double) {
-                                setting.setValue(moduleObject.get(setting.getName()).getAsDouble());
-                            } else if(setting.value instanceof Boolean) {
-                                setting.setValue(moduleObject.get(setting.getName()).getAsBoolean());
-                            } else if(setting.value instanceof String) {
-                                setting.setValue(moduleObject.get(setting.getName()).getAsString());
-                            } else if(setting.value instanceof Enum) {
-                                setting.setValueFromString(moduleObject.get(setting.getName()).getAsString());
-                            } else if(setting.value instanceof Bind) {
-                                JsonObject bindObject = moduleObject.getAsJsonObject(setting.getName());
-                                int key = bindObject.get("buttonCode").getAsInt();
-                                String device = bindObject.get("device").toString().replace("\"", "");
-                                if(!(device == "MOUSE")) {
-                                    module.getBind().setValue(new Bind(key, Bind.Device.KEYBOARD));
-                                }
-                                else {
-                                    module.getBind().setValue(new Bind(key, Bind.Device.MOUSE));
-                                }
-                            }
+                if(!configObject.has(module.getName())) continue;
+                JsonObject moduleObject = configObject.getAsJsonObject(module.getName());
+                for(Setting setting : module.getAllSettings()) {
+                    if(!moduleObject.has(setting.getName())) continue;
+
+                    if(setting.value instanceof Integer) {
+                        setting.setValue(moduleObject.get(setting.getName()).getAsInt());
+                    } else if(setting.value instanceof Float) {
+                        setting.setValue(moduleObject.get(setting.getName()).getAsFloat());
+                    } else if(setting.value instanceof Double) {
+                        setting.setValue(moduleObject.get(setting.getName()).getAsDouble());
+                    } else if(setting.value instanceof Boolean) {
+                        setting.setValue(moduleObject.get(setting.getName()).getAsBoolean());
+                    } else if(setting.value instanceof String) {
+                        setting.setValue(moduleObject.get(setting.getName()).getAsString());
+                    } else if(setting.value instanceof Enum) {
+                        setting.setValueFromString(moduleObject.get(setting.getName()).getAsString());
+                    } else if(setting.value instanceof Bind) {
+                        JsonObject bindObject = moduleObject.getAsJsonObject(setting.getName());
+                        int key = bindObject.get("buttonCode").getAsInt();
+                        String device = bindObject.get("device").toString().replace("\"", "");
+                        if(device == "MOUSE") {
+                            module.getBind().setValue(new Bind(key, Bind.Device.MOUSE));
+                        }
+                        else {
+                            module.getBind().setValue(new Bind(key, Bind.Device.KEYBOARD));
                         }
                     }
                 }
