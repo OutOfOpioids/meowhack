@@ -41,5 +41,6 @@ vec3 gradient(vec3 fCol, vec3 sCol, float x) {
 void main() {
     vec4 centerCol = texture2D(texture, gl_TexCoord[0].xy);
     vec3 finalColor = gradient(firstGradientColor, secondGradientColor, scrollAndStretch(gl_FragCoord.x, stretch, speed));
+
     gl_FragColor = vec4(mix(centerCol.rgb, finalColor, mixFactor), centerCol.a);
 }

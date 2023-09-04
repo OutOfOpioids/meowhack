@@ -5,10 +5,9 @@ import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.command.Command;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.util.chat.MessageSender;
+import me.notkronos.meowhack.util.chat.MessageType;
 
 public class Drawn extends Command {
-    public static Drawn INSTANCE;
-    private final MessageSender messageSender = new MessageSender();
 
     private final String name = "drawn";
 
@@ -17,21 +16,16 @@ public class Drawn extends Command {
     }
 
     @Override
-    public String getUseCase() {
-        return "<module>";
-    }
-
-    @Override
     public void onExecute(String[] args) {
-        if(args.length == 1) {
-            Module module = getMeowhack().getModuleManager().getModule(name -> name.getName().equals(args[0]));
-            if(module != null) {
-                module.setDrawn(!module.isDrawn());
-            } else {
-                messageSender.sendMessageClientSide(ChatFormatting.RED + "Module " + args[0] + " doesn't exist");
-            }
+        if(args.length != 1) {
+            MessageSender.commandFeedback("Drawn takes 1 argument. Correct usage is " + Meowhack.PREFIX + "drawn " + getUseCase(), MessageType.ERROR);
+        }
+
+        Module module = getMeowhack().getModuleManager().getModule(name -> name.getName().equals(args[0]));
+        if(module != null) {
+            module.setDrawn(!module.isDrawn());
         } else {
-            messageSender.sendMessageClientSide(ChatFormatting.RED + "Drawn takes 1 argument." + ChatFormatting.RESET +  " Correct usage is " + Meowhack.PREFIX + "drawn " + getUseCase());
+            MessageSender.commandFeedback("Module " + args[0] + " not found.", MessageType.ERROR);
         }
     }
 
@@ -43,5 +37,10 @@ public class Drawn extends Command {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getUseCase() {
+        return "<module>";
     }
 }
