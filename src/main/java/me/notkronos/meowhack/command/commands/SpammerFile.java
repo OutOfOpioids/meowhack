@@ -5,6 +5,7 @@ import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.command.Command;
 import me.notkronos.meowhack.module.misc.Spammer;
 import me.notkronos.meowhack.util.chat.MessageSender;
+import me.notkronos.meowhack.util.chat.MessageType;
 import me.notkronos.meowhack.util.file.FileSystemUtil;
 
 import java.io.IOException;
@@ -14,11 +15,6 @@ import java.nio.file.Paths;
 
 public class SpammerFile extends Command {
 
-        public static SpammerFile INSTANCE;
-        private final String name = "spammerfile";
-
-        private final MessageSender messageSender = new MessageSender();
-
         public SpammerFile() {
             super("spammerfile", "Used to change the spammer file", new String[]{});
         }
@@ -26,30 +22,28 @@ public class SpammerFile extends Command {
 
         @Override
         public void onExecute(String[] args) {
-            if (args.length == 1) {
-                String filename = args[0];
+            if (args.length != 1) {
+                MessageSender.commandFeedback("SpammerFile takes 1 argument. Correct usage is " + Meowhack.PREFIX + "spammerfile " + getUseCase(), MessageType.ERROR);
+            }
+            String filename = args[0];
 
-                Path path = Paths.get(FileSystemUtil.getSpammerFile(filename).toString());
+            Path path = Paths.get(FileSystemUtil.getSpammerFile(filename).toString());
 
-                if (path.toFile() != null) {
-                    String[] allLines = new String[0];
-                    try {
-                        if(!path.toFile().exists()) {
-                            messageSender.sendMessageClientSide(ChatFormatting.RED + "File " + filename + ".txt does not exist." + ChatFormatting.RESET + " Please create it in the Meowhack folder.");
-                            return;
-                        }
-                        allLines = Files.readAllLines(path).toArray(new String[0]);
-                        Spammer.INSTANCE.spam = allLines;
-                        Spammer.INSTANCE.isFileSet = true;
-                        messageSender.sendMessageClientSide(ChatFormatting.GREEN + "Spammer file set to " + filename + ".txt");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            } else {
-                messageSender.sendMessageClientSide(ChatFormatting.RED + "SpammerFile takes 1 argument." + ChatFormatting.RESET +  " Correct usage is " + Meowhack.PREFIX + "Spammerfile " + getUseCase());
+            if (!path.toFile().exists()) {
+                MessageSender.commandFeedback("File " + filename + ".txt does not exist", MessageType.ERROR);
+                return;
             }
 
+            String[] allLines = new String[0];
+
+            try {
+                allLines = Files.readAllLines(path).toArray(new String[0]);
+                Spammer.INSTANCE.spam = allLines;
+                Spammer.INSTANCE.isFileSet = true;
+                MessageSender.commandFeedback("Spammer file set to " + filename + ".txt", MessageType.SUCCESS);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
 

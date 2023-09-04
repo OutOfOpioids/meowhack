@@ -1,11 +1,11 @@
 package me.notkronos.meowhack.command;
 
 import me.notkronos.meowhack.util.Wrapper;
+import me.notkronos.meowhack.util.chat.MessageType;
 
 import java.io.IOException;
 
 public abstract class Command implements Wrapper {
-
     String name;
     String description;
     String[] alias;
