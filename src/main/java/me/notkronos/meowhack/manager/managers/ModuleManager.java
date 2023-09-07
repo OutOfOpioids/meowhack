@@ -37,6 +37,7 @@ public class ModuleManager extends Manager {
             new FullBright(),
             new HoleESP(),
             new HUD(),
+            new NBTViewer(),
             new NoBob(),
             new NoEnchantingTableLag(),
             new PlayerChams(),
