@@ -2,11 +2,8 @@ package me.notkronos.meowhack.command.commands;
 
 import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.command.Command;
-import me.notkronos.meowhack.util.chat.MessageSender;
+import me.notkronos.meowhack.util.chat.ChatUtil;
 import me.notkronos.meowhack.util.chat.MessageType;
-import net.minecraft.util.text.TextFormatting;
-
-import java.util.Objects;
 
 public class Load extends Command {
 
@@ -18,7 +15,7 @@ public class Load extends Command {
         public void onExecute(String[] args) {
             Meowhack.INSTANCE.getConfigManager().loadModules();
             Meowhack.INSTANCE.getConfigManager().loadFriends();
-            MessageSender.commandFeedback("Loaded the default config", MessageType.SUCCESS);
+            ChatUtil.commandFeedback("Loaded the default config", MessageType.SUCCESS);
         }
 
         @Override

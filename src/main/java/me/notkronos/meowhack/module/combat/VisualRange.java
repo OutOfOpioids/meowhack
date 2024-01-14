@@ -2,7 +2,7 @@ package me.notkronos.meowhack.module.combat;
 
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
-import me.notkronos.meowhack.util.chat.MessageSender;
+import me.notkronos.meowhack.util.chat.ChatUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextFormatting;
@@ -24,7 +24,7 @@ public class VisualRange extends Module {
     }
 
     private final List<Entity> players = new CopyOnWriteArrayList<>();
-    private final MessageSender messageSender = new MessageSender();
+
     @Override
     public void onEnable() {
         super.onEnable();
@@ -55,7 +55,7 @@ public class VisualRange extends Module {
                             + player.getName() + TextFormatting.WHITE + " has " + TextFormatting.GREEN
                             + "entered " + TextFormatting.WHITE + " your visual range!";
 
-                    messageSender.sendMessageClientSide(message);
+                    ChatUtil.sendMessageClientSide(message);
                 }
             }
 
@@ -66,7 +66,7 @@ public class VisualRange extends Module {
                             + player.getName() + TextFormatting.WHITE + " has " + TextFormatting.RED
                             + "left " + TextFormatting.WHITE + " your visual range!";
 
-                    messageSender.sendMessageClientSide(message);
+                    ChatUtil.sendMessageClientSide(message);
                 }
             }
         }

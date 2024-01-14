@@ -7,14 +7,14 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static me.notkronos.meowhack.util.Wrapper.mc;
 
-public class MessageSender {
+public class ChatUtil {
 
-    public void sendMessageClientSide(String in) {
+    public static void sendMessageClientSide(String in) {
         mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new TextComponentString(in), ThreadLocalRandom.current().nextInt(32767));
     }
 
     public static void commandFeedback(String message, MessageType type) {
-        String finalMessage = ChatFormatting.RED + "[meowhack] ";
+        String finalMessage = ChatFormatting.RED + "[Meowhack] ";
         switch(type) {
             case ERROR:
                 finalMessage += ChatFormatting.RED + message;

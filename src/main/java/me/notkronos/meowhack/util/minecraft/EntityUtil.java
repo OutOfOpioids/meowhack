@@ -1,6 +1,7 @@
-package me.notkronos.meowhack.util;
+package me.notkronos.meowhack.util.minecraft;
 
 import me.notkronos.meowhack.module.client.HUD;
+import me.notkronos.meowhack.util.MathUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

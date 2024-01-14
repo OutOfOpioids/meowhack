@@ -5,6 +5,7 @@ import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.manager.managers.TickManager;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
+import me.notkronos.meowhack.module.combat.CornerClip;
 import me.notkronos.meowhack.setting.Setting;
 import me.notkronos.meowhack.util.ColorUtil;
 import me.notkronos.meowhack.util.MathUtil;
@@ -34,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static me.notkronos.meowhack.util.EntityUtil.getTextRadarPlayers;
+import static me.notkronos.meowhack.util.minecraft.EntityUtil.getTextRadarPlayers;
 import static me.notkronos.meowhack.util.Wrapper.mc;
 
 public class HUD extends Module {
@@ -308,6 +309,14 @@ public class HUD extends Module {
                 if (!module.isDrawn() || !module.isEnabled()) {
                     continue;
                 }
+
+                if(module.getName() == "CornerClip") {
+                   String text = "CornerClip [" + TextFormatting.WHITE + CornerClip.INSTANCE.getTimeout() + TextFormatting.RESET + "]";
+                   float textWidth = FontUtil.getStringWidth(text);
+                   FontUtil.drawStringWithShadow(text, width - 1 - textWidth, topRight, primaryColor);
+                   continue;
+                }
+
                 float textWidth = (float) (FontUtil.getStringWidth(module.getName()));
                 FontUtil.drawStringWithShadow(module.getName(), width - 1 - textWidth, topRight, primaryColor);
 

@@ -31,6 +31,7 @@ public class ConfigManager extends Manager {
 
         for(Module module : Meowhack.INSTANCE.getModuleManager().getAllModules()) {
             Map<String, Object> settings = new HashMap<>();
+            settings.put("Enabled", module.isEnabled());
             for(Setting setting : module.getAllSettings()) {
                 if(setting.value instanceof Bind) {
                     settings.put(setting.getName(), ((Bind) setting.value).getButtonCode());
@@ -71,7 +72,9 @@ public class ConfigManager extends Manager {
             for(Module module : Meowhack.INSTANCE.getModuleManager().getAllModules()) {
                 if(!configObject.has(module.getName())) continue;
                 JsonObject moduleObject = configObject.getAsJsonObject(module.getName());
+                module.setEnabled(moduleObject.get("Enabled").getAsBoolean());
                 for(Setting setting : module.getAllSettings()) {
+
                     if(!moduleObject.has(setting.getName())) continue;
 
                     if(setting.value instanceof Integer) {

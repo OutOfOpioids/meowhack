@@ -4,13 +4,16 @@ import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.event.events.network.PacketEvent;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
-import me.notkronos.meowhack.util.chat.MessageSender;
+import me.notkronos.meowhack.util.chat.ChatUtil;
 import net.minecraft.network.play.server.SPacketChat;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static me.notkronos.meowhack.util.Wrapper.mc;
 
 public class AntiPoplag extends Module {
 
@@ -24,8 +27,6 @@ public class AntiPoplag extends Module {
         Meowhack.EVENT_BUS.register(this);
     }
 
-    MessageSender messageSender = new MessageSender();
-
     @SubscribeEvent
     public void onPacketReceive(PacketEvent.PacketReceiveEvent event) {
         if (event.getPacket() instanceof SPacketChat && this.enabled) {
@@ -34,7 +35,8 @@ public class AntiPoplag extends Module {
             Matcher matcher = pattern.matcher(message);
             if (matcher.find()) {
                 event.setCanceled(true);
-                messageSender.sendMessageClientSide(TextFormatting.RED + "[meowhack]" + TextFormatting.WHITE + " Poplag message blocked!");
+                ChatUtil.sendMessageClientSide(TextFormatting.RED + "[meowhack]" + TextFormatting.WHITE + " Poplag message blocked!");
+                mc.ingameGUI.getChatGUI().printChatMessage(new TextComponentString(message.replaceAll(pattern.pattern(), "")));
             }
         }
     }
