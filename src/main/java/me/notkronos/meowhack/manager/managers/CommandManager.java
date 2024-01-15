@@ -6,7 +6,7 @@ import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.command.Command;
 import me.notkronos.meowhack.command.commands.*;
 import me.notkronos.meowhack.manager.Manager;
-import me.notkronos.meowhack.util.chat.MessageSender;
+import me.notkronos.meowhack.util.chat.ChatUtil;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -20,7 +20,6 @@ import static me.notkronos.meowhack.util.Wrapper.mc;
 
 public class CommandManager extends Manager {
     private final List<Command> commands = new ArrayList<>();
-    private final MessageSender messageSender = new MessageSender();
 
     public CommandManager() {
         super("CommandManager");
@@ -55,7 +54,7 @@ public class CommandManager extends Manager {
         if(executableCommand != null) {
             executableCommand.onExecute(arguments);
         } else {
-            messageSender.sendMessageClientSide(ChatFormatting.RED + "[Meowhack] Unrecognized command!");
+            ChatUtil.sendMessageClientSide(ChatFormatting.RED + "[Meowhack] Unrecognized command!");
         }
 
     }

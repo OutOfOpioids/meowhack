@@ -69,12 +69,8 @@ public abstract class Module {
 
     }
 
-    public void enable() {
-        enabled = true;
-    }
-
-    public void disable(boolean b) {
-        enabled = false;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Setting<Bind> getBind() {

@@ -1,10 +1,9 @@
 package me.notkronos.meowhack.command.commands;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
 import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.command.Command;
 import me.notkronos.meowhack.module.misc.Spammer;
-import me.notkronos.meowhack.util.chat.MessageSender;
+import me.notkronos.meowhack.util.chat.ChatUtil;
 import me.notkronos.meowhack.util.chat.MessageType;
 import me.notkronos.meowhack.util.file.FileSystemUtil;
 
@@ -23,14 +22,14 @@ public class SpammerFile extends Command {
         @Override
         public void onExecute(String[] args) {
             if (args.length != 1) {
-                MessageSender.commandFeedback("SpammerFile takes 1 argument. Correct usage is " + Meowhack.PREFIX + "spammerfile " + getUseCase(), MessageType.ERROR);
+                ChatUtil.commandFeedback("SpammerFile takes 1 argument. Correct usage is " + Meowhack.PREFIX + "spammerfile " + getUseCase(), MessageType.ERROR);
             }
             String filename = args[0];
 
             Path path = Paths.get(FileSystemUtil.getSpammerFile(filename).toString());
 
             if (!path.toFile().exists()) {
-                MessageSender.commandFeedback("File " + filename + ".txt does not exist", MessageType.ERROR);
+                ChatUtil.commandFeedback("File " + filename + ".txt does not exist", MessageType.ERROR);
                 return;
             }
 
@@ -40,7 +39,7 @@ public class SpammerFile extends Command {
                 allLines = Files.readAllLines(path).toArray(new String[0]);
                 Spammer.INSTANCE.spam = allLines;
                 Spammer.INSTANCE.isFileSet = true;
-                MessageSender.commandFeedback("Spammer file set to " + filename + ".txt", MessageType.SUCCESS);
+                ChatUtil.commandFeedback("Spammer file set to " + filename + ".txt", MessageType.SUCCESS);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

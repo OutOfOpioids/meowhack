@@ -5,7 +5,7 @@ import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
-import me.notkronos.meowhack.util.chat.MessageSender;
+import me.notkronos.meowhack.util.chat.ChatUtil;
 
 import static me.notkronos.meowhack.util.Wrapper.mc;
 
@@ -29,8 +29,6 @@ public class Spammer extends Module {
     public boolean isFileSet = false;
     private boolean isWarningSent = false;
 
-    MessageSender messageSender = new MessageSender();
-
     public Spammer() {
         super("Spammer", Category.MISC, "Spams the chat with messages inside of a specified file", new String[]{});
         INSTANCE = this;
@@ -49,7 +47,7 @@ public class Spammer extends Module {
             if (tick - this.time >= 20L * time) {
                 if(mode.getValue() == modeEnum.file) {
                     if(!isFileSet && !isWarningSent) {
-                        messageSender.sendMessageClientSide(ChatFormatting.RED + "SpammerFile is not set. Please set it using " + Meowhack.PREFIX + "spammerfile <name>");
+                        ChatUtil.sendMessageClientSide(ChatFormatting.RED + "SpammerFile is not set. Please set it using " + Meowhack.PREFIX + "spammerfile <name>");
                         isWarningSent = true;
                     } else if(spam != null) {
                         mc.player.sendChatMessage(spam[(int) (Math.random() * spam.length)]);

@@ -2,7 +2,7 @@ package me.notkronos.meowhack.command.commands;
 
 import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.command.Command;
-import me.notkronos.meowhack.util.chat.MessageSender;
+import me.notkronos.meowhack.util.chat.ChatUtil;
 import me.notkronos.meowhack.util.chat.MessageType;
 
 public class Friend extends Command {
@@ -24,31 +24,31 @@ public class Friend extends Command {
                 removeFriend(args[1]);
             }
             else {
-                MessageSender.commandFeedback("Friend takes 1 or 2 arguments. Correct usage is " + Meowhack.PREFIX + "friend " + getUseCase(), MessageType.ERROR);
+                ChatUtil.commandFeedback("Friend takes 1 or 2 arguments. Correct usage is " + Meowhack.PREFIX + "friend " + getUseCase(), MessageType.ERROR);
             }
         }
         else {
-           MessageSender.commandFeedback("Friend takes 1 or 2 arguments. Correct usage is " + Meowhack.PREFIX + "friend " + getUseCase(), MessageType.ERROR);
+           ChatUtil.commandFeedback("Friend takes 1 or 2 arguments. Correct usage is " + Meowhack.PREFIX + "friend " + getUseCase(), MessageType.ERROR);
         }
         Meowhack.INSTANCE.getConfigManager().saveFriends();
     }
 
     private void addFriend(String name) {
         if(Meowhack.INSTANCE.getFriendManager().isFriend(name)) {
-            MessageSender.commandFeedback(name + " is already a friend", MessageType.ERROR);
+            ChatUtil.commandFeedback(name + " is already a friend", MessageType.ERROR);
             return;
         }
         Meowhack.INSTANCE.getFriendManager().addFriend(name);
-        MessageSender.commandFeedback("Added " + name + " as a friend", MessageType.SUCCESS);
+        ChatUtil.commandFeedback("Added " + name + " as a friend", MessageType.SUCCESS);
     }
 
     private void removeFriend(String name) {
         if(!Meowhack.INSTANCE.getFriendManager().isFriend(name)) {
-            MessageSender.commandFeedback(name + " is not a friend", MessageType.ERROR);
+            ChatUtil.commandFeedback(name + " is not a friend", MessageType.ERROR);
             return;
         }
         Meowhack.INSTANCE.getFriendManager().removeFriend(name);
-        MessageSender.commandFeedback("Removed " + name + " as a friend", MessageType.ERROR);
+        ChatUtil.commandFeedback("Removed " + name + " as a friend", MessageType.ERROR);
     }
 
     @Override

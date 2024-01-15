@@ -1,7 +1,7 @@
 package me.notkronos.meowhack.manager.managers;
 
 import me.notkronos.meowhack.manager.Manager;
-import me.notkronos.meowhack.util.BlockUtil;
+import me.notkronos.meowhack.util.minecraft.BlockUtil;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;

@@ -2,7 +2,7 @@ package me.notkronos.meowhack.module.combat;
 
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
-import me.notkronos.meowhack.util.chat.MessageSender;
+import me.notkronos.meowhack.util.chat.ChatUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 
@@ -16,7 +16,6 @@ public class StrengthDetect extends Module {
     public static StrengthDetect INSTANCE;
 
     private final Set<EntityPlayer> str = Collections.newSetFromMap(new WeakHashMap<>());
-    private final MessageSender messageSender = new MessageSender();
 
     public StrengthDetect() {
         super("StrengthNotif", Category.COMBAT, "Notifies when someone gets strength in your visual range", new String[]{});
@@ -31,7 +30,7 @@ public class StrengthDetect extends Module {
             if(player.isPotionActive(MobEffects.STRENGTH) && !player.equals(mc.player)) {
                 if (!str.contains(player)) {
                     str.add(player);
-                    messageSender.sendMessageClientSide(player.getName() + " has strength!");
+                    ChatUtil.sendMessageClientSide(player.getName() + " has strength!");
                 }
             } else {
                 str.remove(player);

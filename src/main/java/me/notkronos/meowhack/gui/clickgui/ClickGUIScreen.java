@@ -190,7 +190,7 @@ public class ClickGUIScreen extends GuiScreen implements InterfaceWrapper {
         Meowhack.EVENT_BUS.unregister(this);
 
         // disable the GUI modules, keeps the toggle state consistent with open/close
-        ClickGUIModule.INSTANCE.disable(true);
+        ClickGUIModule.INSTANCE.setEnabled(false);
 
         // save our configs when exiting the GUI
         //Meowhack.INSTANCE.getConfigManager().saveGUI();

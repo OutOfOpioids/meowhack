@@ -1,5 +1,6 @@
-package me.notkronos.meowhack.util;
+package me.notkronos.meowhack.util.minecraft;
 
+import me.notkronos.meowhack.util.Wrapper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

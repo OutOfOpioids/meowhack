@@ -7,7 +7,7 @@ import me.notkronos.meowhack.event.events.entity.EntityWorldEvent;
 import me.notkronos.meowhack.module.Category;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.util.Wrapper;
-import me.notkronos.meowhack.util.chat.MessageSender;
+import me.notkronos.meowhack.util.chat.ChatUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,7 +17,6 @@ import java.util.Map;
 
 public class TotemPopCounter extends Module implements Wrapper {
     public static TotemPopCounter INSTANCE;
-    MessageSender messageSender = new MessageSender();
     private final Map<Entity, Integer> totemPops = new HashMap<>();
 
     public int getTotemPops(Entity entity) {
@@ -46,7 +45,7 @@ public class TotemPopCounter extends Module implements Wrapper {
                 message = TextFormatting.RED + "[Meowhack] " + TextFormatting.WHITE
                         + player.getName() + " popped " + TextFormatting.GREEN + pops + TextFormatting.WHITE + " totems.";
             }
-            messageSender.sendMessageClientSide(message);
+            ChatUtil.sendMessageClientSide(message);
         }
     }
 
@@ -54,7 +53,7 @@ public class TotemPopCounter extends Module implements Wrapper {
     public void onDeath(DeathEvent event) {
         if(totemPops.containsKey(event.getEntity())) {
             int pops = totemPops.get(event.getEntity());
-            messageSender.sendMessageClientSide(TextFormatting.RED + "[Meowhack] " + TextFormatting.WHITE
+            ChatUtil.sendMessageClientSide(TextFormatting.RED + "[Meowhack] " + TextFormatting.WHITE
                     + event.getEntity().getName() + " died after popping " + TextFormatting.GREEN + totemPops.get(event.getEntity()) + TextFormatting.WHITE + (pops == 1 ? " totem." : " totems."));
         }
     }
