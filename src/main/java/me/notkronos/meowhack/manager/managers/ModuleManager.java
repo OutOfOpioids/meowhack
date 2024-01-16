@@ -63,6 +63,11 @@ public class ModuleManager extends Manager {
         for (Module module : modules) {
             if (module.getBind().getValue().isPressed()) {
                 module.toggle();
+                if (module.isEnabled()) {
+                    module.onEnable();
+                } else {
+                    module.onDisable();
+                }
             }
         }
     }

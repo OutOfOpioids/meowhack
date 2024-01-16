@@ -23,47 +23,6 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer implement
     private boolean updateLock;
 
     // mc
-    @Shadow
-    protected Minecraft mc;
-
-    @Shadow
-    private boolean prevOnGround;
-
-    @Shadow
-    private float lastReportedYaw;
-
-    @Shadow
-    private float lastReportedPitch;
-
-    @Shadow
-    private int positionUpdateTicks;
-
-    @Shadow
-    private double lastReportedPosX;
-
-    @Shadow
-    private double lastReportedPosY;
-
-    @Shadow
-    private double lastReportedPosZ;
-
-    @Shadow
-    private boolean autoJumpEnabled;
-
-    @Shadow
-    private boolean serverSprintState;
-
-    @Shadow
-    private boolean serverSneakState;
-
-    @Shadow
-    protected abstract boolean isCurrentViewEntity();
-
-    @Shadow
-    public abstract void onUpdate();
-
-    @Shadow
-    protected abstract void onUpdateWalkingPlayer();
 
     @Redirect(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/AbstractClientPlayer;move(Lnet/minecraft/entity/MoverType;DDD)V"))
     public void move(AbstractClientPlayer player, MoverType type, double x, double y, double z) {
