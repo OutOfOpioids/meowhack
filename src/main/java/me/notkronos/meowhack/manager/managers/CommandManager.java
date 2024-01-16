@@ -26,6 +26,7 @@ public class CommandManager extends Manager {
         commands.add(new BindCommand());
         commands.add(new Drawn());
         commands.add(new Friend());
+        commands.add(new Font());
         commands.add(new Load());
         commands.add(new Save());
         commands.add(new SpammerFile());

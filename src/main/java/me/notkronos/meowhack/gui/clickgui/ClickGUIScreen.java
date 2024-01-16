@@ -30,6 +30,10 @@ import java.util.List;
  * @since 01/29/2022
  */
 public class ClickGUIScreen extends GuiScreen implements InterfaceWrapper {
+    private static String fontName = "Verdana";
+    public static void setFont(String in) {
+        fontName = in;
+    }
 
     private final MousePosition mouse = new MousePosition(Vec2f.ZERO, false, false, false, false);
 
@@ -179,7 +183,7 @@ public class ClickGUIScreen extends GuiScreen implements InterfaceWrapper {
 
         if(CustomFontMod.INSTANCE.isEnabled()) {
             FontUtil.customFont = new CustomFontRenderer(
-                    new Font("Verdana",
+                    new Font(fontName,
                             CustomFontMod.fontStyle.value,
                             CustomFontMod.fontSize.value),
                     CustomFontMod.antiAlias.value,
@@ -237,4 +241,5 @@ public class ClickGUIScreen extends GuiScreen implements InterfaceWrapper {
     public MousePosition getMouse() {
         return mouse;
     }
+
 }

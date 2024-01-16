@@ -7,7 +7,6 @@ import me.notkronos.meowhack.setting.Setting;
 
 public class CustomFontMod extends Module
 {
-
     public static CustomFontMod INSTANCE;
 
     public CustomFontMod() {
