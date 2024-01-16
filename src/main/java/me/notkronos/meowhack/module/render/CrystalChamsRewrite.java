@@ -22,7 +22,6 @@ public class CrystalChamsRewrite extends Module {
         INSTANCE = this;
         INSTANCE.enabled = false;
         INSTANCE.drawn = true;
-        Meowhack.EVENT_BUS.register(this);
     }
 
     public static Setting<Enum<Mode>> mode = new Setting<>("Mode", LINES);
@@ -48,6 +47,16 @@ public class CrystalChamsRewrite extends Module {
     public static Setting<Integer> chamsAlpha = new Setting<>("chamsAlpha", 127, 1, 255);
 
     private final ResourceLocation GLINT_TEXTURE = new ResourceLocation("textures/misc/enchanted_item_glint.png");
+
+    @Override
+    public void onEnable() {
+        Meowhack.EVENT_BUS.register(this);
+    }
+
+    @Override
+    public void onDisable() {
+        Meowhack.EVENT_BUS.unregister(this);
+    }
 
     @SubscribeEvent
     public void onRenderCrystalEvent(RenderCrystalEvent.RenderCrystalPreEvent event) {
