@@ -34,6 +34,9 @@ public class ClickGUIScreen extends GuiScreen implements InterfaceWrapper {
     public static void setFont(String in) {
         fontName = in;
     }
+    public static String getFont() {
+        return fontName;
+    }
 
     private final MousePosition mouse = new MousePosition(Vec2f.ZERO, false, false, false, false);
 

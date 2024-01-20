@@ -20,6 +20,7 @@ public class FileSystemUtil {
         }
 
         folders.add(new File(MEOWHACK_FOLDER + "/config").toPath());
+        folders.add(new File(MEOWHACK_FOLDER + "/font").toPath());
         folders.add(new File(MEOWHACK_FOLDER + "/friends").toPath());
         folders.add(new File(MEOWHACK_FOLDER + "/spammer").toPath());
         for(Path folder : folders) {
@@ -35,6 +36,9 @@ public class FileSystemUtil {
     }
     public static Path getDefaultConfigPath() {
         return Paths.get(getConfigPath().toString() + "/default.json");
+    }
+    public static Path getFontPath() {
+        return Paths.get(FOLDER_STRING + "/font" + "/font.txt");
     }
     public static Path getFriendsPath() {
         return Paths.get(MEOWHACK_FOLDER + "/friends/" + "friends.txt");

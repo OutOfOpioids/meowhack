@@ -4,15 +4,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import me.notkronos.meowhack.Meowhack;
+import me.notkronos.meowhack.gui.clickgui.ClickGUIScreen;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
 import me.notkronos.meowhack.util.Bind;
 import me.notkronos.meowhack.util.file.FileSystemUtil;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -132,6 +135,35 @@ public class ConfigManager extends Manager {
 
             List<String> friends = Files.readAllLines(FileSystemUtil.getFriendsPath());
             Meowhack.INSTANCE.getFriendManager().setFriends(friends);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveFont() {
+        try {
+            if (!FileSystemUtil.getFontPath().toFile().exists()) {
+                FileSystemUtil.getFontPath().toFile().createNewFile();
+            }
+
+            Writer writer = Files.newBufferedWriter(FileSystemUtil.getFontPath());
+            writer.write(ClickGUIScreen.getFont());
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadFont() {
+        try {
+            if (!FileSystemUtil.getFontPath().toFile().exists()) {
+                FileSystemUtil.getFontPath().toFile().createNewFile();
+            }
+
+            List<String> font = Files.readAllLines(FileSystemUtil.getFontPath());
+            List<String> fonts = Arrays.asList(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
+            if(fonts.contains(font.get(0))) ClickGUIScreen.setFont(font.get(0));
+            else ClickGUIScreen.setFont("Verdana");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
