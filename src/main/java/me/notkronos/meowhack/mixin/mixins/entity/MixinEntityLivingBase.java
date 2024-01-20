@@ -53,9 +53,7 @@ public abstract class MixinEntityLivingBase extends Entity {
     public void getArmSwingAnimationEndHook(CallbackInfoReturnable<Integer> ci) {
         int swingSpeed = SWING_SPEED.isEnabled() ? modifier : 8;
         EntityPlayerSP clientPlayer = Minecraft.getMinecraft().player;
-        if (clientPlayer != null) {
-            if (SWING_SPEED.isEnabled()) {
-
+        if (clientPlayer != null && SwingSpeed.INSTANCE.isEnabled()) {
                 if (!this.isPlayer()) return;
 
                 UUID playerUUID = this.getUniqueID();
@@ -85,7 +83,6 @@ public abstract class MixinEntityLivingBase extends Entity {
                     }
                 }
             }
-        }
     }
 
     @Inject(method = "notifyDataManagerChange", at = @At("RETURN"))

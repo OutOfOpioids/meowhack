@@ -15,7 +15,6 @@
     "mixins.MixinMinecraft",
     "mixins.accessor.IMInecraftAccessor",
     "mixins.accessor.ITimerAccessor",
-    "mixins.entity.player.MixinEntityPlayerSP",
     "mixins.render.MixinItemRenderer",
     "mixins.render.MixinParticleTotem",
     "mixins.render.entity.IEntityRenderer",
