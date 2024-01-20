@@ -18,22 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static me.notkronos.meowhack.util.Wrapper.mc;
 
 @Mixin(EntityRenderer.class)
-public abstract class MixinEntityRenderer implements IEntityRenderer {
-    @Shadow
-    protected abstract void setupCameraTransform(float partialTicks, int pass);
-    @Shadow protected abstract void renderHand(float partialTicks, int pass);
-
-    @Override
-    public void invokeSetupCameraTransform(float partialTicks, int pass) {
-        setupCameraTransform(partialTicks, pass);
-    }
-    @Redirect(method = "setupCameraTransform", at = @At(value = "INVOKE", target = "Lorg/lwjgl/util/glu/Project;gluPerspective(FFFF)V", remap = false))
-    private void onSetupCameraTransform(final float fovy, final float aspect, final float zNear, final float zFar) {
-        final AspectRatioEvent event = new AspectRatioEvent(mc.displayWidth / (float) mc.displayHeight);
-        Meowhack.EVENT_BUS.post(event);
-        Project.gluPerspective(fovy, event.getAspectRatio(), zNear, zFar);
-    }
-
+public abstract class MixinEntityRenderer {
     @Inject(method = "renderWorld", at = @At("RETURN"))
     private void renderWorldHook(CallbackInfo info)
     {
@@ -51,18 +36,5 @@ public abstract class MixinEntityRenderer implements IEntityRenderer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void invokeRenderHand(float partialTicks, int pass) {
-        renderHand(partialTicks, pass);
-    }
-
-    @Redirect(method = "renderHand", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemRenderer;renderItemInFirstPerson(F)V"))
-    private void renderHand(ItemRenderer itemRenderer, float partialTicks)
-    {
-        RenderItemInFirstPersonEvent event = new RenderItemInFirstPersonEvent();
-        Meowhack.EVENT_BUS.post(event);
-        if (!event.isCanceled()) itemRenderer.renderItemInFirstPerson(partialTicks);
     }
 }
