@@ -41,6 +41,7 @@ public class ModuleManager extends Manager {
             new NBTViewer(),
             new NoBob(),
             new NoEnchantingTableLag(),
+            new NoRender(),
             new PlayerChams(),
             new PlayerModel(),
             new PopLag(),
