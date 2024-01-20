@@ -36,6 +36,7 @@ public class TickManager extends Manager {
             // mark as last response
             time = System.currentTimeMillis();
         }
+
     }
 
     public float getTPS(TPS tps) {
