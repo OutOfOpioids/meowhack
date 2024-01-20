@@ -22,7 +22,7 @@ import java.util.List;
 public class Meowhack {
     public static final String MODID = "meowhack";
     public static final String NAME = "Meowhack";
-    public static final String VERSION = "1.4+a07c57d8";
+    public static final String VERSION = "1.4+3c2a9d5";
     public static boolean SETUP = false;
     public static String PREFIX = "++";
     public long initTime = 0;
