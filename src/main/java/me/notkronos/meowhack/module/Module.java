@@ -47,81 +47,67 @@ public abstract class Module {
         drawn = true;
     }
 
-    public void toggle() {
-        enabled = !enabled;
-    }
-
-    public void onUpdate() {
-
-    }
-
-    public void onRender2D() {
-
-    }
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void onThread() {
-    }
-
-    public void onEnable() {
-
-    }
+    //setters
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
-    public Setting<Bind> getBind() {
-        return bind;
-    }
-
-    public boolean isDrawn() {
-        return drawn;
+    public void toggle() {
+        enabled = !enabled;
     }
 
     public void setDrawn(boolean b) {
         drawn = true;
     }
 
+    //getters
+    public boolean isEnabled() {
+        return enabled;
+    }
+    public boolean isDrawn() {
+        return drawn;
+    }
+    public Setting<Bind> getBind() {
+        return bind;
+    }
     public Category getCategory() {
         return category;
     }
-
     public List<Setting<?>> getAllSettings() {
         return settings;
     }
-
     public List<Setting<?>> getSettings(Predicate<? super Setting<?>> predicate) {
         return settings.stream()
                 .filter(predicate)
                 .collect(Collectors.toList());
     }
-
     public Setting<?> getSetting(Predicate<? super Setting<?>> predicate) {
         return settings.stream()
                 .filter(predicate)
                 .findFirst()
                 .orElse(null);
     }
-
-    public boolean isActive() {
-        return isEnabled();
-    }
-
     public String getName() {
         return name;
     }
 
+    public void onUpdate() {
+
+    }
+    public void onRender2D() {
+
+    }
+    public void onThread() {
+    }
+    public void onEnable() {
+
+    }
     public void onTick() {
 
     }
-
     public void onDisable() {
 
     }
-
     public void onRender3D() {
 
     };
