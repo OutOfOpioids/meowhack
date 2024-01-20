@@ -97,9 +97,14 @@ public class Meowhack {
         //Load configs
         getConfigManager().loadModules();
         getConfigManager().loadFriends();
+        getConfigManager().loadFont();
 
         //Add a shutdown hook to save the config
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> getConfigManager().saveModules()));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            getConfigManager().saveModules();
+            getConfigManager().saveFriends();
+            getConfigManager().saveFont();
+        }));
 
         SETUP = true;
     }
