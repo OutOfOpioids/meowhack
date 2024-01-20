@@ -22,11 +22,19 @@ public class PlayerChams extends Module {
         INSTANCE = this;
         INSTANCE.enabled = false;
         INSTANCE.drawn = true;
+    }
+
+    @Override
+    public void onEnable() {
         Meowhack.EVENT_BUS.register(this);
     }
 
-    public static Setting<Enum<Mode>> mode = new Setting<>("Mode", LINES);
+    @Override
+    public void onDisable() {
+        Meowhack.EVENT_BUS.unregister(this);
+    }
 
+    public static Setting<Enum<Mode>> mode = new Setting<>("Mode", LINES);
     public static Setting<Boolean> XQZ = new Setting<>("XQZ", true);
     public static Setting<Boolean> texture = new Setting<>("Texture", false);
     public static Setting<Boolean> shine = new Setting<>("Shine", false);
