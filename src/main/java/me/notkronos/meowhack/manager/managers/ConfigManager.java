@@ -160,9 +160,14 @@ public class ConfigManager extends Manager {
                 FileSystemUtil.getFontPath().toFile().createNewFile();
             }
 
-            List<String> font = Files.readAllLines(FileSystemUtil.getFontPath());
+            //Prevent crash if font isn't set
+
+            if(Files.size(FileSystemUtil.getFontPath()) <= 0) {
+                return;
+            }
+            String font = Files.readAllLines(FileSystemUtil.getFontPath()).get(0);
             List<String> fonts = Arrays.asList(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
-            if(fonts.contains(font.get(0))) ClickGUIScreen.setFont(font.get(0));
+            if(fonts.contains(font)) ClickGUIScreen.setFont(font);
             else ClickGUIScreen.setFont("Verdana");
         } catch (IOException e) {
             throw new RuntimeException(e);
