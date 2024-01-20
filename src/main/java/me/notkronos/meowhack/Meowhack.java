@@ -22,7 +22,7 @@ import java.util.List;
 public class Meowhack {
     public static final String MODID = "meowhack";
     public static final String NAME = "Meowhack";
-    public static final String VERSION = "1.4+463af222";
+    public static final String VERSION = "1.4+c21d1cd0";
     public static boolean SETUP = false;
     public static String PREFIX = "++";
     public long initTime = 0;
@@ -60,6 +60,8 @@ public class Meowhack {
         LOGGER.info("Initializing meowhack.");
         Display.setTitle(NAME + " v." + VERSION);
 
+        long startTime = System.currentTimeMillis();
+
         commandManager = new CommandManager();
         managers.add(commandManager);
 
@@ -83,8 +85,9 @@ public class Meowhack {
 
         clickGUI = new ClickGUIScreen();
 
-        LOGGER.info("Meowhack initialized.");
-        initTime = System.currentTimeMillis();
+        initTime = System.currentTimeMillis() - startTime;
+        LOGGER.info("Meowhack initialized in" + initTime + ".");
+
     }
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {

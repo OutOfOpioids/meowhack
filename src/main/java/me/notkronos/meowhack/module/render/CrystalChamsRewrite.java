@@ -189,6 +189,7 @@ public class CrystalChamsRewrite extends Module {
     public enum Mode {
         LINES,
         CHAMS,
-        BOTH
+        BOTH,
+        NONE
     }
 }
