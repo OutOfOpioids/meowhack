@@ -15,13 +15,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(RenderLivingBase.class)
+@Mixin(value = RenderLivingBase.class, priority = Integer.MAX_VALUE - 1)
 public abstract class MixinRenderLivingBase {
     @Shadow
     protected ModelBase mainModel;
 
     @Redirect(method = {"renderModel"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/ModelBase;render(Lnet/minecraft/entity/Entity;FFFFFF)V"))
-    private void onRenderMoedlPreEntityLivingBase(ModelBase modelBase, Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+    private void onRenderModelPreEntityLivingBase(ModelBase modelBase, Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
         RenderLivingEntityEvent.RenderLivingEntityPreEvent event = new RenderLivingEntityEvent.RenderLivingEntityPreEvent(modelBase, (EntityLivingBase) entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
         Meowhack.EVENT_BUS.post(event);
         if(PlayerModel.INSTANCE.isEnabled() && PlayerModel.limbAnimation.value) {

@@ -9,7 +9,7 @@ public class NoBob extends Module {
     public static NoBob INSTANCE;
 
     public NoBob() {
-        super("NoBob", Category.MOVEMENT, "Stops hand bob when walking", new String[]{});
+        super("NoBob", Category.RENDER, "Stops hand bob when walking", new String[]{});
         INSTANCE = this;
         INSTANCE.enabled = false;
         INSTANCE.drawn = true;
