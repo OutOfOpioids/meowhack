@@ -4,8 +4,7 @@ Minecraft utility mod for 1.12.2
 <img src="https://i.imgur.com/QuBhekr.png"></img>
 
 # Download
-
-https://github.com/NotKronos/meowhack/releases/download/v.1.3.1/meowhack-1.3.1.jar
+https://github.com/OutOfOpioids/meowhack/releases/download/1.4/meowhack-1.4.jar
 
 # FAQ
 <ul>
