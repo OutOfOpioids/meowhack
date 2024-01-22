@@ -53,6 +53,9 @@ configurations {
 
 dependencies {
     implementation 'org.jetbrains:annotations:19.0.0'
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 
     embed('org.spongepowered:mixin:0.7.11-SNAPSHOT') {
         exclude module: 'launchwrapper'
@@ -100,4 +103,8 @@ jar {
             'FMLCorePlugin': mixinclass,
             'ForceLoadAsMod': 'true'
     )
+}
+
+test {
+    useJUnitPlatform()
 }

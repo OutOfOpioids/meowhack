@@ -23,6 +23,13 @@ public class ColorUtil {
         return Integer.decode(hexString);
     }
 
+    public static int addAlpha(int color, int alpha) {
+          String hexString;
+          String alphaHex = alpha < 10 ? "0" + Integer.toHexString(alpha) : Integer.toHexString(alpha);
+          hexString = "0x" + alphaHex + Integer.toHexString(color);
+          return Long.decode(hexString).intValue();
+    }
+
     public Color hexToColor(int red, int green, int blue) {
         return new Color(red, green, blue);
     }

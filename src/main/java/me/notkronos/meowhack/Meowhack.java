@@ -1,6 +1,5 @@
 package me.notkronos.meowhack;
 
-import me.notkronos.meowhack.gui.clickgui.ClickGUIScreen;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.manager.managers.*;
 import me.notkronos.meowhack.util.file.FileSystemUtil;
@@ -22,7 +21,7 @@ import java.util.List;
 public class Meowhack {
     public static final String MODID = "meowhack";
     public static final String NAME = "Meowhack";
-    public static final String VERSION = "1.4+c21d1cd0";
+    public static final String VERSION = "1.4";
     public static boolean SETUP = false;
     public static String PREFIX = "++";
     public long initTime = 0;
@@ -33,8 +32,6 @@ public class Meowhack {
     public Meowhack() {
         INSTANCE = this;
     }
-
-    private ClickGUIScreen clickGUI;
 
     public static EventBus EVENT_BUS = MinecraftForge.EVENT_BUS;
 
@@ -82,8 +79,6 @@ public class Meowhack {
 
         threadManager = new ThreadManager();
         managers.add(threadManager);
-
-        clickGUI = new ClickGUIScreen();
 
         initTime = System.currentTimeMillis() - startTime;
         LOGGER.info("Meowhack initialized in" + initTime + ".");
@@ -145,8 +140,5 @@ public class Meowhack {
 
     public List<Manager> getAllManagers() {
         return managers;
-    }
-    public ClickGUIScreen getClickGUI() {
-        return clickGUI;
     }
 }

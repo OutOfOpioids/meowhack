@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import me.notkronos.meowhack.Meowhack;
-import me.notkronos.meowhack.gui.clickgui.ClickGUIScreen;
+import me.notkronos.meowhack.command.commands.Font;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.setting.Setting;
@@ -147,7 +147,7 @@ public class ConfigManager extends Manager {
             }
 
             Writer writer = Files.newBufferedWriter(FileSystemUtil.getFontPath());
-            writer.write(ClickGUIScreen.getFont());
+            writer.write(Font.fontName);
             writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -167,8 +167,8 @@ public class ConfigManager extends Manager {
             }
             String font = Files.readAllLines(FileSystemUtil.getFontPath()).get(0);
             List<String> fonts = Arrays.asList(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
-            if(fonts.contains(font)) ClickGUIScreen.setFont(font);
-            else ClickGUIScreen.setFont("Verdana");
+            //if(fonts.contains(font)) ClickGUIScreen.setFont(font);
+            //else ClickGUIScreen.setFont("Verdana");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

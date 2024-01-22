@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
@@ -451,131 +452,64 @@ public class RenderUtil implements Wrapper {
 
     // ********************************** 2d ************************************** //
 
-    public static void drawRect(float x, float y, float width, float height, int color) {
-        Color c = new Color(color, true);
-        glPushMatrix();
-        glDisable(GL_TEXTURE_2D);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glShadeModel(GL_SMOOTH);
-        glBegin(GL_QUADS);
-        GlStateManager.color((float) c.getRed() / 255, (float) c.getGreen() / 255, (float) c.getBlue() / 255, (float) c.getAlpha() / 255);
-        glVertex2f(x, y);
-        glVertex2f(x, y + height);
-        glVertex2f(x + width, y + height);
-        glVertex2f(x + width, y);
-        glColor4f(0, 0, 0, 1);
-        glEnd();
-        glEnable(GL_TEXTURE_2D);
-        glDisable(GL_BLEND);
-        glPopMatrix();
-    }
+    //pasted from Exeter cause i suck at making renders
 
-    public static void drawRect(float x, float y, float width, float height, Color color) {
-        final float alpha = color.getAlpha();
-        final float red = color.getRed();
-        final float green = color.getGreen();
-        final float blue = color.getBlue();
-
+    public static void enableGL2D() {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GlStateManager.glBegin(GL_QUADS);
-        GlStateManager.color(red / 255, green / 255, blue / 255, alpha);
-        glVertex2f(x, y);
-        glVertex2f(x, y + height);
-        glVertex2f(x + width, y + height);
-        glVertex2f(x + width, y);
-        GlStateManager.glEnd();
+    }
+
+    public static void disableGL2D() {
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
 
-    public static void drawBorder(float x, float y, float width, float height, Color color) {
-        RenderUtil.drawRect(x - 0.5F, y - 0.5F, 0.5F, height + 1, color);
-        RenderUtil.drawRect(x + width, y - 0.5F, 0.5F, height + 1, color);
-        RenderUtil.drawRect(x, y - 0.5F, width, 0.5F, color);
-        RenderUtil.drawRect(x, y + height, width, 0.5F, color);
+    public static void drawRect(Rectangle rectangle, int color) {
+        drawRect(rectangle.x, rectangle.y, rectangle.x + rectangle.width, rectangle.y + rectangle.height, color);
     }
 
-    public static void drawRoundedRect(double x, double y, double width, double height, double radius, Color color) {
-        glPushAttrib(GL_POINTS);
-
-        final float alpha = color.getAlpha();
-        final float red = color.getRed();
-        final float green = color.getGreen();
-        final float blue = color.getBlue();
-
-        glScaled(0.5, 0.5, 0.5); {
-            x *= 2;
-            y *= 2;
-            width *= 2;
-            height *= 2;
-
-            width += x;
-            height += y;
-
-            glEnable(GL_BLEND);
-            glDisable(GL_TEXTURE_2D);
-            GlStateManager.color(red / 255, green / 255, blue / 255, alpha);
-            glEnable(GL_LINE_SMOOTH);
-            glBegin(GL_POLYGON);
-
-            int i;
-            for (i = 0; i <= 90; i++) {
-                glVertex2d(x + radius + Math.sin(i * Math.PI / 180.0D) * radius * -1.0D, y + radius + Math.cos(i * Math.PI / 180.0D) * radius * -1.0D);
-            }
-
-            for (i = 90; i <= 180; i++) {
-                glVertex2d(x + radius + Math.sin(i * Math.PI / 180.0D) * radius * -1.0D, height - radius + Math.cos(i * Math.PI / 180.0D) * radius * -1.0D);
-            }
-
-            for (i = 0; i <= 90; i++) {
-                glVertex2d(width - radius + Math.sin(i * Math.PI / 180.0D) * radius, height - radius + Math.cos(i * Math.PI / 180.0D) * radius);
-            }
-
-            for (i = 90; i <= 180; i++) {
-                glVertex2d(width - radius + Math.sin(i * Math.PI / 180.0D) * radius, y + radius + Math.cos(i * Math.PI / 180.0D) * radius);
-            }
-
-            glEnd();
-            glEnable(GL_TEXTURE_2D);
-            glDisable(GL_BLEND);
-            glDisable(GL_LINE_SMOOTH);
-            glDisable(GL_BLEND);
-            glEnable(GL_TEXTURE_2D);
-        }
-
-        glScaled(2, 2, 2);
-        glPopAttrib();
+    public static void drawRect(float x, float y, float x1, float y1, int color) {
+        enableGL2D();
+        glColor(color);
+        drawRect(x, y, x1, y1);
+        disableGL2D();
     }
 
-    public static void drawPolygon(double x, double y, float radius, int sides, Color color) {
-        glEnable(GL_BLEND);
-        glDisable(GL_TEXTURE_2D);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glColor4f((float) color.getRed() / 255, (float) color.getGreen() / 255, (float) color.getBlue() / 255, (float) color.getAlpha() / 255);
-        bufferBuilder.begin(GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION);
-        bufferBuilder.pos(x, y, 0).endVertex();
-        double TWICE_PI = Math.PI * 2;
-
-        for (int i = 0; i <= sides; i++) {
-            double angle = (TWICE_PI * i / sides) + Math.toRadians(180);
-            bufferBuilder.pos(x + Math.sin(angle) * radius, y + Math.cos(angle) * radius, 0).endVertex();
-        }
-
-        tessellator.draw();
-        glEnable(GL_TEXTURE_2D);
-        glDisable(GL_BLEND);
+    public static void drawRect(float x, float y, float x1, float y1, float r, float g, float b, float a) {
+        enableGL2D();
+        GL11.glColor4f(r, g, b, a);
+        drawRect(x, y, x1, y1);
+        disableGL2D();
     }
 
-    public static double getDisplayWidth() {
-        return resolution.getScaledWidth_double();
+    public static void drawRect(float x, float y, float x1, float y1) {
+        GL11.glBegin(7);
+        GL11.glVertex2f(x, y1);
+        GL11.glVertex2f(x1, y1);
+        GL11.glVertex2f(x1, y);
+        GL11.glVertex2f(x, y);
+        GL11.glEnd();
     }
 
-    public static double getDisplayHeight() {
-        return resolution.getScaledHeight_double();
+    public static void glColor(Color color) {
+        GL11.glColor4f((float)((float)color.getRed() / 255.0f), (float)((float)color.getGreen() / 255.0f), (float)((float)color.getBlue() / 255.0f), (float)((float)color.getAlpha() / 255.0f));
+    }
+
+    public static void glColor(int hex) {
+        float alpha = (float)(hex >> 24 & 0xFF) / 255.0f;
+        float red = (float)(hex >> 16 & 0xFF) / 255.0f;
+        float green = (float)(hex >> 8 & 0xFF) / 255.0f;
+        float blue = (float)(hex & 0xFF) / 255.0f;
+        GL11.glColor4f((float)red, (float)green, (float)blue, (float)alpha);
+    }
+
+    public static void glColor(float alpha, int redRGB, int greenRGB, int blueRGB) {
+        float red = 0.003921569f * (float)redRGB;
+        float green = 0.003921569f * (float)greenRGB;
+        float blue = 0.003921569f * (float)blueRGB;
+        GL11.glColor4f((float)red, (float)green, (float)blue, (float)alpha);
     }
 }

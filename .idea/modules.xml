@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/src/test/java/java.iml" filepath="$PROJECT_DIR$/src/test/java/java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/meowhack.iml" filepath="$PROJECT_DIR$/.idea/modules/meowhack.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/meowhack.api.iml" filepath="$PROJECT_DIR$/.idea/modules/meowhack.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/meowhack.main.iml" filepath="$PROJECT_DIR$/.idea/modules/meowhack.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/meowhack.test.iml" filepath="$PROJECT_DIR$/.idea/modules/meowhack.test.iml" />
+    </modules>
+  </component>
+</project>

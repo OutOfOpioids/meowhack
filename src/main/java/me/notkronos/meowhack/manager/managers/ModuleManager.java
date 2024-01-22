@@ -26,6 +26,7 @@ public class ModuleManager extends Manager {
             new AntiPoplag(),
             new Ambience(),
             new AutoMeow(),
+            new AutoHeadBurrow(),
             new ChatSuffix(),
             new ChatTimestamp(),
             new ChestplateSwap(),
