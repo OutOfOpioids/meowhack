@@ -179,6 +179,16 @@ public class ConfigManager extends Manager {
                         CustomFontMod.antiAlias.value,
                         CustomFontMod.metrics.value
                 );
+            } else {
+                //fallback to default font
+                FontUtil.customFont = new CustomFontRenderer(
+                        new java.awt.Font("Verdana",
+                                CustomFontMod.fontStyle.value,
+                                CustomFontMod.fontSize.value
+                        ),
+                        CustomFontMod.antiAlias.value,
+                        CustomFontMod.metrics.value
+                );
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
