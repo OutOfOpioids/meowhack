@@ -6,6 +6,7 @@ import me.notkronos.meowhack.event.events.network.PacketEvent;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.module.Module;
 import me.notkronos.meowhack.module.client.HUD;
+import me.notkronos.meowhack.module.combat.VisualRange;
 import me.notkronos.meowhack.module.render.HoleESP;
 import me.notkronos.meowhack.util.Wrapper;
 import net.minecraft.entity.Entity;
@@ -36,6 +37,7 @@ public class EventManager extends Manager implements Wrapper {
         if (!nullCheck() && !event.getEntity().getEntityWorld().isRemote && !event.getEntityLiving().equals(mc.player)) return;
         try {
             HUD.INSTANCE.onUpdate();
+            VisualRange.INSTANCE.onUpdate();
         } catch (Exception exception) {
             exception.printStackTrace();
         }

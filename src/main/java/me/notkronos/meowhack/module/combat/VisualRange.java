@@ -41,31 +41,30 @@ public class VisualRange extends Module {
     @Override
     public void onUpdate() {
         if(mc.player.ticksExisted > 20) {
-            List<Entity> exitPlayers = players.stream().filter(player -> !mc.world.loadedEntityList.contains(player)).collect(Collectors.toList());
-            List<Entity> enterPlayers = mc.world.loadedEntityList.stream().filter(
-                    player -> player instanceof EntityPlayer).filter(player -> !player.equals(mc.player)).filter(
-                            player -> !players.contains(player)).collect(Collectors.toList()
-            );
+            List<Entity> currentPlayers = mc.world.loadedEntityList.stream().filter(
+                    player -> player instanceof EntityPlayer).filter(
+                            player -> !player.equals(mc.player)).collect(Collectors.toList());
+
 
             // on enter
 
-            for(Entity player : enterPlayers) {
-                if(!player.getName().equals(mc.player.getName())) {
+            for(Entity player : currentPlayers) {
+                if(!players.contains(player)) {
                     String message = TextFormatting.RED + "[Meowhack] " + TextFormatting.GREEN
                             + player.getName() + TextFormatting.WHITE + " has " + TextFormatting.GREEN
                             + "entered " + TextFormatting.WHITE + " your visual range!";
-
+                    players.add(player);
                     ChatUtil.sendMessageClientSide(message);
                 }
             }
 
             // on exit
-            for(Entity player : exitPlayers) {
-                if(!player.getName().equals(mc.player.getName())) {
+            for(Entity player : players) {
+                if(!currentPlayers.contains(player)) {
                     String message = TextFormatting.RED + "[Meowhack] " + TextFormatting.GREEN
                             + player.getName() + TextFormatting.WHITE + " has " + TextFormatting.RED
                             + "left " + TextFormatting.WHITE + " your visual range!";
-
+                    players.remove(player);
                     ChatUtil.sendMessageClientSide(message);
                 }
             }
