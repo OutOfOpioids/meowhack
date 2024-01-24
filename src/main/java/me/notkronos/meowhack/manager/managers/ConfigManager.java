@@ -5,11 +5,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.command.commands.Font;
+import me.notkronos.meowhack.font.CustomFontRenderer;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.module.Module;
+import me.notkronos.meowhack.module.client.CustomFontMod;
 import me.notkronos.meowhack.setting.Setting;
 import me.notkronos.meowhack.util.Bind;
 import me.notkronos.meowhack.util.file.FileSystemUtil;
+import me.notkronos.meowhack.util.render.FontUtil;
 
 import java.awt.*;
 import java.io.IOException;
@@ -140,14 +143,14 @@ public class ConfigManager extends Manager {
         }
     }
 
-    public void saveFont() {
+    public void saveFont(String font) {
         try {
             if (!FileSystemUtil.getFontPath().toFile().exists()) {
                 FileSystemUtil.getFontPath().toFile().createNewFile();
             }
 
             Writer writer = Files.newBufferedWriter(FileSystemUtil.getFontPath());
-            writer.write(Font.fontName);
+            writer.write(font);
             writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -167,8 +170,16 @@ public class ConfigManager extends Manager {
             }
             String font = Files.readAllLines(FileSystemUtil.getFontPath()).get(0);
             List<String> fonts = Arrays.asList(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
-            //if(fonts.contains(font)) ClickGUIScreen.setFont(font);
-            //else ClickGUIScreen.setFont("Verdana");
+            if(fonts.stream().anyMatch(f -> f.equalsIgnoreCase(font))) {
+                FontUtil.customFont = new CustomFontRenderer(
+                        new java.awt.Font(font,
+                                CustomFontMod.fontStyle.value,
+                                CustomFontMod.fontSize.value
+                        ),
+                        CustomFontMod.antiAlias.value,
+                        CustomFontMod.metrics.value
+                );
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

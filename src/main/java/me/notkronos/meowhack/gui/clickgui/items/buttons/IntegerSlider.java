@@ -52,7 +52,7 @@ public class IntegerSlider extends Item {
         setting.setValue(MathHelper.clamp(result, setting.getMin(), setting.getMax()));
         if(setting.getModule() == CustomFontMod.INSTANCE && CustomFontMod.INSTANCE.isEnabled()) {
             FontUtil.customFont = new CustomFontRenderer(
-                    new Font("Verdana",
+                    new Font(me.notkronos.meowhack.command.commands.Font.fontName,
                         CustomFontMod.fontStyle.value,
                         CustomFontMod.fontSize.value
                     ),

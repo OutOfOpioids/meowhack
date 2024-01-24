@@ -43,7 +43,7 @@ public class BooleanButton extends Button {
         this.setting.setValue(!(Boolean)this.setting.getValue());
         if(setting.getModule() == CustomFontMod.INSTANCE && CustomFontMod.INSTANCE.isEnabled()) {
             FontUtil.customFont = new CustomFontRenderer(
-                    new Font("Verdana",
+                    new Font(me.notkronos.meowhack.command.commands.Font.fontName,
                             CustomFontMod.fontStyle.value,
                             CustomFontMod.fontSize.value
                     ),

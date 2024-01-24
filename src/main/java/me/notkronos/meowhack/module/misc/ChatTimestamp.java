@@ -1,5 +1,6 @@
 package me.notkronos.meowhack.module.misc;
 
+import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.event.events.network.PacketEvent;
 import me.notkronos.meowhack.mixin.mixins.accessor.ITextComponentStringAccessor;
 import me.notkronos.meowhack.module.Category;
@@ -21,6 +22,7 @@ public class ChatTimestamp extends Module {
         INSTANCE = this;
         INSTANCE.enabled = true;
         INSTANCE.drawn = false;
+        Meowhack.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent

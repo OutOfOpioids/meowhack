@@ -1,5 +1,6 @@
 package me.notkronos.meowhack.command.commands;
 
+import me.notkronos.meowhack.Meowhack;
 import me.notkronos.meowhack.command.Command;
 import me.notkronos.meowhack.font.CustomFontRenderer;
 import me.notkronos.meowhack.module.client.CustomFontMod;
@@ -26,6 +27,7 @@ public class Font extends Command {
                     CustomFontMod.metrics.value
             );
             fontName = args[0];
+            Meowhack.INSTANCE.getConfigManager().saveFont(args[0]);
         }
     }
 

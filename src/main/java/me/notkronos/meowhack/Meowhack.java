@@ -1,5 +1,6 @@
 package me.notkronos.meowhack;
 
+import me.notkronos.meowhack.command.commands.Font;
 import me.notkronos.meowhack.manager.Manager;
 import me.notkronos.meowhack.manager.managers.*;
 import me.notkronos.meowhack.util.file.FileSystemUtil;
@@ -101,7 +102,7 @@ public class Meowhack {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             getConfigManager().saveModules();
             getConfigManager().saveFriends();
-            getConfigManager().saveFont();
+            getConfigManager().saveFont(Font.fontName);
         }));
 
         SETUP = true;
