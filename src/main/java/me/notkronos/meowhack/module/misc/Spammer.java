@@ -11,16 +11,16 @@ import static me.notkronos.meowhack.util.Wrapper.mc;
 
 public class Spammer extends Module {
     private final String[] hazelSpam = {
-            "holy shit i love C10",
-            "im omw to get estrogen",
-            "dan heng is my beautiful little princess",
-            "cinnamorolling the opps",
-            "i gotta go grief sun knights brb",
-            "does anyone here like newjeans",
-            "hey guys my name is hazel",
-            "any hazel fans online rn",
-            "donfeur LITERALLY loves me",
-            "hazel hazel bo bazel banana nana fo fazel fe fi fo fazel HAZEL!!!!!!! :3"
+            "hazel",
+            "EMPERIUM DIES IN A 5V1 TO HAZELBESTIEE QUEEN OF GRIM",
+            "bezo is a cuck",
+            "SUPERHATEMEWINNING",
+            "DOCTORKEA IS GOD",
+            "meow :3",
+            "trans rights are human rights ^_^",
+            "RAHHHHHHHHHHHHH",
+            "FatManLana",
+            "i love asplint"
     };
     public static String[] spam;
 
